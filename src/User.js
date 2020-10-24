@@ -6,7 +6,7 @@
     this.email = userData.email;
     this.strideLength = userData.strideLength;
     this.dailyStepGoal = userData.dailyStepGoal;
-    this.totalStepsThisWeek = 0;
+    this.totalStepsThisWeek = 0;//
     this.friends = userData.friends;
     this.ouncesAverage = 0;
     this.ouncesRecord = [];
@@ -22,17 +22,22 @@
     this.friendsActivityRecords = []
   }
   getFirstName() {
-    var names = this.name.split(' ');
-    return names[0].toUpperCase();
+    this.name = this.name.split(' ');
+    return this.name[0].toUpperCase();
   }
+  // Should be in Hydration.js?
   updateHydration(date, amount) {
     this.ouncesRecord.unshift({[date]: amount});
-    if (this.ouncesRecord.length) {
-      this.ouncesAverage = Math.round((amount + (this.ouncesAverage * (this.ouncesRecord.length - 1))) / this.ouncesRecord.length);
-    } else {
-      this.ouncesAverage = amount;
-    }
+    const recordLength = this.ouncesRecord.length;
+    const currentTotal = this.ouncesAverage * (recordLength - 1);
+    const currentAverage = (currentTotal + amount) / recordLength;
+    const finalAverage = Math.round(currentAverage);
+
+    return this.ouncesAverage = recordLength ? finalAverage : amount;
   }
+
+
+  //Move to Hydration.js
   addDailyOunces(date) {
     return this.ouncesRecord.reduce((sum, record) => {
       let amount = record[date];
@@ -42,6 +47,7 @@
       return sum
     }, 0)
   }
+  //Move to Sleep.js
   updateSleep(date, hours, quality) {
     this.sleepHoursRecord.unshift({
       'date': date,
@@ -164,6 +170,7 @@
   }
   findFriendsTotalStepsForWeek(users, date) {
     this.friends.map(friend => {
+      console.log(friend)
       let matchedFriend = users.find(user => user.id === friend);
       matchedFriend.calculateTotalStepsThisWeek(date);
       this.friendsActivityRecords.push(
