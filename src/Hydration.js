@@ -5,11 +5,10 @@ class Hydration {
     this.ounces = data.numOunces;
     this.drink(userRepository);
   }
+
   drink(userRepo) {
-    var hydrate = this;
-    userRepo.users.find(function(user) {
-      return user.id === hydrate.userId;
-    }).updateHydration(this.date, this.ounces);
+    const chosenUser = userRepo.users.find(user => user.id === this.userId);
+    chosenUser.updateHydration(this.date, this.ounces);
   }
 }
 
