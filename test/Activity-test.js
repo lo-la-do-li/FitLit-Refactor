@@ -3,10 +3,9 @@ import Activity from '../src/Activity';
 import UserRepository from '../src/UserRepository';
 import User from '../src/User';
 
-describe('Activity', function() {
-  let activity;
-  let user;
-  let userRepository;
+describe.only('Activity', function() {
+  let activity1, activity2, user1, user2, userRepository;
+  
   beforeEach(() => {
     user1 = new User({
       'id': 1,
