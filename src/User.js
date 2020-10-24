@@ -37,14 +37,13 @@
   }
 
 
-  //Move to Hydration.js
-  addDailyOunces(date) {
-    return this.ouncesRecord.reduce((sum, record) => {
-      let amount = record[date];
-      if (amount) {
-        sum += amount
+  //Move to Hydration.js, formerly addDailyOunces(date)
+  returnTotalDailyOunces(date) {
+    return this.ouncesRecord.reduce((totalOunces, record) => {
+      if (record[date]) {
+        totalOunces += record[date]
       }
-      return sum
+      return totalOunces
     }, 0)
   }
   //Move to Sleep.js
