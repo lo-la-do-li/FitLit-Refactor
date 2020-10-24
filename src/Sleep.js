@@ -6,11 +6,10 @@ class Sleep { // instance for the user's sleep each day
     this.sleepQuality = data.sleepQuality;
     this.sleep(userRepository);
   }
+
   sleep(userRepo) {
-    var sleep = this;
-    userRepo.users.find(function(user) {
-      return user.id === sleep.userId;
-    }).updateSleep(this.date, this.hoursSlept, this.sleepQuality);
+    const chosenUser = userRepo.users.find(user => user.id === this.userId);
+    chosenUser.updateSleep(this.date, this.hoursSlept, this.sleepQuality);
   }
 }
 
