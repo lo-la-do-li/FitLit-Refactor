@@ -84,6 +84,11 @@ describe.only('Activity', function() {
   it('should have a method that calculate miles walked', function() {
     expect(activity1.calculateMiles(userRepository)).to.equal('3.0');
   });
+
+  it('should return the chosen user', () => {
+    expect(activity1.returnChosenUser(userRepository)).to.deep.equal(user1);
+  });
+
   describe('compareStepGoal', function() {
     it('should return false if goal isn\'t met', function() {
       activity1.compareStepGoal(userRepository);
