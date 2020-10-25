@@ -50,40 +50,31 @@
   //Move to Sleep.js 
   updateSleepRecord(sleepInfo) {
     if (sleepInfo.hours) {
-      sleepInfo.recordType.unshift({[sleepInfo.date]: sleepInfo.hours})
+      sleepInfo.recordType.unshift({date: sleepInfo.date, hours: sleepInfo.hours})
     } else if (sleepInfo.quality) {
-      sleepInfo.recordType.unshift({[sleepInfo.date]: sleepInfo.quality})
+      sleepInfo.recordType.unshift({date: sleepInfo.date, quality: sleepInfo.quality})
     }
   }
-  //revisit on the if condition
+ 
   returnAverageValue(sleepInfo) {
-    const recordLength = sleepInfo.recordType.length;
+    const property = sleepInfo.hours ? 'hoursSleptAverage' : 'sleepQualityAverage';
     let recordData = sleepInfo.hours || sleepInfo.quality;
-    const totalSum = sleepInfo.recordAverage * (recordLength - 1);
-    const averageValue = (recordData + totalSum) / recordLength.toFixed(1);
-    if (sleepInfo.hours) {
-      return this.hoursSleptAverage = recordLength ? averageValue : recordData
-    } else if (sleepInfo.quality) {
-      return this.sleepQualityAverage = recordLength ? averageValue : recordData
-    }
+    const totalValue = sleepInfo.recordType.reduce((acc, x)=> {
+      return acc += x.hours || x.quality;
+    }, 0)
+    const averageValue = totalValue / sleepInfo.recordType.length;
+    const finalAverage = recordLength ? averageValue : recordData
+    return this[property] = finalAverage;
   }
 
   updateSleepHours(date, hours) {
     this.updateSleepRecord({date, hours, recordType: this.sleepHoursRecord});
-    this.returnAverageValue({hours, recordType: this.sleepHoursRecord, recordAverage: this.hoursSleptAverage})
-    // const recordLength = this.sleepHoursRecord.length;
-    // const hoursTotal = this.hoursSleptAverage * (recordLength - 1);
-    // const averageHours = (hours + hoursTotal) / recordLength.toFixed(1);
-    // return this.hoursSleptAverage = recordLength ? averageHours : hours
+    this.returnAverageValue({hours, recordType: this.sleepHoursRecord})
   }
 
   updateSleepQuality(date, quality) {
     this.updateSleepRecord({date, quality, recordType: this.sleepQualityRecord});
-    this.returnAverageValue({quality, recordType: this.sleepQualityRecord, recordAverage: this.sleepQualityAverage})
-    // const recordLength = this.sleepQualityRecord.length;
-    // const qualityTotal = this.sleepQualityAverage * (recordLength - 1);
-    // const averageQuality = (quality + qualityTotal) / recordLength.toFixed(1);
-    // return this.sleepQualityAverage = recordLength ? averageQuality : quality
+    this.returnAverageValue({quality, recordType: this.sleepQualityRecord})
   }
 
   calculateAverageHoursThisWeek(todayDate) {

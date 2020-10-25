@@ -88,7 +88,7 @@ describe.only('User', function() {
     ]
     expect(user.returnTotalDailyOunces("2019/06/15")).to.equal(2);
   });
-  describe.only('updateSleep', function() {
+  describe('updateSleep', function() {
     beforeEach(() => {
       user.updateSleepHours("2019/06/15", 7);
       user.updateSleepHours("2019/07/14", 6);
