@@ -112,13 +112,13 @@
   }
 
   calculateDailyCalories(date) {
-    let totalMinutes = this.activityRecord.filter(activity => {
-      return activity.date === date
-    }).reduce((sumMinutes, activity) => {
+    let fitDate = this.activityRecord.filter(activity => activity.date === date)
+    const totalMinutes = fitDate.reduce((sumMinutes, activity) => {
       return sumMinutes += activity.minutesActive
     }, 0);
     return Math.round(totalMinutes * 7.6);
   }
+  
   calculateAverageMinutesActiveThisWeek(todayDate) {
     return this.calculateAverageValueByWeek(todayDate, this.activityRecord, 'minutesActive', 0);
   }
