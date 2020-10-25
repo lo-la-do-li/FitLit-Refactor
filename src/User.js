@@ -76,25 +76,27 @@
     this.updateSleepRecord({date, quality, recordType: this.sleepQualityRecord});
     this.returnAverageValue({quality, recordType: this.sleepQualityRecord})
   }
+  
+  
+  calculateAverageValueByWeek(todayDate, recordType) {
+    return (recordType.reduce((totalValue, sleepData) => {
+      const sleepDate = recordType.find(sleep => sleep.date === todayDate);
+      let day7Index = recordType.indexOf(sleepDate);
+      if (day7Index <= recordType.indexOf(sleepData) && recordType.indexOf(sleepData) <= (day7Index + 6)) {
+        totalValue += sleepData.hours || sleepData.quality;
+      }
+      return totalValue;
+    }, 0) / 7).toFixed(1);
+  }
 
-  calculateAverageHoursThisWeek(todayDate) {
-    return (this.sleepHoursRecord.reduce((sum, sleepAct) => {
-      let index = this.sleepHoursRecord.indexOf(this.sleepHoursRecord.find(sleep => sleep.date === todayDate));
-      if (index <= this.sleepHoursRecord.indexOf(sleepAct) && this.sleepHoursRecord.indexOf(sleepAct) <= (index + 6)) {
-        sum += sleepAct.hours;
-      }
-      return sum;
-    }, 0) / 7).toFixed(1);
+  calculateAverageSleptHoursThisWeek(todayDate) {
+    return this.calculateAverageValueByWeek(todayDate, this.sleepHoursRecord);
   }
-  calculateAverageQualityThisWeek(todayDate) {
-    return (this.sleepQualityRecord.reduce((sum, sleepAct) => {
-      let index = this.sleepQualityRecord.indexOf(this.sleepQualityRecord.find(sleep => sleep.date === todayDate));
-      if (index <= this.sleepQualityRecord.indexOf(sleepAct) && this.sleepQualityRecord.indexOf(sleepAct) <= (index + 6)) {
-        sum += sleepAct.quality;
-      }
-      return sum;
-    }, 0) / 7).toFixed(1);
+  
+  calculateAverageSleptQualityThisWeek(todayDate) {
+    return this.calculateAverageValueByWeek(todayDate, this.sleepQualityRecord);
   }
+
   updateActivities(activity) {
     this.activityRecord.unshift(activity);
     if (activity.numSteps >= this.dailyStepGoal) {
@@ -175,7 +177,7 @@
         sum += activity.steps;
       }
       return sum;
-    }, 0));
+    }, 0) / 7);
   }
   findFriendsTotalStepsForWeek(users, date) {
     this.friends.map(friend => {
