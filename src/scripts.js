@@ -1,5 +1,6 @@
 import './css/base.scss';
 import './css/styles.scss';
+// import './src/index.js';
 
 import userData from './data/users';
 import activityData from './data/activity';
