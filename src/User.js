@@ -93,16 +93,24 @@
   }
 
   updateActivities(activity) {
-    this.activityRecord.unshift(activity);
+    this.updateRecord(activity, 'activityRecord')
     if (activity.numSteps >= this.dailyStepGoal) {
       this.accomplishedDays.unshift(activity.date);
     }
   }
+
   findClimbingRecord() {
     return this.activityRecord.sort((a, b) => {
-      return b.flightsOfStairs - a.flightsOfStairs;
+      if (a.flightsOfStairs - b.flightsOfStairs < 0) {
+        return 1
+      } else if (a.flightsOfStairs - b.flightsOfStairs > 0) {
+        return -1
+      } else {
+        return 0
+      }
     })[0].flightsOfStairs;
   }
+
   calculateDailyCalories(date) {
     let totalMinutes = this.activityRecord.filter(activity => {
       return activity.date === date

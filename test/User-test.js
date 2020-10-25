@@ -104,8 +104,6 @@ describe.only('User', function() {
       expect(user.hoursSleptAverage).to.equal(7.0);
     });
     it('should update user\'s average quality of sleep', function() {
-      //console.log(user.sleepQualityRecord);
-      
       expect(user.sleepQualityAverage).to.equal(4.7);
     });
   })
@@ -119,7 +117,7 @@ describe.only('User', function() {
     expect(user.calculateAverageSleptQualityThisWeek('2019/09/22')).to.equal('8.5')
   });
   it('should have a method that return the highest climbing record', function() {
-    user.activityRecord = [{flightsOfStairs: 10}, {flightsOfStairs: 15}, {flightsOfStairs: 17}]
+    user.activityRecord = [{flightsOfStairs: 17}, {flightsOfStairs: 10}, {flightsOfStairs: 15}]
     expect(user.findClimbingRecord()).to.equal(17)
   });
   it('should have a method that calculates daily calories burned', function() {
@@ -134,7 +132,7 @@ describe.only('User', function() {
     user.activityRecord = [{date: "2019/09/18", steps: 1178}, {date: "2019/09/17", steps: 1080}, {date: "2019/09/16", steps: 120}, {date: "2019/09/15", steps: 891}, {date: "2019/09/14", steps: 380}, {date: "2019/09/13", steps: 3234}, {date: "2019/06/12", steps: 1111}, {date: "2019/09/11", steps: 18}, {date: "2019/09/10", steps: 345}, {date: "2019/09/09", steps: 81}];
     expect(user.calculateAverageStepsThisWeek("2019/09/17")).to.equal('976')
   });
-  it.only('calculateAverageFlightsThisWeek should calculate the average flights of stairs taken in a given week', function() {
+  it('calculateAverageFlightsThisWeek should calculate the average flights of stairs taken in a given week', function() {
     user.activityRecord = [{date: "2019/09/18", flightsOfStairs: 4}, {date: "2019/09/17", flightsOfStairs: 6}, {date: "2019/09/16", flightsOfStairs: 1}, {date: "2019/09/15", flightsOfStairs: 2}, {date: "2019/09/14", flightsOfStairs: 12}, {date: "2019/09/13", flightsOfStairs: 21}, {date: "2019/06/12", flightsOfStairs: 3}, {date: "2019/09/11", flightsOfStairs: 14}, {date: "2019/09/10", flightsOfStairs: 2}, {date: "2019/09/09", flightsOfStairs: 8}];
     expect(user.calculateAverageFlightsThisWeek("2019/09/17")).to.equal('8.4')
   });
