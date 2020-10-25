@@ -47,50 +47,45 @@
     }, 0)
   }
 
-  //Move to Sleep.js - revist updateSleepRecord
-  // updateSleepRecord(sleepInfo) {
-  //   if (sleepInfo.hours) {
-  //     sleepInfo.recordType.unshift({sleepInfo.date: sleepInfo.hours})
-  //   } else if (sleepInfo.quality) {
-  //     sleepInfo.recordType.unshift({sleepInfo.date: sleepInfo.quality})
-  //   }
-  // }
+  //Move to Sleep.js 
+  updateSleepRecord(sleepInfo) {
+    if (sleepInfo.hours) {
+      sleepInfo.recordType.unshift({[sleepInfo.date]: sleepInfo.hours})
+    } else if (sleepInfo.quality) {
+      sleepInfo.recordType.unshift({[sleepInfo.date]: sleepInfo.quality})
+    }
+  }
+  //revisit on the if condition
+  returnAverageValue(sleepInfo) {
+    const recordLength = sleepInfo.recordType.length;
+    let recordData = sleepInfo.hours || sleepInfo.quality;
+    const totalSum = sleepInfo.recordAverage * (recordLength - 1);
+    const averageValue = (recordData + totalSum) / recordLength.toFixed(1);
+    if (sleepInfo.hours) {
+      return this.hoursSleptAverage = recordLength ? averageValue : recordData
+    } else if (sleepInfo.quality) {
+      return this.sleepQualityAverage = recordLength ? averageValue : recordData
+    }
+  }
+
   updateSleepHours(date, hours) {
-    this.sleepHoursRecord.unshift({date, hours});
-    const recordLength = this.sleepHoursRecord.length;
-    const hoursTotal = this.hoursSleptAverage * (recordLength - 1);
-    const averageHours = (hours + hoursTotal) / recordLength.toFixed(1);
-    return this.hoursSleptAverage = recordLength ? averageHours : hours
+    this.updateSleepRecord({date, hours, recordType: this.sleepHoursRecord});
+    this.returnAverageValue({hours, recordType: this.sleepHoursRecord, recordAverage: this.hoursSleptAverage})
+    // const recordLength = this.sleepHoursRecord.length;
+    // const hoursTotal = this.hoursSleptAverage * (recordLength - 1);
+    // const averageHours = (hours + hoursTotal) / recordLength.toFixed(1);
+    // return this.hoursSleptAverage = recordLength ? averageHours : hours
   }
 
   updateSleepQuality(date, quality) {
-    this.sleepQualityRecord.unshift({date, quality});
-    const recordLength = this.sleepQualityRecord.length;
-    const qualityTotal = this.sleepQualityAverage * (recordLength - 1);
-    const averageQuality = (quality + qualityTotal) / recordLength.toFixed(1);
-    return this.sleepQualityAverage = recordLength ? averageQuality : quality
+    this.updateSleepRecord({date, quality, recordType: this.sleepQualityRecord});
+    this.returnAverageValue({quality, recordType: this.sleepQualityRecord, recordAverage: this.sleepQualityAverage})
+    // const recordLength = this.sleepQualityRecord.length;
+    // const qualityTotal = this.sleepQualityAverage * (recordLength - 1);
+    // const averageQuality = (quality + qualityTotal) / recordLength.toFixed(1);
+    // return this.sleepQualityAverage = recordLength ? averageQuality : quality
   }
 
-  // updateSleep(date, hours, quality) {
-  //   this.sleepHoursRecord.unshift({
-  //     'date': date,
-  //     'hours': hours
-  //   });
-  //   this.sleepQualityRecord.unshift({
-  //     'date': date,
-  //     'quality': quality
-  //   });
-  //   if(this.sleepHoursRecord.length) {
-  //     this.hoursSleptAverage = ((hours + (this.hoursSleptAverage * (this.sleepHoursRecord.length - 1))) / this.sleepHoursRecord.length).toFixed(1);
-  //   } else {
-  //     this.hoursSleptAverage = hours;
-  //   }
-  //   if (this.sleepQualityRecord.length) {
-  //     this.sleepQualityAverage = ((quality + (this.sleepQualityAverage * (this.sleepQualityRecord.length - 1))) / this.sleepQualityRecord.length).toFixed(1);
-  //   } else {
-  //     this.sleepQualityAverage = quality;
-  //   }
-  // }
   calculateAverageHoursThisWeek(todayDate) {
     return (this.sleepHoursRecord.reduce((sum, sleepAct) => {
       let index = this.sleepHoursRecord.indexOf(this.sleepHoursRecord.find(sleep => sleep.date === todayDate));
