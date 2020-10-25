@@ -47,15 +47,10 @@
     }, 0)
   }
 
-  //Move to Sleep.js 
-  updateSleepRecord(sleepInfo) {
-    if (sleepInfo.hours) {
-      sleepInfo.recordType.unshift({date: sleepInfo.date, hours: sleepInfo.hours})
-    } else if (sleepInfo.quality) {
-      sleepInfo.recordType.unshift({date: sleepInfo.date, quality: sleepInfo.quality})
-    }
+  updateRecord(dataValues, recordType) {
+    this[recordType].unshift(dataValues);
   }
- 
+
   returnAverageValue(sleepInfo) {
     const property = sleepInfo.hours ? 'hoursSleptAverage' : 'sleepQualityAverage';
     let recordData = sleepInfo.hours || sleepInfo.quality;
@@ -63,21 +58,21 @@
       return acc += x.hours || x.quality;
     }, 0)
     const averageValue = totalValue / sleepInfo.recordType.length;
-    const finalAverage = recordLength ? averageValue : recordData
+    const finalAverage = sleepInfo.recordType.length ? averageValue : recordData
     return this[property] = finalAverage;
   }
 
   updateSleepHours(date, hours) {
-    this.updateSleepRecord({date, hours, recordType: this.sleepHoursRecord});
+    this.updateRecord({date, hours}, 'sleepHoursRecord');
     this.returnAverageValue({hours, recordType: this.sleepHoursRecord})
   }
 
   updateSleepQuality(date, quality) {
-    this.updateSleepRecord({date, quality, recordType: this.sleepQualityRecord});
+    this.updateRecord({date, quality}, 'sleepQualityRecord');
     this.returnAverageValue({quality, recordType: this.sleepQualityRecord})
   }
-  
-  
+
+
   calculateAverageValueByWeek(todayDate, recordType, input, num) {
     return (recordType.reduce((totalValue, detail) => {
       const activityDate = recordType.find(activity => activity.date === todayDate);
