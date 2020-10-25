@@ -118,7 +118,7 @@
     }, 0);
     return Math.round(totalMinutes * 7.6);
   }
-  
+
   calculateAverageMinutesActiveThisWeek(todayDate) {
     return this.calculateAverageValueByWeek(todayDate, this.activityRecord, 'minutesActive', 0);
   }
@@ -128,17 +128,21 @@
   calculateAverageFlightsThisWeek(todayDate) {
     return this.calculateAverageValueByWeek(todayDate, this.activityRecord, 'flightsOfStairs', 1);
   }
+
+  //revisit
   findTrendingStepDays() {
-    let positiveDays = [];
-    for (var i = 0; i < this.activityRecord.length; i++) {
-      if (this.activityRecord[i + 1] && this.activityRecord[i].steps > this.activityRecord[i + 1].steps) {
-        positiveDays.unshift(this.activityRecord[i].date);
+    return this.activityRecord.reduce((positiveDays, dailyRecord) => {
+      const index1 = this.activityRecord.indexOf(dailyRecord);
+      if (this.activityRecord[index1+1] && dailyRecord.steps > this.activityRecord[index1+1].steps) {
+        positiveDays.unshift(dailyRecord.date);
       } else if (positiveDays.length > 2) {
         this.trendingStepDays.push(`Your most recent positive step streak was ${positiveDays[0]} - ${positiveDays[positiveDays.length - 1]}!`);
         positiveDays = [];
       }
-    }
+      return positiveDays;
+    }, [])
   }
+  
   findTrendingStairsDays() {
     let positiveDays = [];
     for (var i = 0; i < this.activityRecord.length; i++) {
