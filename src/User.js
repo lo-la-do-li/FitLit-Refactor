@@ -72,8 +72,7 @@
     this.returnAverageValue({quality, recordType: this.sleepQualityRecord})
   }
 
-
-  calculateAverageValueByWeek(todayDate, recordType, input, num) {
+  calculateTotalNum(todayDate, recordType, input) {
     return (recordType.reduce((totalValue, detail) => {
       const activityDate = recordType.find(activity => activity.date === todayDate);
       let day7Index = recordType.indexOf(activityDate);
@@ -81,7 +80,20 @@
         totalValue += detail[input];
       }
       return totalValue;
-    }, 0) / 7).toFixed(num);
+    }, 0))
+  }
+
+  calculateAverageValueByWeek(todayDate, recordType, input, num) {
+  return (this.calculateTotalNum(todayDate, recordType, input) / 7).toFixed(num)
+
+    // return (recordType.reduce((totalValue, detail) => {
+    //   const activityDate = recordType.find(activity => activity.date === todayDate);
+    //   let day7Index = recordType.indexOf(activityDate);
+    //   if (day7Index <= recordType.indexOf(detail) && recordType.indexOf(detail) <= (day7Index + 6)) {
+    //     totalValue += detail[input];
+    //   }
+    //   return totalValue;
+    // }, 0) / 7).toFixed(num);
   }
 
   calculateAverageSleptHoursThisWeek(todayDate) {
@@ -150,19 +162,16 @@
   findTrendingStairsDays() {
     this.findRecord('trendingStairsDays', 'flightsOfStairs', 'climbing');
   }
+
   findFriendsNames(users) {
     this.friends.forEach(friend => {
       this.friendsNames.push(users.find(user => user.id === friend).getFirstName());
     })
   }
+
   calculateTotalStepsThisWeek(todayDate) {
-    return this.totalStepsThisWeek = (this.activityRecord.reduce((sum, activity) => {
-      let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
-      if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
-        sum += activity.steps;
-      }
-      return sum;
-    }, 0));
+    const totalSteps = this.calculateTotalNum(todayDate, this.activityRecord, 'steps');
+    return this.totalStepsThisWeek = totalSteps;
   }
   findFriendsTotalStepsForWeek(users, date) {
     this.friends.map(friend => {
