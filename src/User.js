@@ -78,23 +78,23 @@
   }
   
   
-  calculateAverageValueByWeek(todayDate, recordType) {
-    return (recordType.reduce((totalValue, sleepData) => {
-      const sleepDate = recordType.find(sleep => sleep.date === todayDate);
-      let day7Index = recordType.indexOf(sleepDate);
-      if (day7Index <= recordType.indexOf(sleepData) && recordType.indexOf(sleepData) <= (day7Index + 6)) {
-        totalValue += sleepData.hours || sleepData.quality;
+  calculateAverageValueByWeek(todayDate, recordType, input, num) {
+    return (recordType.reduce((totalValue, detail) => {
+      const activityDate = recordType.find(activity => activity.date === todayDate);
+      let day7Index = recordType.indexOf(activityDate);
+      if (day7Index <= recordType.indexOf(detail) && recordType.indexOf(detail) <= (day7Index + 6)) {
+        totalValue += detail[input];
       }
       return totalValue;
-    }, 0) / 7).toFixed(1);
+    }, 0) / 7).toFixed(num);
   }
 
   calculateAverageSleptHoursThisWeek(todayDate) {
-    return this.calculateAverageValueByWeek(todayDate, this.sleepHoursRecord);
+    return this.calculateAverageValueByWeek(todayDate, this.sleepHoursRecord, 'hours', 1);
   }
-  
+
   calculateAverageSleptQualityThisWeek(todayDate) {
-    return this.calculateAverageValueByWeek(todayDate, this.sleepQualityRecord);
+    return this.calculateAverageValueByWeek(todayDate, this.sleepQualityRecord, 'quality', 1);
   }
 
   updateActivities(activity) {
@@ -117,31 +117,13 @@
     return Math.round(totalMinutes * 7.6);
   }
   calculateAverageMinutesActiveThisWeek(todayDate) {
-    return (this.activityRecord.reduce((sum, activity) => {
-      let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
-      if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
-        sum += activity.minutesActive;
-      }
-      return sum;
-    }, 0) / 7).toFixed(0);
+    return this.calculateAverageValueByWeek(todayDate, this.activityRecord, 'minutesActive', 0);
   }
   calculateAverageStepsThisWeek(todayDate) {
-    return (this.activityRecord.reduce((sum, activity) => {
-      let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
-      if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
-        sum += activity.steps;
-      }
-      return sum;
-    }, 0) / 7).toFixed(0);
+    return this.calculateAverageValueByWeek(todayDate, this.activityRecord, 'steps', 0);
   }
   calculateAverageFlightsThisWeek(todayDate) {
-    return (this.activityRecord.reduce((sum, activity) => {
-      let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
-      if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
-        sum += activity.flightsOfStairs;
-      }
-      return sum;
-    }, 0) / 7).toFixed(1);
+    return this.calculateAverageValueByWeek(todayDate, this.activityRecord, 'flightsOfStairs', 1);
   }
   findTrendingStepDays() {
     let positiveDays = [];
@@ -171,13 +153,13 @@
     })
   }
   calculateTotalStepsThisWeek(todayDate) {
-    this.totalStepsThisWeek = (this.activityRecord.reduce((sum, activity) => {
+    return this.totalStepsThisWeek = (this.activityRecord.reduce((sum, activity) => {
       let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
       if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
         sum += activity.steps;
       }
       return sum;
-    }, 0) / 7);
+    }, 0));
   }
   findFriendsTotalStepsForWeek(users, date) {
     this.friends.map(friend => {
