@@ -102,16 +102,21 @@
     }
   }
 
-  findClimbingRecord() {
-    return this.activityRecord.sort((a, b) => {
-      if (a.flightsOfStairs - b.flightsOfStairs < 0) {
+  sortRecord(recordType, activity) {
+    return this[recordType].sort((a, b) => {
+      if (a[activity] - b[activity] < 0) {
         return 1
-      } else if (a.flightsOfStairs - b.flightsOfStairs > 0) {
+      } else if (a[activity] - b[activity] > 0) {
         return -1
       } else {
         return 0
       }
-    })[0].flightsOfStairs;
+    })
+  }
+
+  findClimbingRecord() {
+     this.sortRecord('activityRecord', 'flightsOfStairs');
+     return this.activityRecord[0].flightsOfStairs;
   }
 
   calculateDailyCalories(date) {
@@ -132,7 +137,6 @@
     return this.calculateAverageValueByWeek(todayDate, this.activityRecord, 'flightsOfStairs', 1);
   }
 
-  //revisit
   findRecord(type, activity, msg) {
     return this.activityRecord.reduce((positiveDays, dailyRecord) => {
       const index1 = this.activityRecord.indexOf(dailyRecord);
@@ -165,9 +169,9 @@
     const totalSteps = this.calculateTotalNum(todayDate, this.activityRecord, 'steps');
     return this.totalStepsThisWeek = totalSteps;
   }
+
   findFriendsTotalStepsForWeek(users, date) {
     this.friends.map(friend => {
-      console.log(friend)
       let matchedFriend = users.find(user => user.id === friend);
       matchedFriend.calculateTotalStepsThisWeek(date);
       this.friendsActivityRecords.push(
@@ -175,15 +179,9 @@
           'id': matchedFriend.id,
           'firstName': matchedFriend.name.toUpperCase().split(' ')[0],
           'totalWeeklySteps': matchedFriend.totalStepsThisWeek
-        })
+        });
     })
-    this.calculateTotalStepsThisWeek(date);
-    this.friendsActivityRecords.push({
-      'id': this.id,
-      'firstName': 'YOU',
-      'totalWeeklySteps': this.totalStepsThisWeek
-    });
-    this.friendsActivityRecords = this.friendsActivityRecords.sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps);
+    return this.sortRecord('friendsActivityRecords', 'totalWeeklySteps');
   }
 }
 
