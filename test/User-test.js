@@ -188,7 +188,7 @@ describe.only('User', function() {
     user.findTrendingStairsDays()
     expect(user.trendingStairsDays).to.deep.equal(['Your most recent positive climbing streak was 2019/06/26 - 2019/06/29!', 'Your most recent positive climbing streak was 2019/06/19 - 2019/06/24!']);
   });
-  it('findFriendsNames should find the first names of friends', function() {
+  it.only('findFriendsNames should find the first names of friends', function() {
     let user2 = new User({
       'id': 16,
       'name': 'Ben Nist',
