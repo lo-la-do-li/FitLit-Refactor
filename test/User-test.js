@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import User from '../src/User';
 
 
-describe.only('User', function() {
+describe('User', function() {
   let user;
   beforeEach(() => {
     user = new User({
@@ -188,7 +188,7 @@ describe.only('User', function() {
     user.findTrendingStairsDays()
     expect(user.trendingStairsDays).to.deep.equal(['Your most recent positive climbing streak was 2019/06/26 - 2019/06/29!', 'Your most recent positive climbing streak was 2019/06/19 - 2019/06/24!']);
   });
-  it.only('findFriendsNames should find the first names of friends', function() {
+  it('findFriendsNames should find the first names of friends', function() {
     let user2 = new User({
       'id': 16,
       'name': 'Ben Nist',
@@ -276,6 +276,6 @@ describe.only('User', function() {
     {"date": "2019/06/18", "steps": 10}];
     let users = [user2, user3, user4];
     user.findFriendsTotalStepsForWeek(users, '2019/06/29');
-    expect(user.friendsActivityRecords).to.deep.equal([{"id": 4, "totalWeeklySteps": 734}, {"id": 16, "totalWeeklySteps": 248}, {"id": 8, "totalWeeklySteps": 34}]);
+    expect(user.friendsActivityRecords).to.deep.equal([{"id": 4, "firstName": "JOHN", "totalWeeklySteps": 734}, {"id": 16, "firstName": "BEN", "totalWeeklySteps": 248}, {"id": 8, "firstName": "NICK", "totalWeeklySteps": 34}]);
   });
 });
