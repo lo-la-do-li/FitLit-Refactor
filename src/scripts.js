@@ -17,10 +17,15 @@ import Sleep from './Sleep';
 
 let userRepository = new UserRepository();
 
-userData.forEach(user => {
-  user = new User(user);
-  userRepository.users.push(user)
-});
+userRepository.users = userData.map(data => new User(data))
+// userData.forEach(user => {
+//   user = new User(user);
+//   userRepository.users.push(user)
+// });
+// userData.forEach(user => {
+//   user = new User(user);
+//   userRepository.users.push(user)
+// });
 
 activityData.forEach(activity => {
   activity = new Activity(activity, userRepository);
