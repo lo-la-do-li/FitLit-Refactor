@@ -1,21 +1,15 @@
-import sleepData from './data/sleep';
-
 class UserRepository {
   constructor() {
     this.users = [];
   }
 
   getUser(id) {
-    return this.users.find(function(user) {
-      return user.id === id;
-    })
+    return this.users.find(user => user.id === id)
   }
 
   calculateAverageStepGoal() {
-    let goals = this.users.map(function(user) {
-      return user.dailyStepGoal;
-    });
-    let total = goals.reduce(function(sum, goal) {
+    let goals = this.users.map(user => user.dailyStepGoal);
+    let total = goals.reduce((sum, goal) => {
       return sum += goal;
     }, 0);
     return total / this.users.length;
@@ -30,9 +24,7 @@ class UserRepository {
 
   calculateAverageValue(date, recordType, measurement) {
     let allUsersTotal = this.users.map(user => {
-      return user[recordType].filter(activity => {
-        return activity.date === date;
-      });
+      return user[recordType].filter(activity => activity.date === date)
     })
     let totalSum = allUsersTotal.reduce((sum, activityCollection) => {
       activityCollection.forEach(activity => {
@@ -45,50 +37,14 @@ class UserRepository {
 
   calculateAverageSteps(date) {
     return this.calculateAverageValue(date, 'activityRecord', 'steps');
-    // let allUsersStepsCount = this.users.map(user => {
-    //   return user.activityRecord.filter(activity => {
-    //     return activity.date === date;
-    //   });
-    // })
-    // let sumOfSteps = allUsersStepsCount.reduce((stepsSum, activityCollection) => {
-    //   activityCollection.forEach(activity => {
-    //     stepsSum += activity.steps
-    //   })
-    //   return stepsSum;
-    // }, 0);
-    // return Math.round(sumOfSteps / allUsersStepsCount.length);
   }
 
   calculateAverageStairs(date) {
     return this.calculateAverageValue(date, 'activityRecord', 'flightsOfStairs');
-    // let allUsersStairsCount = this.users.map(user => {
-    //   return user.activityRecord.filter(activity => {
-    //     return activity.date === date;
-    //   });
-    // })
-    // let sumOfStairs = allUsersStairsCount.reduce((stairsSum, activityCollection) => {
-    //   activityCollection.forEach(activity => {
-    //     stairsSum += activity.flightsOfStairs
-    //   })
-    //   return stairsSum;
-    // }, 0);
-    // return Math.round(sumOfStairs / allUsersStairsCount.length);
   }
 
   calculateAverageMinutesActive(date) {
     return this.calculateAverageValue(date, 'activityRecord', 'minutesActive');
-    // let allUsersMinutesActiveCount = this.users.map(user => {
-    //   return user.activityRecord.filter(activity => {
-    //     return activity.date === date;
-    //   });
-    // })
-    // let sumOfMinutesActive = allUsersMinutesActiveCount.reduce((minutesActiveSum, activityCollection) => {
-    //   activityCollection.forEach(activity => {
-    //     minutesActiveSum += activity.minutesActive
-    //   })
-    //   return minutesActiveSum;
-    // }, 0);
-    // return Math.round(sumOfMinutesActive / allUsersMinutesActiveCount.length);
   }
 
   calculateAverageDailyWater(date) {
@@ -107,10 +63,9 @@ class UserRepository {
     })
   }
 
-  organizeSleepers(date) {
-    return sleepData.filter(sleep => {
-      return sleep.date === date;
-    }).sort((a, b) => {
+  organizeSleepers(date, sleepInfo) {
+    const sleepReport = sleepInfo.filter(sleep => sleep.date === date)
+    return sleepReport.sort((a, b) => {
       if (a.hoursSlept - b.hoursSlept < 0) {
         return -1
       } else if (a.hoursSlept - b.hoursSlept > 0) {
@@ -121,13 +76,13 @@ class UserRepository {
     })
   }
 
-  getLongestSleepers(date) {
-    const totalSleepers = this.organizeSleepers(date)
+  getLongestSleepers(date, sleepInfo) {
+    const totalSleepers = this.organizeSleepers(date, sleepInfo);
     return totalSleepers[totalSleepers.length - 1].userID;
   }
 
-  getWorstSleepers(date) {
-    const totalSleepers = this.organizeSleepers(date)
+  getWorstSleepers(date, sleepInfo) {
+    const totalSleepers = this.organizeSleepers(date, sleepInfo);
     return totalSleepers[0].userID;
   }
 }
