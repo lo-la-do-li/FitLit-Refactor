@@ -12,6 +12,10 @@ $font-stack: 'Oswald', sans-serif;
 $primary-background: #1F1F1F;
 $profile-button: 5.6vw;
 $margin-size: .5vw;
+$bright-orange: #F5634B;
+$aqua-blue: #54C6BE;
+$light-purple: #8975B2;
+$pale-yellow: #FBD089;
 
 body {
   background-color: $primary-background;
@@ -112,18 +116,19 @@ main {
   'stairs sleep';
   height: 100%;
 }
-
-.main-card {
+.card-display {
   align-items: center;
   display: flex;
+}
+.main-card {
+  @extend .card-display;
   flex-direction: column;
   height: 20vw;
   justify-content: center;
 }
 
 .main-card-top-row {
-  align-items: center;
-  display: flex;
+  @extend .card-display;
   justify-content: space-between;
   width: 100%;
 }
@@ -134,25 +139,25 @@ main {
 }
 
 #steps-card-container {
-  background-color: #F5634B;
+  background-color: $bright-orange;
   grid-area: steps;
   margin: $margin-size;
 }
 
 #hydration-card-container {
-  background-color: #54C6BE;
+  background-color: $aqua-blue;
   grid-area: hydration;
   margin: $margin-size;
 }
 
 #stairs-card-container {
-  background-color: #8975B2;
+  background-color: $light-purple;
   grid-area: stairs;
   margin: $margin-size;
 }
 
 #sleep-card-container {
-  background-color: #FBD089;
+  background-color: $pale-yellow;
   grid-area: sleep;
   margin: $margin-size;
 }
@@ -194,96 +199,99 @@ main {
     margin-left: 1vw;
     width: 3.4vw;
 }
-.info-button {
-  @include button-styles();
-}
-
-.friends-button {
-  @include button-styles();
-}
-
-.calendar-button {
-  @include button-styles();
-}
-
-.trending-button {
-  @include button-styles();
-}
-
-.go-back-button {
-  @include button-styles();
-}
 
 .steps-go-back-button {
+  @include button-styles();
   background-image: url(../images/steps-goback.png);
 }
 
 .steps-info-button {
+  @include button-styles();
   background-image: url(../images/steps-info.png);
 }
 
 .steps-friends-button {
+  @include button-styles()
   background-image: url(../images/steps-friends.png);
 }
 
 .steps-calendar-button {
+  float: right;
+  @include button-styles();
   background-image: url(../images/steps-calendar.png);
 }
 
 .hydration-go-back-button {
+  @include button-styles();
   background-image: url(../images/hydration-goback.png);
 }
 
 .hydration-info-button {
+  @include button-styles();
   background-image: url(../images/hydration-info.png);
 }
 
 .hydration-friends-button {
+  @include button-styles();
   background-image: url(../images/hydration-friends.png);
 }
 
 .hydration-calendar-button {
+  float: right;
+  @include button-styles();
   background-image: url(../images/hydration-calendar.png);
 }
 
 .stairs-go-back-button {
+  @include button-styles();
   background-image: url(../images/stairs-goback.png);
 }
 
 .stairs-info-button {
+  @include button-styles();
   background-image: url(../images/stairs-info.png);
 }
 
 .stairs-friends-button {
+  @include button-styles();
   background-image: url(../images/stairs-friends.png);
 }
 
 .stairs-calendar-button {
+  float: right;
+  @include button-styles();
   background-image: url(../images/stairs-calendar.png);
 }
 
 .sleep-go-back-button {
+  @include button-styles();
   background-image: url(../images/sleep-goback.png);
 }
 
 .sleep-info-button {
+  @include button-styles();
   background-image: url(../images/sleep-info.png);
 }
 
 .sleep-friends-button {
+  @include button-styles();
   background-image: url(../images/sleep-friends.png);
 }
 
 .sleep-calendar-button {
+  float: right;
+  @include button-styles();
   background-image: url(../images/sleep-calendar.png);
 }
 
 
 .steps-trending-button {
+  @include button-styles();
   background-image: url(../images/steps-trending.png);
 }
 
 .stairs-trending-button {
+  @include button-styles();
   background-image: url(../images/stairs-trending.png);
 }
 
@@ -292,12 +300,12 @@ main {
   display: none;
 }
 
-.green-text {
-  color: green;
+.teal-text {
+  color: #00FFFF;
 }
 
-.red-text {
-  color: red;
+.orange-text {
+  color: #FF8C00;
 }
 
 .yellow-text {
