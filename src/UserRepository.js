@@ -1,100 +1,89 @@
-import sleepData from './data/sleep';
-
 class UserRepository {
   constructor() {
     this.users = [];
   }
+
   getUser(id) {
-    return this.users.find(function(user) {
-      return user.id === id;
-    })
+    return this.users.find(user => user.id === id)
   }
+
   calculateAverageStepGoal() {
-    let goals = this.users.map(function(user) {
-      return user.dailyStepGoal;
-    });
-    let total = goals.reduce(function(sum, goal) {
-      sum += goal;
-      return sum;
+    let goals = this.users.map(user => user.dailyStepGoal);
+    let total = goals.reduce((sum, goal) => {
+      return sum += goal;
     }, 0);
     return total / this.users.length;
   }
+
   calculateAverageSleepQuality() {
     let totalSleepQuality = this.users.reduce((sum, user) => {
-      sum += user.sleepQualityAverage;
-      return sum;
+      return sum += user.sleepQualityAverage;
     }, 0);
     return totalSleepQuality / this.users.length;
   }
+
+  calculateAverageValue(date, recordType, measurement) {
+    let allUsersTotal = this.users.map(user => {
+      return user[recordType].filter(activity => activity.date === date)
+    })
+    let totalSum = allUsersTotal.reduce((sum, activityCollection) => {
+      activityCollection.forEach(activity => {
+        sum += activity[measurement]
+      })
+      return sum;
+    }, 0);
+    return Math.round(totalSum / allUsersTotal.length);
+  }
+
   calculateAverageSteps(date) {
-    let allUsersStepsCount = this.users.map(user => {
-      return user.activityRecord.filter(activity => {
-        return activity.date === date;
-      });
-    })
-    let sumOfSteps = allUsersStepsCount.reduce((stepsSum, activityCollection) => {
-      activityCollection.forEach(activity => {
-        stepsSum += activity.steps
-      })
-      return stepsSum;
-    }, 0);
-    return Math.round(sumOfSteps / allUsersStepsCount.length);
+    return this.calculateAverageValue(date, 'activityRecord', 'steps');
   }
+
   calculateAverageStairs(date) {
-    let allUsersStairsCount = this.users.map(user => {
-      return user.activityRecord.filter(activity => {
-        return activity.date === date;
-      });
-    })
-    let sumOfStairs = allUsersStairsCount.reduce((stairsSum, activityCollection) => {
-      activityCollection.forEach(activity => {
-        stairsSum += activity.flightsOfStairs
-      })
-      return stairsSum;
-    }, 0);
-    return Math.round(sumOfStairs / allUsersStairsCount.length);
+    return this.calculateAverageValue(date, 'activityRecord', 'flightsOfStairs');
   }
+
   calculateAverageMinutesActive(date) {
-    let allUsersMinutesActiveCount = this.users.map(user => {
-      return user.activityRecord.filter(activity => {
-        return activity.date === date;
-      });
-    })
-    let sumOfMinutesActive = allUsersMinutesActiveCount.reduce((minutesActiveSum, activityCollection) => {
-      activityCollection.forEach(activity => {
-        minutesActiveSum += activity.minutesActive
-      })
-      return minutesActiveSum;
-    }, 0);
-    return Math.round(sumOfMinutesActive / allUsersMinutesActiveCount.length);
+    return this.calculateAverageValue(date, 'activityRecord', 'minutesActive');
   }
+
   calculateAverageDailyWater(date) {
     let todaysDrinkers = this.users.filter(user => {
-      return user.addDailyOunces(date) > 0;
+      return user.returnTotalDailyOunces(date) > 0;
     });
     let sumDrankOnDate = todaysDrinkers.reduce((sum, drinker) => {
-      return sum += drinker.addDailyOunces(date);
+      return sum += drinker.returnTotalDailyOunces(date);
     }, 0)
     return Math.floor(sumDrankOnDate / todaysDrinkers.length);
   }
+
   findBestSleepers(date) {
     return this.users.filter(user => {
-      return user.calculateAverageQualityThisWeek(date) > 3;
+      return user.calculateAverageSleptQualityThisWeek(date) > 3;
     })
   }
-  getLongestSleepers(date) {
-    return sleepData.filter(sleep => {
-      return sleep.date === date;
-    }).sort((a, b) => {
-      return b.hoursSlept - a.hoursSlept;
-    })[0].userID;
+
+  organizeSleepers(date, sleepInfo) {
+    const sleepReport = sleepInfo.filter(sleep => sleep.date === date)
+    return sleepReport.sort((a, b) => {
+      if (a.hoursSlept - b.hoursSlept < 0) {
+        return -1
+      } else if (a.hoursSlept - b.hoursSlept > 0) {
+        return 1
+      } else {
+        return 0
+      }
+    })
   }
-  getWorstSleepers(date) {
-    return sleepData.filter(sleep => {
-      return sleep.date === date;
-    }).sort((a, b) => {
-      return a.hoursSlept - b.hoursSlept;
-    })[0].userID;
+
+  getLongestSleepers(date, sleepInfo) {
+    const totalSleepers = this.organizeSleepers(date, sleepInfo);
+    return totalSleepers[totalSleepers.length - 1].userID;
+  }
+
+  getWorstSleepers(date, sleepInfo) {
+    const totalSleepers = this.organizeSleepers(date, sleepInfo);
+    return totalSleepers[0].userID;
   }
 }
 

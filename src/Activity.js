@@ -9,22 +9,23 @@ class Activity {
     this.reachedStepGoal = null;
     this.doActivity(userRepository);
   }
-  doActivity(userRepo) {
-    var activity = this;
-    userRepo.users.find(function(user) {
-      return user.id === activity.userId;
-    }).updateActivities(this);
+
+  returnChosenUser(userRepository) {
+    return userRepository.users.find(user => user.id === this.userId)
   }
+
+  doActivity(userRepository) {
+    const chosenUser = this.returnChosenUser(userRepository);
+    chosenUser.updateActivities(this);
+  }
+
   calculateMiles(userRepository) {
-    let walkingUser = userRepository.users.find(user => {
-      return user.id === this.userId;
-    });
+    const walkingUser = this.returnChosenUser(userRepository);
     return Math.round(this.steps * walkingUser.strideLength / 5280).toFixed(1);
   }
+
   compareStepGoal(userRepository) {
-    let userStepGoal = userRepository.users.find(user => {
-      return user.id === this.userId;
-    }).dailyStepGoal;
+    let userStepGoal = this.returnChosenUser(userRepository).dailyStepGoal;
     this.reachedStepGoal = this.steps >= userStepGoal;
   }
 }

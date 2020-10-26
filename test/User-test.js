@@ -80,19 +80,22 @@ describe('User', function() {
   it('getFirstName should return the first name of the user', function () {
     expect(user.getFirstName()).to.equal('LUISA');
   });
-  it('addDailyOunces should show the last week of water', function() {
+  it('returnTotalDailyOunces should show the last week of water', function() {
     user.ouncesRecord = [
       {"2019/06/15": 1},
       {"2019/06/15": 1},
       {"2019/06/16": 4}
     ]
-    expect(user.addDailyOunces("2019/06/15")).to.equal(2);
+    expect(user.returnTotalDailyOunces("2019/06/15")).to.equal(2);
   });
   describe('updateSleep', function() {
     beforeEach(() => {
-      user.updateSleep("2019/06/15", 7, 4.7);
-      user.updateSleep("2019/07/14", 6, 4);
-      user.updateSleep("2019/08/04", 8, 5.4);
+      user.updateSleepHours("2019/06/15", 7);
+      user.updateSleepHours("2019/07/14", 6);
+      user.updateSleepHours("2019/08/04", 8);
+      user.updateSleepQuality("2019/06/15", 4.7);
+      user.updateSleepQuality("2019/07/14", 4);
+      user.updateSleepQuality("2019/08/04", 5.4);
     })
     it('should update user\'s quality of sleep record', function() {
       expect(user.sleepQualityRecord.length).to.equal(3);
@@ -106,14 +109,15 @@ describe('User', function() {
   })
   it('calculateAverageHoursThisWeek should calculate average sleep hours for week before given date', function() {
     user.sleepHoursRecord = [{date: "2019/09/22", hours: 9.6}, {date: "2019/09/21", hours: 8.2}, {date: "2019/09/20", hours: 9.9}, {date: "2019/09/19", hours: 4.2}, {date: "2019/09/18", hours: 9.5}, {date: "2019/09/17", hours: 7.8}, {date: "2019/09/16", hours: 10.2}, {date: "2019/09/15", hours: 5.7}, {date: "2019/09/14", hours: 8.8}, {date: "2019/09/13", hours: 4.6}, {date: "2019/09/12", hours: 5.3}];
-    expect(user.calculateAverageHoursThisWeek('2019/09/21')).to.equal('7.9');
+    const result = user.calculateAverageSleptHoursThisWeek('2019/09/21')
+    expect(result).to.equal('7.9');
   });
   it('calculateAverageQualityThisWeek should calculate average quality of sleep for week before a given date', function() {
     user.sleepQualityRecord = [{date: "2019/09/22", quality: 9.6}, {date: "2019/09/21", quality: 8.2}, {date: "2019/09/20", quality: 9.9}, {date: "2019/09/19", quality: 4.2}, {date: "2019/09/18", quality: 9.5}, {date: "2019/09/17", quality: 7.8}, {date: "2019/09/16", quality: 10.2}, {date: "2019/09/15", quality: 5.7}, {date: "2019/09/14", quality: 8.8}, {date: "2019/09/13", quality: 4.6}, {date: "2019/09/12", quality: 5.3}];
-    expect(user.calculateAverageQualityThisWeek('2019/09/22')).to.equal('8.5')
+    expect(user.calculateAverageSleptQualityThisWeek('2019/09/22')).to.equal('8.5')
   });
   it('should have a method that return the highest climbing record', function() {
-    user.activityRecord = [{flightsOfStairs: 10}, {flightsOfStairs: 15}, {flightsOfStairs: 17}]
+    user.activityRecord = [{flightsOfStairs: 17}, {flightsOfStairs: 10}, {flightsOfStairs: 15}]
     expect(user.findClimbingRecord()).to.equal(17)
   });
   it('should have a method that calculates daily calories burned', function() {
@@ -221,15 +225,15 @@ describe('User', function() {
   it('findFriendsTotalStepsForWeek should find friends\' total steps', function() {
     let user2 = new User({
       'id': 16,
-      'name': 'Ben Nist',
+      'name': ['Ben', 'Nist'],
     })
     let user3 = new User({
       'id': 4,
-      'name': 'John Firth',
+      'name': ['John', 'Firth'],
     })
     let user4 = new User({
       'id': 8,
-      'name': 'Nick Adams',
+      'name': ['Nick', 'Adams'],
     })
     user2.activityRecord = [{
     "date": "2019/06/29", "steps": 25},
@@ -272,6 +276,6 @@ describe('User', function() {
     {"date": "2019/06/18", "steps": 10}];
     let users = [user2, user3, user4];
     user.findFriendsTotalStepsForWeek(users, '2019/06/29');
-    expect(user.friendsActivityRecords).to.deep.equal([{"id": 4, "totalWeeklySteps": 734}, {"id": 16, "totalWeeklySteps": 248}, {"id": 8, "totalWeeklySteps": 34}]);
+    expect(user.friendsActivityRecords).to.deep.equal([{"id": 4, "firstName": "JOHN", "totalWeeklySteps": 734}, {"id": 16, "firstName": "BEN", "totalWeeklySteps": 248}, {"id": 8, "firstName": "NICK", "totalWeeklySteps": 34}]);
   });
 });

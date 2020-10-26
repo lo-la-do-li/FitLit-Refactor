@@ -5,13 +5,7 @@ import UserRepository from '../src/UserRepository';
 import User from '../src/User';
 
 describe('Hydration', function() {
-  let hydration;
-  let user1;
-  let user2;
-  let userRepository;
-  let hydrate1;
-  let hydrate2;
-  let hydrate3;
+  let user1, user2, userRepository, hydrate1, hydrate2, hydrate3;
 
   beforeEach(() => {
     user1 = new User({
