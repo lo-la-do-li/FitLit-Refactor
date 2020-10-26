@@ -16,16 +16,14 @@ class UserRepository {
       return user.dailyStepGoal;
     });
     let total = goals.reduce(function(sum, goal) {
-      sum += goal;
-      return sum;
+      return sum += goal;
     }, 0);
     return total / this.users.length;
   }
 
   calculateAverageSleepQuality() {
     let totalSleepQuality = this.users.reduce((sum, user) => {
-      sum += user.sleepQualityAverage;
-      return sum;
+      return sum += user.sleepQualityAverage;
     }, 0);
     return totalSleepQuality / this.users.length;
   }
@@ -36,13 +34,13 @@ class UserRepository {
         return activity.date === date;
       });
     })
-    let sumOfSteps = allUsersTotal.reduce((stepsSum, activityCollection) => {
+    let totalSum = allUsersTotal.reduce((sum, activityCollection) => {
       activityCollection.forEach(activity => {
-        stepsSum += activity[measurement]
+        sum += activity[measurement]
       })
-      return stepsSum;
+      return sum;
     }, 0);
-    return Math.round(sumOfSteps / allUsersTotal.length);
+    return Math.round(totalSum / allUsersTotal.length);
   }
 
   calculateAverageSteps(date) {
@@ -95,33 +93,42 @@ class UserRepository {
 
   calculateAverageDailyWater(date) {
     let todaysDrinkers = this.users.filter(user => {
-      return user.addDailyOunces(date) > 0;
+      return user.returnTotalDailyOunces(date) > 0;
     });
     let sumDrankOnDate = todaysDrinkers.reduce((sum, drinker) => {
-      return sum += drinker.addDailyOunces(date);
+      return sum += drinker.returnTotalDailyOunces(date);
     }, 0)
     return Math.floor(sumDrankOnDate / todaysDrinkers.length);
   }
 
   findBestSleepers(date) {
     return this.users.filter(user => {
-      return user.calculateAverageQualityThisWeek(date) > 3;
+      return user.calculateAverageSleptQualityThisWeek(date) > 3;
+    })
+  }
+
+  organizeSleepers(date) {
+    return sleepData.filter(sleep => {
+      return sleep.date === date;
+    }).sort((a, b) => {
+      if (a.hoursSlept - b.hoursSlept < 0) {
+        return -1
+      } else if (a.hoursSlept - b.hoursSlept > 0) {
+        return 1
+      } else {
+        return 0
+      }
     })
   }
 
   getLongestSleepers(date) {
-    return sleepData.filter(sleep => {
-      return sleep.date === date;
-    }).sort((a, b) => {
-      return b.hoursSlept - a.hoursSlept;
-    })[0].userID;
+    const totalSleepers = this.organizeSleepers(date)
+    return totalSleepers[totalSleepers.length - 1].userID;
   }
+
   getWorstSleepers(date) {
-    return sleepData.filter(sleep => {
-      return sleep.date === date;
-    }).sort((a, b) => {
-      return a.hoursSlept - b.hoursSlept;
-    })[0].userID;
+    const totalSleepers = this.organizeSleepers(date)
+    return totalSleepers[0].userID;
   }
 }
 
