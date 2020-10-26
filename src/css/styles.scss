@@ -8,9 +8,14 @@ margin: 0;
 padding: 0;
 }
 
+$font-stack: 'Oswald', sans-serif;
+$primary-background: #1F1F1F;
+$profile-button: 5.6vw;
+$margin-size: .5vw;
+
 body {
-  background-color: #1F1F1F;
-  font-family: 'Oswald', sans-serif;
+  background-color: $primary-background;
+  font-family: $font-stack;
 }
 
 /* HEADER */
@@ -27,18 +32,18 @@ button:active {
 #profile-button {
   background-image: url(../images/profile.png);
   background-position: center;
-  background-size: 5.6vw;
+  background-size: $profile-button;
   border: none;
   display: inline;
   float: right;
-  height: 5.6vw;
-  margin-right: .5vw;
+  height: $profile-button;
+  margin-right: $margin-size;
   margin-top: 1.6vw;
-  width: 5.6vw;
+  width: $profile-button;
 }
 
 #user-info-dropdown {
-  background-color: #1F1F1F;
+  background-color: $primary-background;
   color: white;
   margin-left: 60%;
   margin-top: -1.2%;
@@ -131,25 +136,25 @@ main {
 #steps-card-container {
   background-color: #F5634B;
   grid-area: steps;
-  margin: .5vw;
+  margin: $margin-size;
 }
 
 #hydration-card-container {
   background-color: #54C6BE;
   grid-area: hydration;
-  margin: .5vw;
+  margin: $margin-size;
 }
 
 #stairs-card-container {
   background-color: #8975B2;
   grid-area: stairs;
-  margin: .5vw;
+  margin: $margin-size;
 }
 
 #sleep-card-container {
   background-color: #FBD089;
   grid-area: sleep;
-  margin: .5vw;
+  margin: $margin-size;
 }
 
 .card-data-line {
@@ -180,53 +185,33 @@ main {
 }
 
 /* BUTTONS */
+@mixin button-styles() {
+    background-position: center;
+    background-size: 3.4vw;
+    border: none;
+    display: inline;
+    height: 3.4vw;
+    margin-left: 1vw;
+    width: 3.4vw;
+}
 .info-button {
-  background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  display: inline;
-  height: 3.4vw;
-  margin-left: 1vw;
-  width: 3.4vw;
+  @include button-styles();
 }
 
 .friends-button {
-  background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  display: inline;
-  height: 3.4vw;
-  margin-right: 1vw;
-  width: 3.4vw;
+  @include button-styles();
 }
 
 .calendar-button {
-  background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  display: inline;
-  float: right;
-  height: 3.4vw;
-  margin-right: 1vw;
-  width: 3.4vw;
+  @include button-styles();
 }
 
 .trending-button {
-  background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  height: 3.4vw;
-  margin-left: 1vw;
-  width: 3.4vw;
+  @include button-styles();
 }
 
 .go-back-button {
-  background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  height: 3.4vw;
-  margin-left: 1vw;
-  width: 3.4vw;
+  @include button-styles();
 }
 
 .steps-go-back-button {
