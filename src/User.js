@@ -59,7 +59,7 @@
     }, 0)
     const averageValue = totalValue / sleepInfo.recordType.length;
     const finalAverage = sleepInfo.recordType.length ? averageValue : recordData
-    return this[property] = finalAverage;
+    return this[property] = finalAverage.toFixed(1);
   }
 
   updateSleepHours(date, hours) {
@@ -177,7 +177,7 @@
       this.friendsActivityRecords.push(
         {
           'id': matchedFriend.id,
-          'firstName': matchedFriend.name.toUpperCase().split(' ')[0],
+          'firstName': matchedFriend.name[0].toUpperCase(),
           'totalWeeklySteps': matchedFriend.totalStepsThisWeek
         });
     })
