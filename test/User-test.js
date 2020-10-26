@@ -101,10 +101,10 @@ describe('User', function() {
       expect(user.sleepQualityRecord.length).to.equal(3);
     });
     it('should update user\'s average hours of sleep', function() {
-      expect(user.hoursSleptAverage).to.equal(7.0);
+      expect(user.hoursSleptAverage).to.equal('7.0');
     });
     it('should update user\'s average quality of sleep', function() {
-      expect(user.sleepQualityAverage).to.equal(4.7);
+      expect(user.sleepQualityAverage).to.equal('4.7');
     });
   })
   it('calculateAverageHoursThisWeek should calculate average sleep hours for week before given date', function() {
@@ -225,15 +225,15 @@ describe('User', function() {
   it('findFriendsTotalStepsForWeek should find friends\' total steps', function() {
     let user2 = new User({
       'id': 16,
-      'name': 'Ben Nist',
+      'name': ['Ben', 'Nist'],
     })
     let user3 = new User({
       'id': 4,
-      'name': 'John Firth',
+      'name': ['John', 'Firth'],
     })
     let user4 = new User({
       'id': 8,
-      'name': 'Nick Adams',
+      'name': ['Nick', 'Adams'],
     })
     user2.activityRecord = [{
     "date": "2019/06/29", "steps": 25},

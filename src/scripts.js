@@ -185,7 +185,7 @@ function updateTrendingStepDays() {
 }
 
 for (var i = 0; i < dailyOz.length; i++) {
-  dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
+  dailyOz[i].innerText = user.returnTotalDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
 }
 
 dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
@@ -206,16 +206,16 @@ hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
   return hydration.userID === user.id && hydration.date === todayDate;
 }).numOunces / 8;
 
-sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageHoursThisWeek(todayDate);
+sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageSleptHoursThisWeek(todayDate);
 
-sleepCalendarQualityAverageWeekly.innerText = user.calculateAverageQualityThisWeek(todayDate);
+sleepCalendarQualityAverageWeekly.innerText = user.calculateAverageSleptQualityThisWeek(todayDate);
 
 sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
-  return user.id === userRepository.getLongestSleepers(todayDate)
+  return user.id === userRepository.getLongestSleepers(todayDate, sleepData)
 }).getFirstName();
 
 sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
-  return user.id === userRepository.getWorstSleepers(todayDate)
+  return user.id === userRepository.getWorstSleepers(todayDate, sleepData)
 }).getFirstName();
 
 sleepInfoHoursAverageAlltime.innerText = user.hoursSleptAverage;
