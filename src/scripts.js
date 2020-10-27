@@ -139,6 +139,8 @@ function showDropdown() {
   <section id='dropdown-friends-steps-container'>
   ${displayFriendsSteps()}</section>
   `
+  let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
+  updateDropdowTextColor(friendsStepsParagraphs);
 }
 
 function displayFriendsSteps() {
@@ -150,6 +152,20 @@ function displayFriendsSteps() {
     `
   });
   return element;
+}
+
+function updateDropdowTextColor(element) {
+  element.forEach(paragraph => {
+    if (element[0] === paragraph) {  
+      paragraph.classList.add('teal-text');
+    }
+    if (element[element.length - 1] === paragraph) {
+      paragraph.classList.add('orange-text');
+    }
+    if (paragraph.innerText.includes('YOU')) {
+      paragraph.classList.add('yellow-text');
+    }
+  });
 }
 
 function showInfo() {
@@ -227,10 +243,6 @@ function displayDailyOunces() {
       dailyOz[index].innerText = user.returnTotalDailyOunces(record.date)
     }
   })
-}
-
-function displayStepsCard() {
-
 }
 
 headerName.innerText = `${user.getFirstName()}'S `;
@@ -320,17 +332,3 @@ stepsUserStepsToday.innerText = activityData.find(activity => {
 }).numSteps;
 
 user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
-
-let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
-
-friendsStepsParagraphs.forEach(paragraph => {
-  if (friendsStepsParagraphs[0] === paragraph) {
-    paragraph.classList.add('teal-text');
-  }
-  if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
-    paragraph.classList.add('orange-text');
-  }
-  if (paragraph.innerText.includes('YOU')) {
-    paragraph.classList.add('yellow-text');
-  }
-});
