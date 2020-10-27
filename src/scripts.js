@@ -15,20 +15,15 @@ import Sleep from './Sleep';
 
 
 //Instances of classes
-let userRepository = new UserRepository();
-userRepository.users = userData.map(data => new User(data))
 
-activityData.forEach(activity => {
-  activity = new Activity(activity, userRepository);
-});
+const users = userData.map(user => new User(user));
+let userRepository = new UserRepository(users);
 
-hydrationData.forEach(hydration => {
-  hydration = new Hydration(hydration, userRepository);
-});
+const activityInstances = activityData.map(data => new Activity(data, userRepository));
 
-sleepData.forEach(sleep => {
-  sleep = new Sleep(sleep, userRepository);
-});
+const hydrationInstances = hydrationData.map(data => new Hydration(data, userRepository));
+
+const sleepInstances = sleepData.map(data => new Sleep(data, userRepository));
 
 let user = userRepository.users[0];
 let todayDate = "2019/09/22";
@@ -247,26 +242,26 @@ function displayDailyOunces() {
 
 headerName.innerText = `${user.getFirstName()}'S `;
 
-hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
-  return hydration.userID === user.id && hydration.date === todayDate;
-}).numOunces;
+hydrationUserOuncesToday.innerText = hydrationInstances.find(hydration => {
+  return hydration.userId === user.id && hydration.date === todayDate;
+}).ounces;
 
 hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
 
-hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
-  return hydration.userID === user.id && hydration.date === todayDate;
-}).numOunces / 8;
+hydrationInfoGlassesToday.innerText = hydrationInstances.find(hydration => {
+  return hydration.userId === user.id && hydration.date === todayDate;
+}).ounces / 8;
 
 sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageSleptHoursThisWeek(todayDate);
 
 sleepCalendarQualityAverageWeekly.innerText = user.calculateAverageSleptQualityThisWeek(todayDate);
 
 sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
-  return user.id === userRepository.getLongestSleepers(todayDate, sleepData)
+  return user.id === userRepository.getLongestSleepers(todayDate, sleepInstances)
 }).getFirstName();
 
 sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
-  return user.id === userRepository.getWorstSleepers(todayDate, sleepData)
+  return user.id === userRepository.getWorstSleepers(todayDate, sleepInstances)
 }).getFirstName();
 
 sleepInfoHoursAverageAlltime.innerText = user.hoursSleptAverage;
@@ -277,12 +272,12 @@ stepsInfoMilesWalkedToday.innerText = user.activityRecord.find(activity => {
 
 sleepInfoQualityAverageAlltime.innerText = user.sleepQualityAverage;
 
-sleepInfoQualityToday.innerText = sleepData.find(sleep => {
-  return sleep.userID === user.id && sleep.date === todayDate;
+sleepInfoQualityToday.innerText = sleepInstances.find(sleep => {
+  return sleep.userId === user.id && sleep.date === todayDate;
 }).sleepQuality;
 
-sleepUserHoursToday.innerText = sleepData.find(sleep => {
-  return sleep.userID === user.id && sleep.date === todayDate;
+sleepUserHoursToday.innerText = sleepInstances.find(sleep => {
+  return sleep.userId === user.id && sleep.date === todayDate;
 }).hoursSlept;
 
 stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
@@ -291,12 +286,12 @@ stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisW
 
 stairsFriendFlightsAverageToday.innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
 
-stairsInfoFlightsToday.innerText = activityData.find(activity => {
-  return activity.userID === user.id && activity.date === todayDate;
+stairsInfoFlightsToday.innerText = activityInstances.find(activity => {
+  return activity.userId === user.id && activity.date === todayDate;
 }).flightsOfStairs;
 
-stairsUserStairsToday.innerText = activityData.find(activity => {
-  return activity.userID === user.id && activity.date === todayDate;
+stairsUserStairsToday.innerText = activityInstances.find(activity => {
+  return activity.userId === user.id && activity.date === todayDate;
 }).flightsOfStairs * 12;
 
 stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
@@ -323,12 +318,12 @@ stepsFriendAverageStepGoal.innerText = `${userRepository.calculateAverageStepGoa
 
 stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
 
-stepsInfoActiveMinutesToday.innerText = activityData.find(activity => {
-  return activity.userID === user.id && activity.date === todayDate;
+stepsInfoActiveMinutesToday.innerText = activityInstances.find(activity => {
+  return activity.userId === user.id && activity.date === todayDate;
 }).minutesActive;
 
-stepsUserStepsToday.innerText = activityData.find(activity => {
-  return activity.userID === user.id && activity.date === todayDate;
-}).numSteps;
+stepsUserStepsToday.innerText = activityInstances.find(activity => {
+  return activity.userId === user.id && activity.date === todayDate;
+}).steps;
 
 user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);

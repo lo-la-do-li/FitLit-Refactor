@@ -1,6 +1,6 @@
 class UserRepository {
-  constructor() {
-    this.users = [];
+  constructor(users) {
+    this.users = users || [];
   }
 
   getUser(id) {
@@ -78,12 +78,12 @@ class UserRepository {
 
   getLongestSleepers(date, sleepInfo) {
     const totalSleepers = this.organizeSleepers(date, sleepInfo);
-    return totalSleepers[totalSleepers.length - 1].userID;
+    return totalSleepers[totalSleepers.length - 1].userId;
   }
 
   getWorstSleepers(date, sleepInfo) {
     const totalSleepers = this.organizeSleepers(date, sleepInfo);
-    return totalSleepers[0].userID;
+    return totalSleepers[0].userId;
   }
 }
 
