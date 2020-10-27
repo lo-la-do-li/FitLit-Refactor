@@ -128,6 +128,28 @@ function flipCard(cardToHide, cardToShow) {
 
 function showDropdown() {
   userInfoDropdown.classList.toggle('hide');
+  userInfoDropdown.innerHTML = '';
+  userInfoDropdown.innerHTML = 
+  `
+  <h5 id='dropdown-name'>${user.name[0].toUpperCase()}</h5>
+  <p class='dropdown-p' id='dropdown-email'> EMAIL | ${user.email}</p>
+  <p class='dropdown-p' id='dropdown-goal'> DAILY STEP GOAL | ${user.dailyStepGoal}</p>
+  <br/>
+  <p class='dropdown-p' id='dropdown-friends'>FRIENDS TOTAL STEPS THIS WEEK</p>
+  <section id='dropdown-friends-steps-container'>
+  ${displayFriendsSteps()}</section>
+  `
+}
+
+function displayFriendsSteps() {
+  let element = '';
+  user.friendsActivityRecords.forEach(friend => {   
+    element +=
+    `
+    <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
+    `
+  });
+  return element;
 }
 
 function showInfo() {
@@ -207,11 +229,9 @@ function displayDailyOunces() {
   })
 }
 
-dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
+function displayStepsCard() {
 
-dropdownEmail.innerText = `EMAIL | ${user.email}`;
-
-dropdownName.innerText = user.name.toUpperCase();
+}
 
 headerName.innerText = `${user.getFirstName()}'S `;
 
@@ -300,12 +320,6 @@ stepsUserStepsToday.innerText = activityData.find(activity => {
 }).numSteps;
 
 user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
-
-user.friendsActivityRecords.forEach(friend => {
-  dropdownFriendsStepsContainer.innerHTML += `
-  <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
-  `;
-});
 
 let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
 
