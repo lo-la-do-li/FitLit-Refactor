@@ -8,14 +8,15 @@ margin: 0;
 padding: 0;
 }
 
-$font-stack: 'Oswald', sans-serif;
-$primary-background: #1F1F1F;
-$profile-button: 5.6vw;
-$margin-size: .5vw;
-$bright-orange: #F5634B;
-$aqua-blue: #54C6BE;
-$light-purple: #8975B2;
-$pale-yellow: #FBD089;
+@import 'variables';
+// $font-stack: 'Oswald', sans-serif;
+// $primary-background: #1F1F1F;
+// $profile-button: 5.6vw;
+// $margin-size: .5vw;
+// $bright-orange: #F5634B;
+// $aqua-blue: #54C6BE;
+// $light-purple: #8975B2;
+// $pale-yellow: #FBD089;
 
 body {
   background-color: $primary-background;
@@ -187,17 +188,6 @@ main {
   font-size: 2vw;
   text-align: center;
   width: 20vw;
-}
-
-/* BUTTONS */
-@mixin button-styles() {
-    background-position: center;
-    background-size: 3.4vw;
-    border: none;
-    display: inline;
-    height: 3.4vw;
-    margin-left: 1vw;
-    width: 3.4vw;
 }
 
 .steps-go-back-button {
