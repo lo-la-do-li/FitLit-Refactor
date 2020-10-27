@@ -27,7 +27,7 @@
   }
   // Should be in Hydration.js?
   updateHydration(date, amount) {
-    this.ouncesRecord.unshift({[date]: amount});
+    this.ouncesRecord.unshift({date,amount});
     const recordLength = this.ouncesRecord.length;
     const currentTotal = this.ouncesAverage * (recordLength - 1);
     const currentAverage = (currentTotal + amount) / recordLength;
@@ -40,8 +40,8 @@
   //Move to Hydration.js, formerly addDailyOunces(date)
   returnTotalDailyOunces(date) {
     return this.ouncesRecord.reduce((totalOunces, record) => {
-      if (record[date]) {
-        totalOunces += record[date]
+      if (record.date === date) {
+        totalOunces += record.amount
       }
       return totalOunces
     }, 0)

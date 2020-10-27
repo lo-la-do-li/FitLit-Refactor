@@ -82,9 +82,9 @@ describe('User', function() {
   });
   it('returnTotalDailyOunces should show the last week of water', function() {
     user.ouncesRecord = [
-      {"2019/06/15": 1},
-      {"2019/06/15": 1},
-      {"2019/06/16": 4}
+      {date: "2019/06/15", amount: 1},
+      {date: "2019/06/15", amount: 1},
+      {date: "2019/06/16", amount: 4}
     ]
     expect(user.returnTotalDailyOunces("2019/06/15")).to.equal(2);
   });
