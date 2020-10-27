@@ -1,30 +1,29 @@
 class ApiCalls {
-  getUserData() {
-    return fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
+
+  getData(path) {
+    return fetch(path)
     .then(response => response.json())
     .catch(err => console.log(err))
+  }
+
+  getUserData() {
+    return this.getData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData');
   }
 
   getSleepData() {
-    return fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData')
-    .then(response => response.json())
-    .catch(err => console.log(err))
+    return this.getData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData');
   }
 
   getActivityData() {
-    return fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
-    .then(response => response.json())
-    .catch(err => console.log(err))
+    return this.getData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData');
   }
 
   getHydrationData() {
-    return fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData')
-    .then(response => response.json())
-    .catch(err => console.log(err))
+    return this.getData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData');
   }
 
-  addSleepData(data) {
-    return fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
+  addData(path, data) {
+    return fetch(path, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -35,29 +34,18 @@ class ApiCalls {
     .catch(err => console.log(err))
   }
 
-  addActivityData(data) {
-    return fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .catch(err => console.log(err))
+  addSleepData(sleepData) {
+    return this.addData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', sleepData);
   }
 
-  addHydrationData(data) {
-    return fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .catch(err => console.log(err))
+  addActivityData(activityData) {
+    return this.addData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', activityData);
   }
+
+  addHydrationData(hydrationData) {
+    return this.addData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', hydrationData);
+  }
+  
 }
 
 export default ApiCalls;
