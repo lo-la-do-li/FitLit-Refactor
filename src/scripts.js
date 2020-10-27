@@ -14,18 +14,9 @@ import Hydration from './Hydration';
 import Sleep from './Sleep';
 
 
-
+//Instances of classes
 let userRepository = new UserRepository();
-
 userRepository.users = userData.map(data => new User(data))
-// userData.forEach(user => {
-//   user = new User(user);
-//   userRepository.users.push(user)
-// });
-// userData.forEach(user => {
-//   user = new User(user);
-//   userRepository.users.push(user)
-// });
 
 activityData.forEach(activity => {
   activity = new Activity(activity, userRepository);
@@ -43,6 +34,17 @@ let user = userRepository.users[0];
 let todayDate = "2019/09/22";
 user.findFriendsNames(userRepository.users);
 
+let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {  
+  if (Object.values(a)[0] > Object.values(b)[0]) {
+    return -1;
+  }
+  if (Object.values(a)[0] < Object.values(b)[0]) {
+    return 1;
+  }
+  return 0;
+});
+
+//querySelectors
 let dailyOz = document.querySelectorAll('.daily-oz');
 let dropdownEmail = document.querySelector('#dropdown-email');
 let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
@@ -70,15 +72,6 @@ let sleepInfoQualityAverageAlltime = document.querySelector('#sleep-info-quality
 let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
 let sleepMainCard = document.querySelector('#sleep-main-card');
 let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
-let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
-  if (Object.keys(a)[0] > Object.keys(b)[0]) {
-    return -1;
-  }
-  if (Object.keys(a)[0] < Object.keys(b)[0]) {
-    return 1;
-  }
-  return 0;
-});
 let stairsCalendarCard = document.querySelector('#stairs-calendar-card');
 let stairsCalendarFlightsAverageWeekly = document.querySelector('#stairs-calendar-flights-average-weekly');
 let stairsCalendarStairsAverageWeekly = document.querySelector('#stairs-calendar-stairs-average-weekly');
@@ -108,10 +101,25 @@ let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phras
 let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
 let userInfoDropdown = document.querySelector('#user-info-dropdown');
 
+//eventListener
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
 stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
 stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
+
+//Functions
+
+//maybe for later
+// function changeHiddenProperty(elements) {
+//   elements.forEach(element => {
+//     if (element.addHidden) {
+//       elements.property.classList.add('hidden');
+//     } else {
+//       elements.property.classList.remove('hidden')
+//     }
+//   }) 
+// }
+
 
 function flipCard(cardToHide, cardToShow) {
   cardToHide.classList.add('hide');
@@ -143,6 +151,7 @@ function showInfo() {
   }
   if (event.target.classList.contains('hydration-calendar-button')) {
     flipCard(hydrationMainCard, hydrationCalendarCard);
+    displayDailyOunces();
   }
   if (event.target.classList.contains('stairs-info-button')) {
     flipCard(stairsMainCard, stairsInfoCard);
@@ -179,18 +188,23 @@ function showInfo() {
   }
 }
 
-function updateTrendingStairsDays() {
-  user.findTrendingStairsDays();
-  trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
-}
-
 function updateTrendingStepDays() {
   user.findTrendingStepDays();
   trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
 }
 
-for (var i = 0; i < dailyOz.length; i++) {
-  dailyOz[i].innerText = user.returnTotalDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
+function updateTrendingStairsDays() {
+  user.findTrendingStairsDays();
+  trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
+}
+
+function displayDailyOunces() {
+  user.ouncesRecord.forEach(record => {
+    let index = user.ouncesRecord.indexOf(record);
+    if (index < dailyOz.length) {
+      dailyOz[index].innerText = user.returnTotalDailyOunces(record.date)
+    }
+  })
 }
 
 dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
