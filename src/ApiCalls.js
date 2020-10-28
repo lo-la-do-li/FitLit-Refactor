@@ -1,51 +1,51 @@
-class ApiCalls {
+const getData = (path) => {
+  return fetch(path)
+  .then(response => response.json())
+  .catch(err => console.log(err))
+}
 
-  getData(path) {
-    return fetch(path)
-    .then(response => response.json())
-    .catch(err => console.log(err))
-  }
+const addData = (path, data) => {
+  return fetch(path, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .catch(err => console.log(err))
+}
 
-  getUserData() {
-    return this.getData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData');
-  }
+const apiCalls = {
 
-  getSleepData() {
-    return this.getData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData');
-  }
+  getUserData: () => {
+    return getData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData');
+  },
 
-  getActivityData() {
-    return this.getData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData');
-  }
+  getSleepData: () => {
+    return getData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData');
+  },
 
-  getHydrationData() {
-    return this.getData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData');
-  }
+  getActivityData: () => {
+    return getData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData');
+  },
 
-  addData(path, data) {
-    return fetch(path, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .catch(err => console.log(err))
-  }
+  getHydrationData: () => {
+    return getData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData');
+  },
 
-  addSleepData(sleepData) {
-    return this.addData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', sleepData);
-  }
+  addSleepData: (sleepData) => {
+    return addData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', sleepData);
+  },
 
-  addActivityData(activityData) {
-    return this.addData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', activityData);
-  }
+  addActivityData: (activityData) => {
+    return addData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', activityData);
+  },
 
-  addHydrationData(hydrationData) {
-    return this.addData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', hydrationData);
+  addHydrationData: (hydrationData) => {
+    return addData('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', hydrationData);
   }
   
 }
 
-export default ApiCalls;
+export default apiCalls;
