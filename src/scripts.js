@@ -100,7 +100,7 @@ let userInfoDropdown = document.querySelector('#user-info-dropdown');
 //eventListener
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
-stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
+// stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
 
 //Functions
 
@@ -237,9 +237,10 @@ function showStairsInfo() {
     displayFriendsStairsSection();
   } else if (event.target.classList.contains('stairs-trending-button')) {
     flipCard(stairsMainCard, stairsTrendingCard);
-
+    displayTrendingStairsSection();
   } else if (event.target.classList.contains('stairs-calendar-button')) {
     flipCard(stairsMainCard, stairsCalendarCard);
+    displayCalendarStairsSection();
   } else if (event.target.classList.contains('stairs-go-back-button')) {
     flipCard(event.target.parentNode, stairsMainCard);
   }
@@ -328,22 +329,6 @@ function displayTrendingStepSection() {
 
 // END OF STEPS -----------------------------------------
 
-// function displayStairsInfoSection() {
-//   stairsInfoCard.innerHTML = '';
-//   stairsInfoCard.innerHTML =
-//   `
-//   <section class='main-card-top-row'>
-//     <button aria-label='stairs' class='info-button stairs-info-button'></button>
-//     <h3>YOU HAVE CLIMBED</h3>
-//     <button aria-label='friends-stairs' class='friends-button stairs-friends-button'></button>
-//   </section>
-//   <h2 id='stairs-user-stairs-today'>${findActivityInstance().flightsOfStairs * 12}</h2>
-//   <section class='main-card-top-row'>
-//     <button aria-label='stairs-trending' class='trending-button stairs-trending-button'></button>
-//     <h3>STAIRS TODAY</h3>
-//     <button aria-label='stairs-calendar' class='calendar-button stairs-calendar-button'></button>
-//   `
-// }
 function displayStairsInfoSection() {
   stairsInfoCard.innerHTML = '';
   stairsInfoCard.innerHTML =
@@ -376,14 +361,34 @@ function displayTrendingStairsSection() {
   ${updateTrendingStairsDays()}
   </section>
   `
-
 }
-
 function updateTrendingStairsDays() {
   let element = '';
   user.findTrendingStairsDays();
   return element = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
 }
+
+function displayCalendarStairsSection() {
+  stairsCalendarCard.innerHTML = '';
+  stairsCalendarCard.innerHTML =
+  `
+  <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
+  <section class='card-data-line'>
+    <p>YOUR WEEKLY FLIGHTS CLIMBED</p>
+    <h4 id='stairs-calendar-flights-average-weekly'>${user.calculateAverageFlightsThisWeek(todayDate)}</h4>
+  </section>
+  <section class='card-data-line'>
+    <p>YOUR WEEKLY STAIRS CLIMBED</p>
+    <h4 id='stairs-calendar-stairs-average-weekly'>${(user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0)}</h4>
+  </section>
+  `
+}
+//
+// stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
+//
+// stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+
+// END OF STAIRS -----------------------------------------
 
 function displayDailyOunces() {
   user.ouncesRecord.forEach(record => {
@@ -430,9 +435,9 @@ sleepUserHoursToday.innerText = sleepInstances.find(sleep => {
   return sleep.userId === user.id && sleep.date === todayDate;
 }).hoursSlept;
 
-stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
-
-stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+// stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
+//
+// stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
 
 // stairsFriendFlightsAverageToday.innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
 
@@ -442,14 +447,10 @@ stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisW
 //
 
 
-stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
-
-stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
-
-stairsTrendingButton.addEventListener('click', function() {
-  user.findTrendingStairsDays();
-  trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
-});
+// stairsTrendingButton.addEventListener('click', function() {
+//   user.findTrendingStairsDays();
+//   trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
+// });
 
 // stepsCalendarTotalActiveMinutesWeekly.innerText = user.calculateAverageMinutesActiveThisWeek(todayDate);
 //
