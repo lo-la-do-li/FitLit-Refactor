@@ -40,11 +40,21 @@ let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
 });
 
 //querySelectors
-let dailyOz = document.querySelectorAll('.daily-oz');
+
 // let dropdownEmail = document.querySelector('#dropdown-email');
 // let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
 // let dropdownGoal = document.querySelector('#dropdown-goal');
 // let dropdownName = document.querySelector('#dropdown-name');
+// let stepsCalendarTotalActiveMinutesWeekly = document.querySelector('#steps-calendar-total-active-minutes-weekly');
+// let stepsCalendarTotalStepsWeekly = document.querySelector('#steps-calendar-total-steps-weekly');
+// let stepsFriendAverageStepGoal = document.querySelector('#steps-friend-average-step-goal');
+// let stepsInfoActiveMinutesToday = document.querySelector('#steps-info-active-minutes-today');
+// let stepsInfoMilesWalkedToday = document.querySelector('#steps-info-miles-walked-today');
+// let stepsFriendActiveMinutesAverageToday = document.querySelector('#steps-friend-active-minutes-average-today');
+// let stepsFriendStepsAverageToday = document.querySelector('#steps-friend-steps-average-today');
+// let stepsTrendingButton = document.querySelector('.steps-trending-button');
+// let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phrase-container');
+let dailyOz = document.querySelectorAll('.daily-oz');
 let headerName = document.querySelector('#header-name');
 let hydrationCalendarCard = document.querySelector('#hydration-calendar-card');
 let hydrationFriendOuncesToday = document.querySelector('#hydration-friend-ounces-today');
@@ -83,24 +93,14 @@ let stairsMainCard = document.querySelector('#stairs-main-card');
 let stairsTrendingButton = document.querySelector('.stairs-trending-button');
 let stairsTrendingCard = document.querySelector('#stairs-trending-card');
 let stairsUserStairsToday = document.querySelector('#stairs-user-stairs-today');
-let stepsCalendarTotalActiveMinutesWeekly = document.querySelector('#steps-calendar-total-active-minutes-weekly');
-let stepsCalendarTotalStepsWeekly = document.querySelector('#steps-calendar-total-steps-weekly');
-let stepsFriendAverageStepGoal = document.querySelector('#steps-friend-average-step-goal');
-let stepsInfoActiveMinutesToday = document.querySelector('#steps-info-active-minutes-today');
-let stepsInfoMilesWalkedToday = document.querySelector('#steps-info-miles-walked-today');
-let stepsFriendActiveMinutesAverageToday = document.querySelector('#steps-friend-active-minutes-average-today');
-let stepsFriendStepsAverageToday = document.querySelector('#steps-friend-steps-average-today');
-let stepsTrendingButton = document.querySelector('.steps-trending-button');
 let stepsUserStepsToday = document.querySelector('#steps-user-steps-today');
-let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phrase-container');
 let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
 let userInfoDropdown = document.querySelector('#user-info-dropdown');
 
 //eventListener
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
-stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
-stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
+stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
 
 //Functions
 
@@ -108,13 +108,27 @@ stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
 // function changeHiddenProperty(elements) {
 //   elements.forEach(element => {
 //     if (element.addHidden) {
-//       elements.property.classList.add('hidden');
+//       elements.property.classList.add('hide');
 //     } else {
-//       elements.property.classList.remove('hidden')
+//       elements.property.classList.remove('hide')
 //     }
 //   }) 
 // }
 
+function displayOnLoad() {
+  displayMainStepsSection();
+}
+displayOnLoad()
+
+function displayMainStepsSection() {
+  stepsUserStepsToday.innerText = findTodaySteps();
+}
+
+function findTodaySteps() {
+  return activityInstances.find(activity => {
+    return activity.userId === user.id && activity.date === todayDate;
+  }).steps;
+}
 
 function flipCard(cardToHide, cardToShow) {
   cardToHide.classList.add('hide');
@@ -139,6 +153,7 @@ function showDropdown() {
 }
 
 function displayFriendsSteps() {
+  user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
   let element = '';
   user.friendsActivityRecords.forEach(friend => {   
     element +=
@@ -164,8 +179,7 @@ function updateDropdowTextColor(element) {
 }
 
 function showInfo() {
-  //console.log(event.target.parentNode.parentNode.classList)
-  if (event.target.classList.contains('steps')) {
+  if (event.target.parentNode.parentNode.classList.contains('steps')) {
     showStepInfo();
   } else if (event.target.parentNode.parentNode.classList.contains('hydration')) {
     showHydrationInfo();
@@ -179,12 +193,16 @@ function showInfo() {
 function showStepInfo() {
   if (event.target.classList.contains('steps-info-button')) {
     flipCard(stepsMainCard, stepsInfoCard);
+    displayStepsInfoSection();
   } else if (event.target.classList.contains('steps-friends-button')) {
     flipCard(stepsMainCard, stepsFriendsCard);
+    displayFriendsStepsSection();
   } else if (event.target.classList.contains('steps-trending-button')) {
     flipCard(stepsMainCard, stepsTrendingCard);
+    displayTrendingStepSection();
   } else if (event.target.classList.contains('steps-calendar-button')) {
     flipCard(stepsMainCard, stepsCalendarCard);
+    displayCalendarStepsSection();
   } else if (event.target.classList.contains('steps-go-back-button')) {
     flipCard(event.target.parentNode, stepsMainCard);
   }
@@ -213,6 +231,7 @@ function showStairsInfo() {
     flipCard(stairsMainCard, stairsFriendsCard);
   } else if (event.target.classList.contains('stairs-trending-button')) {
     flipCard(stairsMainCard, stairsTrendingCard);
+
   } else if (event.target.classList.contains('stairs-calendar-button')) {
     flipCard(stairsMainCard, stairsCalendarCard);
   } else if (event.target.classList.contains('stairs-go-back-button')) {
@@ -232,45 +251,74 @@ function showSleepInfo() {
   }
 }
 
-displayMainStepsSection()
-
-function displayMainStepsSection() {
-  stepsUserStepsToday.innerText = findTodaySteps();
+function displayStepsInfoSection() {
+  stepsInfoCard.innerHTML = '';
+  stepsInfoCard.innerHTML =
+  `
+  <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
+  <section class='card-data-line'>
+    <p>TOTAL ACTIVE MINUTES TODAY:</p>
+    <h4 id='steps-info-active-minutes-today'>${findActivityInstance().minutesActive}</h4>
+  </section>
+  <section class='card-data-line'>
+    <p>TOTAL MILES WALKED TODAY:</p>
+    <h4 id='steps-info-miles-walked-today'>${findActivityInstance().calculateMiles(userRepository)}</h4>
+  </section>
+  `
 }
 
-
-function updateTrendingStepDays() {
-  user.findTrendingStepDays();
-  trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
-}
-function findTodaySteps() {
+function findActivityInstance() {
   return activityInstances.find(activity => {
     return activity.userId === user.id && activity.date === todayDate;
-  }).steps;
+  });
 }
 
-stepsCalendarTotalActiveMinutesWeekly.innerText = user.calculateAverageMinutesActiveThisWeek(todayDate);
+function displayFriendsStepsSection() {
+  stepsFriendsCard.innerHTML = '';
+  stepsFriendsCard.innerHTML = 
+  `
+  <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
+  <section class='card-data-line'>
+    <p>ALL USERS' AVERAGE ACTIVE MINUTES TODAY:</p>
+    <h4 id='steps-friend-active-minutes-average-today'>${userRepository.calculateAverageMinutesActive(todayDate)}</h4>
+  </section>
+  <section class='card-data-line'>
+    <p>ALL USERS' AVERAGE STEPS TODAY:</p>
+    <h4 id='steps-friend-steps-average-today'>${userRepository.calculateAverageSteps(todayDate)}</h4>
+  </section>
+  <section class='card-data-line'>
+    <p>ALL USERS' AVERAGE STEP GOAL:</p>
+    <h4 id='steps-friend-average-step-goal'>${userRepository.calculateAverageStepGoal()}</h4>
+  `
+}
 
-stepsCalendarTotalStepsWeekly.innerText = user.calculateAverageStepsThisWeek(todayDate);
+function displayCalendarStepsSection() {
+  stepsCalendarCard.innerHTML = '';
+  stepsCalendarCard.innerHTML =
+  `
+  <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
+  <section class='card-data-line'>
+    <p>YOUR WEEKLY AVERAGE MINUTES:</p>
+    <h4 id='steps-calendar-total-active-minutes-weekly'>${user.calculateAverageMinutesActiveThisWeek(todayDate)}</h4>
+  </section>
+  <section class='card-data-line'>
+    <p>YOUR TOTAL WEEKLY STEP COUNT:</p>
+    <h4 id='steps-calendar-total-steps-weekly'>${user.calculateAverageStepsThisWeek(todayDate)}</h4>
+  </section>
+  `
+}
 
-stepsTrendingButton.addEventListener('click', function() {
+function displayTrendingStepSection() {
   user.findTrendingStepDays();
-  trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
-});
-
-
-stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive(todayDate);
-
-stepsFriendAverageStepGoal.innerText = `${userRepository.calculateAverageStepGoal()}`;
-
-stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
-
-stepsInfoActiveMinutesToday.innerText = activityInstances.find(activity => {
-  return activity.userId === user.id && activity.date === todayDate;
-}).minutesActive;
-
-
-user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
+  stepsTrendingCard.innerHTML = '';
+  stepsTrendingCard.innerHTML =
+  `
+  <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
+  <section class='card-data-line trending-steps-phrase-container'>
+    <p class='trend-line'>${user.trendingStepDays[0]}</p>
+  </section>
+  `
+}
 
 // END OF STEPS -----------------------------------------
 
@@ -313,10 +361,6 @@ sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
 }).getFirstName();
 
 sleepInfoHoursAverageAlltime.innerText = user.hoursSleptAverage;
-
-stepsInfoMilesWalkedToday.innerText = user.activityRecord.find(activity => {
-  return (activity.date === todayDate && activity.userId === user.id)
-}).calculateMiles(userRepository);
 
 sleepInfoQualityAverageAlltime.innerText = user.sleepQualityAverage;
 
