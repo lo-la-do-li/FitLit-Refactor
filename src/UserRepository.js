@@ -76,12 +76,12 @@ class UserRepository {
     })
   }
 
-  getLongestSleepers(date, sleepInfo) {
+  getLongestSleeper(date, sleepInfo) {
     const totalSleepers = this.organizeSleepers(date, sleepInfo);
     return totalSleepers[totalSleepers.length - 1].userId;
   }
 
-  getWorstSleepers(date, sleepInfo) {
+  getWorstSleeper(date, sleepInfo) {
     const totalSleepers = this.organizeSleepers(date, sleepInfo);
     return totalSleepers[0].userId;
   }

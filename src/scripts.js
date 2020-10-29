@@ -124,19 +124,15 @@ displayOnLoad()
 function displayMainStepsSection() {
   stepsUserStepsToday.innerText = findTodayUserMetrics(activityInstances).steps;
   stairsUserStairsToday.innerText = findTodayUserMetrics(activityInstances).flightsOfStairs * 12;
+  hydrationUserOuncesToday.innerText = findTodayUserMetrics(hydrationInstances).ounces;
   sleepUserHoursToday.innerText = findTodayUserMetrics(sleepInstances).hoursSlept;
 }
-//ONLOAD SLEEP METRIC
-// sleepUserHoursToday.innerText = sleepInstances.find(sleep => {
-//   return sleep.userId === user.id && sleep.date === todayDate;
-// }).hoursSlept;
 
 function findTodayUserMetrics(instances) {
-  return instances.find(activity => {
-    return activity.userId === user.id && activity.date === todayDate;
+  return instances.find(action => {
+    return action.userId === user.id && action.date === todayDate;
   });
 }
-
 
 function flipCard(cardToHide, cardToShow) {
   cardToHide.classList.add('hide');
@@ -219,10 +215,11 @@ function showStepInfo() {
 function showHydrationInfo() {
   if (event.target.classList.contains('hydration-info-button')) {
     flipCard(hydrationMainCard, hydrationInfoCard);
-
+    displayHydrationInfoSection();
   }
   if (event.target.classList.contains('hydration-friends-button')) {
     flipCard(hydrationMainCard, hydrationFriendsCard);
+    displayFriendsHydrationSection();
   }
   if (event.target.classList.contains('hydration-calendar-button')) {
     flipCard(hydrationMainCard, hydrationCalendarCard);
@@ -273,19 +270,13 @@ function displayStepsInfoSection() {
   <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
   <section class='card-data-line'>
     <p>TOTAL ACTIVE MINUTES TODAY:</p>
-    <h4 id='steps-info-active-minutes-today'>${findActivityInstance().minutesActive}</h4>
+    <h4 id='steps-info-active-minutes-today'>${findTodayUserMetrics(activityInstances).minutesActive}</h4>
   </section>
   <section class='card-data-line'>
     <p>TOTAL MILES WALKED TODAY:</p>
-    <h4 id='steps-info-miles-walked-today'>${findActivityInstance().calculateMiles(userRepository)}</h4>
+    <h4 id='steps-info-miles-walked-today'>${findTodayUserMetrics(activityInstances).calculateMiles(userRepository)}</h4>
   </section>
   `
-}
-
-function findActivityInstance() {
-  return activityInstances.find(activity => {
-    return activity.userId === user.id && activity.date === todayDate;
-  });
 }
 
 function displayFriendsStepsSection() {
@@ -344,7 +335,7 @@ function displayStairsInfoSection() {
   <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
   <section class='card-data-line'>
     <p>FLIGHTS CLIMBED TODAY</p>
-    <h4 id='stairs-info-flights-today'>${findActivityInstance().flightsOfStairs}</h4>
+    <h4 id='stairs-info-flights-today'>${findTodayUserMetrics(activityInstances).flightsOfStairs}</h4>
   </section>
   `
 }
@@ -403,15 +394,29 @@ function displayDailyOunces() {
   })
 }
 
-hydrationUserOuncesToday.innerText = hydrationInstances.find(hydration => {
-  return hydration.userId === user.id && hydration.date === todayDate;
-}).ounces;
+function displayHydrationInfoSection() {
+  hydrationInfoCard.innerHTML = '';
+  hydrationInfoCard.innerHTML = 
+  `
+  <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
+  <section class='card-data-line'>
+    <p>GLASSES OF WATER CONSUMED TODAY:</p>
+    <h4 id='hydration-info-glasses-today'>${findTodayUserMetrics(hydrationInstances).ounces/8}</h4>
+  </section>
+  `
+}
 
-hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
-
-hydrationInfoGlassesToday.innerText = hydrationInstances.find(hydration => {
-  return hydration.userId === user.id && hydration.date === todayDate;
-}).ounces / 8;
+function displayFriendsHydrationSection() {
+  hydrationFriendsCard.innerHTML = '';
+  hydrationFriendsCard.innerHTML = 
+  `
+  <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
+  <section class='card-data-line'>
+    <p>ALL USERS' AVERAGE DAILY OUNCES:</p>
+    <h4 id='hydration-friend-ounces-today'>${userRepository.calculateAverageDailyWater(todayDate)}</h4>
+  </section>
+  `
+}
 
 // END OF HYDRATION  -----------------------------------------
 
@@ -422,7 +427,7 @@ function displaySleepInfoSection() {
   <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
   <section class='card-data-line'>
     <p>SLEEP QUALITY LAST NIGHT</p>
-    <h4 id='sleep-info-quality-today'>${getSleepQualityToday()}</h4>
+    <h4 id='sleep-info-quality-today'>${findTodayUserMetrics(sleepInstances).sleepQuality}</h4>
   </section>
   <section class='card-data-line'>
     <p>OVERALL NUMBER OF HOURS AVERAGE</p>
@@ -434,11 +439,7 @@ function displaySleepInfoSection() {
   </section>
   `
 }
-function getSleepQualityToday() {
-  return sleepInstances.find(sleep => {
-    return sleep.userId === user.id && sleep.date === todayDate;
-  }).sleepQuality;
-}
+
 function displayFriendsSleepSection() {
   sleepFriendsCard.innerHTML = '';
   sleepFriendsCard.innerHTML =
@@ -446,19 +447,21 @@ function displayFriendsSleepSection() {
   <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
   <section class='card-data-line'>
     <p>LAST NIGHT'S SUPERIOR SLEEPER</p>
-    <h4 id='sleep-friend-longest-sleeper'>${getFriendSleeper('getLongestSleepers')}</h4>
+    <h4 id='sleep-friend-longest-sleeper'>${getFriendSleeper('getLongestSleeper')}</h4>
   </section>
   <section class='card-data-line'>
     <p>LAST NIGHT'S INFERIOR SLEEPER</p>
-    <h4 id='sleep-friend-worst-sleeper'>${getFriendSleeper('getWorstSleepers')}</h4>
+    <h4 id='sleep-friend-worst-sleeper'>${getFriendSleeper('getWorstSleeper')}</h4>
   </section>
   `
 }
+
 function getFriendSleeper(type) {
   return userRepository.users.find(user => {
     return user.id === userRepository[type](todayDate, sleepInstances)
   }).getFirstName();
 }
+
 function displayCalendarSleepSection() {
   sleepCalendarCard.innerHTML = '';
   sleepCalendarCard.innerHTML =
@@ -474,27 +477,3 @@ function displayCalendarSleepSection() {
   </section>
   `
 }
-
-// sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageSleptHoursThisWeek(todayDate);
-//
-// sleepCalendarQualityAverageWeekly.innerText = user.calculateAverageSleptQualityThisWeek(todayDate);
-//
-// sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
-//   return user.id === userRepository.getLongestSleepers(todayDate, sleepInstances)
-// }).getFirstName();
-//
-// sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
-//   return user.id === userRepository.getWorstSleepers(todayDate, sleepInstances)
-// }).getFirstName();
-//
-// sleepInfoHoursAverageAlltime.innerText = user.hoursSleptAverage;
-//
-// sleepInfoQualityAverageAlltime.innerText = user.sleepQualityAverage;
-//
-// sleepInfoQualityToday.innerText = sleepInstances.find(sleep => {
-//   return sleep.userId === user.id && sleep.date === todayDate;
-// }).sleepQuality;
-
-// sleepUserHoursToday.innerText = sleepInstances.find(sleep => {
-//   return sleep.userId === user.id && sleep.date === todayDate;
-// }).hoursSlept;
