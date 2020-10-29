@@ -100,7 +100,6 @@ let userInfoDropdown = document.querySelector('#user-info-dropdown');
 //eventListener
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
-// stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
 
 //Functions
 
@@ -118,16 +117,22 @@ profileButton.addEventListener('click', showDropdown);
 
 function displayOnLoad() {
   displayMainStepsSection();
+  headerName.innerText = `${user.getFirstName()}'S FITLIT`;
 }
 displayOnLoad()
 
 function displayMainStepsSection() {
-  stepsUserStepsToday.innerText = findTodayUserMetrics().steps;
-  stairsUserStairsToday.innerText = findTodayUserMetrics().flightsOfStairs * 12;
+  stepsUserStepsToday.innerText = findTodayUserMetrics(activityInstances).steps;
+  stairsUserStairsToday.innerText = findTodayUserMetrics(activityInstances).flightsOfStairs * 12;
+  sleepUserHoursToday.innerText = findTodayUserMetrics(sleepInstances).hoursSlept;
 }
+//ONLOAD SLEEP METRIC
+// sleepUserHoursToday.innerText = sleepInstances.find(sleep => {
+//   return sleep.userId === user.id && sleep.date === todayDate;
+// }).hoursSlept;
 
-function findTodayUserMetrics() {
-  return activityInstances.find(activity => {
+function findTodayUserMetrics(instances) {
+  return instances.find(activity => {
     return activity.userId === user.id && activity.date === todayDate;
   });
 }
@@ -249,10 +254,13 @@ function showStairsInfo() {
 function showSleepInfo() {
   if (event.target.classList.contains('sleep-info-button')) {
     flipCard(sleepMainCard, sleepInfoCard);
+    displaySleepInfoSection();
   } else if (event.target.classList.contains('sleep-friends-button')) {
     flipCard(sleepMainCard, sleepFriendsCard);
+    displayFriendsSleepSection();
   } else if (event.target.classList.contains('sleep-calendar-button')) {
     flipCard(sleepMainCard, sleepCalendarCard);
+    displayCalendarSleepSection();
   } else if (event.target.classList.contains('sleep-go-back-button')) {
     flipCard(event.target.parentNode, sleepMainCard);
   }
@@ -383,10 +391,6 @@ function displayCalendarStairsSection() {
   </section>
   `
 }
-//
-// stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
-//
-// stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
 
 // END OF STAIRS -----------------------------------------
 
@@ -395,11 +399,9 @@ function displayDailyOunces() {
     let index = user.ouncesRecord.indexOf(record);
     if (index < dailyOz.length) {
       dailyOz[index].innerText = user.returnTotalDailyOunces(record.date)
-    }
+    };
   })
 }
-
-headerName.innerText = `${user.getFirstName()}'S `;
 
 hydrationUserOuncesToday.innerText = hydrationInstances.find(hydration => {
   return hydration.userId === user.id && hydration.date === todayDate;
@@ -411,68 +413,88 @@ hydrationInfoGlassesToday.innerText = hydrationInstances.find(hydration => {
   return hydration.userId === user.id && hydration.date === todayDate;
 }).ounces / 8;
 
-sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageSleptHoursThisWeek(todayDate);
+// END OF HYDRATION  -----------------------------------------
 
-sleepCalendarQualityAverageWeekly.innerText = user.calculateAverageSleptQualityThisWeek(todayDate);
+function displaySleepInfoSection() {
+  sleepInfoCard.innerHTML = '';
+  sleepInfoCard.innerHTML =
+  `
+  <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
+  <section class='card-data-line'>
+    <p>SLEEP QUALITY LAST NIGHT</p>
+    <h4 id='sleep-info-quality-today'>${getSleepQualityToday()}</h4>
+  </section>
+  <section class='card-data-line'>
+    <p>OVERALL NUMBER OF HOURS AVERAGE</p>
+    <h4 id='sleep-info-hours-average-alltime'>${user.hoursSleptAverage}</h4>
+  </section>
+  <section class='card-data-line'>
+    <p>OVERALL SLEEP QUALITY AVERAGE</p>
+    <h4 id='sleep-info-quality-average-alltime'>${user.sleepQualityAverage}</h4>
+  </section>
+  `
+}
+function getSleepQualityToday() {
+  return sleepInstances.find(sleep => {
+    return sleep.userId === user.id && sleep.date === todayDate;
+  }).sleepQuality;
+}
+function displayFriendsSleepSection() {
+  sleepFriendsCard.innerHTML = '';
+  sleepFriendsCard.innerHTML =
+  `
+  <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
+  <section class='card-data-line'>
+    <p>LAST NIGHT'S SUPERIOR SLEEPER</p>
+    <h4 id='sleep-friend-longest-sleeper'>${getFriendSleeper('getLongestSleepers')}</h4>
+  </section>
+  <section class='card-data-line'>
+    <p>LAST NIGHT'S INFERIOR SLEEPER</p>
+    <h4 id='sleep-friend-worst-sleeper'>${getFriendSleeper('getWorstSleepers')}</h4>
+  </section>
+  `
+}
+function getFriendSleeper(type) {
+  return userRepository.users.find(user => {
+    return user.id === userRepository[type](todayDate, sleepInstances)
+  }).getFirstName();
+}
+function displayCalendarSleepSection() {
+  sleepCalendarCard.innerHTML = '';
+  sleepCalendarCard.innerHTML =
+  `
+  <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
+  <section class='card-data-line'>
+    <p>LAST WEEK'S HOURLY AVERAGE</p>
+    <h4 id='sleep-calendar-hours-average-weekly'>${user.calculateAverageSleptHoursThisWeek(todayDate)}</h4>
+  </section>
+  <section class='card-data-line'>
+    <p>LAST WEEK'S QUALITY AVERAGE</p>
+    <h4 id='sleep-calendar-quality-average-weekly'>${user.calculateAverageSleptQualityThisWeek(todayDate)}</h4>
+  </section>
+  `
+}
 
-sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
-  return user.id === userRepository.getLongestSleepers(todayDate, sleepInstances)
-}).getFirstName();
-
-sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
-  return user.id === userRepository.getWorstSleepers(todayDate, sleepInstances)
-}).getFirstName();
-
-sleepInfoHoursAverageAlltime.innerText = user.hoursSleptAverage;
-
-sleepInfoQualityAverageAlltime.innerText = user.sleepQualityAverage;
-
-sleepInfoQualityToday.innerText = sleepInstances.find(sleep => {
-  return sleep.userId === user.id && sleep.date === todayDate;
-}).sleepQuality;
-
-sleepUserHoursToday.innerText = sleepInstances.find(sleep => {
-  return sleep.userId === user.id && sleep.date === todayDate;
-}).hoursSlept;
-
-// stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
+// sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageSleptHoursThisWeek(todayDate);
 //
-// stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
-
-// stairsFriendFlightsAverageToday.innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
-
-// stairsInfoFlightsToday.innerText = activityInstances.find(activity => {
-//   return activity.userId === user.id && activity.date === todayDate;
-// }).flightsOfStairs;
+// sleepCalendarQualityAverageWeekly.innerText = user.calculateAverageSleptQualityThisWeek(todayDate);
 //
-
-
-// stairsTrendingButton.addEventListener('click', function() {
-//   user.findTrendingStairsDays();
-//   trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
-// });
-
-// stepsCalendarTotalActiveMinutesWeekly.innerText = user.calculateAverageMinutesActiveThisWeek(todayDate);
+// sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
+//   return user.id === userRepository.getLongestSleepers(todayDate, sleepInstances)
+// }).getFirstName();
 //
-// stepsCalendarTotalStepsWeekly.innerText = user.calculateAverageStepsThisWeek(todayDate);
+// sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
+//   return user.id === userRepository.getWorstSleepers(todayDate, sleepInstances)
+// }).getFirstName();
 //
-// stepsTrendingButton.addEventListener('click', function()
-//   user.findTrendingStepDays();
-//   trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
-// });
+// sleepInfoHoursAverageAlltime.innerText = user.hoursSleptAverage;
+//
+// sleepInfoQualityAverageAlltime.innerText = user.sleepQualityAverage;
+//
+// sleepInfoQualityToday.innerText = sleepInstances.find(sleep => {
+//   return sleep.userId === user.id && sleep.date === todayDate;
+// }).sleepQuality;
 
-// stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive(todayDate);
-
-// stepsFriendAverageStepGoal.innerText = `${userRepository.calculateAverageStepGoal()}`;
-
-// stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
-
-// stepsInfoActiveMinutesToday.innerText = activityInstances.find(activity => {
-//   return activity.userId === user.id && activity.date === todayDate;
-// }).minutesActive;
-
-// stepsUserStepsToday.innerText = activityInstances.find(activity => {
-//   return activity.userId === user.id && activity.date === todayDate;
-// }).steps;
-
-// user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
+// sleepUserHoursToday.innerText = sleepInstances.find(sleep => {
+//   return sleep.userId === user.id && sleep.date === todayDate;
+// }).hoursSlept;
