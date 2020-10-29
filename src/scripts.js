@@ -54,47 +54,47 @@ let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
 // let stepsFriendStepsAverageToday = document.querySelector('#steps-friend-steps-average-today');
 // let stepsTrendingButton = document.querySelector('.steps-trending-button');
 // let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phrase-container');
-let dailyOz = document.querySelectorAll('.daily-oz');
+//let dailyOz = document.querySelectorAll('.daily-oz');
+// let hydrationFriendOuncesToday = document.querySelector('#hydration-friend-ounces-today');
+//let hydrationInfoGlassesToday = document.querySelector('#hydration-info-glasses-today');
+// let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
+// let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-quality-average-weekly');
+// let sleepFriendLongestSleeper = document.querySelector('#sleep-friend-longest-sleeper');
+//let sleepFriendWorstSleeper = document.querySelector('#sleep-friend-worst-sleeper');
+// let sleepInfoHoursAverageAlltime = document.querySelector('#sleep-info-hours-average-alltime');
+// let sleepInfoQualityAverageAlltime = document.querySelector('#sleep-info-quality-average-alltime');
+// let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
+// let stairsCalendarFlightsAverageWeekly = document.querySelector('#stairs-calendar-flights-average-weekly');
+// let stairsCalendarStairsAverageWeekly = document.querySelector('#stairs-calendar-stairs-average-weekly');
+//let stairsFriendFlightsAverageToday = document.querySelector('#stairs-friend-flights-average-today');
+//let stairsInfoFlightsToday = document.querySelector('#stairs-info-flights-today');
+//let stairsTrendingButton = document.querySelector('.stairs-trending-button');
+//let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
 let headerName = document.querySelector('#header-name');
 let hydrationCalendarCard = document.querySelector('#hydration-calendar-card');
-let hydrationFriendOuncesToday = document.querySelector('#hydration-friend-ounces-today');
 let hydrationFriendsCard = document.querySelector('#hydration-friends-card');
 let hydrationInfoCard = document.querySelector('#hydration-info-card');
-let hydrationInfoGlassesToday = document.querySelector('#hydration-info-glasses-today');
 let hydrationMainCard = document.querySelector('#hydration-main-card');
 let hydrationUserOuncesToday = document.querySelector('#hydration-user-ounces-today');
 let mainPage = document.querySelector('main');
 let profileButton = document.querySelector('#profile-button');
 let sleepCalendarCard = document.querySelector('#sleep-calendar-card');
-let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
-let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-quality-average-weekly');
-let sleepFriendLongestSleeper = document.querySelector('#sleep-friend-longest-sleeper');
 let sleepFriendsCard = document.querySelector('#sleep-friends-card');
-let sleepFriendWorstSleeper = document.querySelector('#sleep-friend-worst-sleeper');
 let sleepInfoCard = document.querySelector('#sleep-info-card');
-let sleepInfoHoursAverageAlltime = document.querySelector('#sleep-info-hours-average-alltime');
-let sleepInfoQualityAverageAlltime = document.querySelector('#sleep-info-quality-average-alltime');
-let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
 let sleepMainCard = document.querySelector('#sleep-main-card');
 let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
 let stairsCalendarCard = document.querySelector('#stairs-calendar-card');
-let stairsCalendarFlightsAverageWeekly = document.querySelector('#stairs-calendar-flights-average-weekly');
-let stairsCalendarStairsAverageWeekly = document.querySelector('#stairs-calendar-stairs-average-weekly');
 let stepsMainCard = document.querySelector('#steps-main-card');
 let stepsInfoCard = document.querySelector('#steps-info-card');
 let stepsFriendsCard = document.querySelector('#steps-friends-card');
 let stepsTrendingCard = document.querySelector('#steps-trending-card');
 let stepsCalendarCard = document.querySelector('#steps-calendar-card');
-let stairsFriendFlightsAverageToday = document.querySelector('#stairs-friend-flights-average-today');
 let stairsFriendsCard = document.querySelector('#stairs-friends-card');
 let stairsInfoCard = document.querySelector('#stairs-info-card');
-let stairsInfoFlightsToday = document.querySelector('#stairs-info-flights-today');
 let stairsMainCard = document.querySelector('#stairs-main-card');
-let stairsTrendingButton = document.querySelector('.stairs-trending-button');
 let stairsTrendingCard = document.querySelector('#stairs-trending-card');
 let stairsUserStairsToday = document.querySelector('#stairs-user-stairs-today');
 let stepsUserStepsToday = document.querySelector('#steps-user-steps-today');
-let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
 let userInfoDropdown = document.querySelector('#user-info-dropdown');
 
 //eventListener
@@ -223,7 +223,7 @@ function showHydrationInfo() {
   }
   if (event.target.classList.contains('hydration-calendar-button')) {
     flipCard(hydrationMainCard, hydrationCalendarCard);
-    displayDailyOunces();
+    displayHydrationCalendarSection();
   }
   if (event.target.classList.contains('hydration-go-back-button')) {
     flipCard(event.target.parentNode, hydrationMainCard);
@@ -385,14 +385,6 @@ function displayCalendarStairsSection() {
 
 // END OF STAIRS -----------------------------------------
 
-function displayDailyOunces() {
-  user.ouncesRecord.forEach(record => {
-    let index = user.ouncesRecord.indexOf(record);
-    if (index < dailyOz.length) {
-      dailyOz[index].innerText = user.returnTotalDailyOunces(record.date)
-    };
-  })
-}
 
 function displayHydrationInfoSection() {
   hydrationInfoCard.innerHTML = '';
@@ -400,8 +392,8 @@ function displayHydrationInfoSection() {
   `
   <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
   <section class='card-data-line'>
-    <p>GLASSES OF WATER CONSUMED TODAY:</p>
-    <h4 id='hydration-info-glasses-today'>${findTodayUserMetrics(hydrationInstances).ounces/8}</h4>
+  <p>GLASSES OF WATER CONSUMED TODAY:</p>
+  <h4 id='hydration-info-glasses-today'>${findTodayUserMetrics(hydrationInstances).ounces/8}</h4>
   </section>
   `
 }
@@ -412,10 +404,61 @@ function displayFriendsHydrationSection() {
   `
   <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
   <section class='card-data-line'>
-    <p>ALL USERS' AVERAGE DAILY OUNCES:</p>
-    <h4 id='hydration-friend-ounces-today'>${userRepository.calculateAverageDailyWater(todayDate)}</h4>
+  <p>ALL USERS' AVERAGE DAILY OUNCES:</p>
+  <h4 id='hydration-friend-ounces-today'>${userRepository.calculateAverageDailyWater(todayDate)}</h4>
   </section>
   `
+}
+
+function displayHydrationCalendarSection() {
+  hydrationCalendarCard.innerHTML = '';
+  hydrationCalendarCard.innerHTML = 
+  `
+  <button aria-label='go-back' class='go-back-button hydration-go-back-button'>
+  </button>
+  <section class="display-hydration-calendar">
+  ${displayDailyOunces()}
+  </section>
+  `
+}
+
+function displayDailyOunces() {
+  let elementSection = '';
+  user.ouncesRecord.forEach((record, index) => {
+  if (index === 1) {
+    elementSection = 
+    `
+    <section 
+      class='hydration-data-line'>
+        <p 
+          class='hydration-weekly-label'>
+          YESTERDAY:
+        </p>
+        <h4 
+          class='hydration-weekly-amount daily-oz' 
+          id='hydration-calendar-ounces-1day'>
+          ${user.returnTotalDailyOunces(record.date)} oz
+        </h4>
+    </section>
+    ` 
+  } else if(index > 1 && index < 7) {
+    elementSection += 
+    `
+    <section 
+      class='hydration-data-line'>
+      <p 
+        class='hydration-weekly-label'>
+        ${index} DAYS AGO:</p>
+      <h4 
+        class='hydration-weekly-amount daily-oz' 
+        id='hydration-calendar-ounces-1day'> 
+        ${user.returnTotalDailyOunces(record.date)} oz
+      </h4>
+    </section>
+    ` 
+    }
+  })
+  return elementSection;
 }
 
 // END OF HYDRATION  -----------------------------------------
