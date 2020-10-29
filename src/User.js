@@ -22,8 +22,8 @@
     this.friendsActivityRecords = []
   }
   getFirstName() {
-    this.name = this.name.split(' ');
-    return this.name[0].toUpperCase();
+    const newName = this.name.split(' ');
+    return newName[0].toUpperCase();
   }
   // Should be in Hydration.js?
   updateHydration(date, amount) {
