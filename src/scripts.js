@@ -116,12 +116,12 @@ profileButton.addEventListener('click', showDropdown);
 // }
 
 function displayOnLoad() {
-  displayMainStepsSection();
+  displayMainPageSection();
   headerName.innerText = `${user.getFirstName()}'S FITLIT`;
 }
 displayOnLoad()
 
-function displayMainStepsSection() {
+function displayMainPageSection() {
   stepsUserStepsToday.innerText = findTodayUserMetrics(activityInstances).steps;
   stairsUserStairsToday.innerText = findTodayUserMetrics(activityInstances).flightsOfStairs * 12;
   hydrationUserOuncesToday.innerText = findTodayUserMetrics(hydrationInstances).ounces;
@@ -144,7 +144,7 @@ function showDropdown() {
   userInfoDropdown.innerHTML = '';
   userInfoDropdown.innerHTML =
   `
-  <h5 id='dropdown-name'>${user.name[0].toUpperCase()}</h5>
+  <h5 id='dropdown-name'>${user.getFirstName()}</h5>
   <p class='dropdown-p' id='dropdown-email'> EMAIL | ${user.email}</p>
   <p class='dropdown-p' id='dropdown-goal'> DAILY STEP GOAL | ${user.dailyStepGoal}</p>
   <br/>
@@ -154,12 +154,13 @@ function showDropdown() {
   `
   let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
   updateDropdowTextColor(friendsStepsParagraphs);
+
 }
 
 function displayFriendsSteps() {
-  user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
+  const friendsStepsRecords = user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
   let element = '';
-  user.friendsActivityRecords.forEach(friend => {
+  friendsStepsRecords.forEach(friend => {    
     element +=
     `
     <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
