@@ -73,7 +73,7 @@ describe('Hydration', function() {
       expect(user2.ouncesAverage).to.equal(83);
     })
     it('should add the date and amount to the object record', function() {
-      expect(user1.ouncesRecord).to.deep.equal([{"2019/06/15": 37}])
+      expect(user1.ouncesRecord).to.deep.equal([{date: "2019/06/15", amount: 37}])
       expect(user2.ouncesRecord.length).to.equal(2)
     })
   });
