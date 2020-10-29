@@ -2,74 +2,58 @@
 import './css/styles.scss';
 // import './src/index.js';
 
-import userData from './data/users';
-import activityData from './data/activity';
-import sleepData from './data/sleep';
-import hydrationData from './data/hydration';
+// import userData from './data/users';
+// import activityData from './data/activity';
+// import sleepData from './data/sleep';
+// import hydrationData from './data/hydration';
 
 import UserRepository from './UserRepository';
 import User from './User';
 import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
+import apiCalls from './ApiCalls';
 
+
+let userRepository = new UserRepository();
+let users = [];
+let activityInstances = [];
+let hydrationInstances = [];
+let sleepInstances = [];
+let user;
+let todayDate;
+
+const newSleepData = {"userID": 1, "date": '2019/09/21', "hoursSlept": 8, "sleepQuality": 7};
+const newActivityData = {"userID": 1, "date": '2019/09/22', "numSteps": 2000, "minutesActive": 30, "flightsOfStairs": 16};
+const newHydrationData = {"userID": 1, "date": '2019/09/22', "numOunces": 6.1};
+//apiCalls.addSleepData(newSleepData), apiCalls.addActivityData(newActivityData),apiCalls.addHydrationData(newHydrationData),
+
+Promise.all([apiCalls.getUserData(), apiCalls.getSleepData(), apiCalls.getActivityData(), apiCalls.getHydrationData()])
+  .then((data) => {
+  // console.log('this is all promises' , data);
+    const dataSet = data.reduce((dataList, dataItem) => {
+      return dataList = {...dataList, ...dataItem};
+    }, {})
+    instantiateData(dataSet);
+    displayOnLoad();
+  })
 
 //Instances of classes
-
-const users = userData.map(user => new User(user));
-let userRepository = new UserRepository(users);
-
-const activityInstances = activityData.map(data => new Activity(data, userRepository));
-
-const hydrationInstances = hydrationData.map(data => new Hydration(data, userRepository));
-
-const sleepInstances = sleepData.map(data => new Sleep(data, userRepository));
-
-let user = userRepository.users[0];
-let todayDate = "2019/09/22";
-user.findFriendsNames(userRepository.users);
-
-let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
-  if (Object.values(a)[0] > Object.values(b)[0]) {
-    return -1;
-  }
-  if (Object.values(a)[0] < Object.values(b)[0]) {
-    return 1;
-  }
-  return 0;
-});
+function instantiateData(data) {
+  users = data.userData.map(user => new User(user));
+  userRepository = new UserRepository(users);
+  activityInstances = data.activityData.map(data => new Activity(data, userRepository));
+  hydrationInstances = data.hydrationData.map(data => new Hydration(data, userRepository));
+  sleepInstances = data.sleepData.map(data => new Sleep(data, userRepository));
+  user = userRepository.users[generateRandomNum(userRepository.users)];
+  todayDate = "2019/06/24";
+}
+  
+function generateRandomNum(list){
+  return Math.round(Math.random() * list.length);
+}
 
 //querySelectors
-
-// let dropdownEmail = document.querySelector('#dropdown-email');
-// let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
-// let dropdownGoal = document.querySelector('#dropdown-goal');
-// let dropdownName = document.querySelector('#dropdown-name');
-// let stepsCalendarTotalActiveMinutesWeekly = document.querySelector('#steps-calendar-total-active-minutes-weekly');
-// let stepsCalendarTotalStepsWeekly = document.querySelector('#steps-calendar-total-steps-weekly');
-// let stepsFriendAverageStepGoal = document.querySelector('#steps-friend-average-step-goal');
-// let stepsInfoActiveMinutesToday = document.querySelector('#steps-info-active-minutes-today');
-// let stepsInfoMilesWalkedToday = document.querySelector('#steps-info-miles-walked-today');
-// let stepsFriendActiveMinutesAverageToday = document.querySelector('#steps-friend-active-minutes-average-today');
-// let stepsFriendStepsAverageToday = document.querySelector('#steps-friend-steps-average-today');
-// let stepsTrendingButton = document.querySelector('.steps-trending-button');
-// let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phrase-container');
-//let dailyOz = document.querySelectorAll('.daily-oz');
-// let hydrationFriendOuncesToday = document.querySelector('#hydration-friend-ounces-today');
-//let hydrationInfoGlassesToday = document.querySelector('#hydration-info-glasses-today');
-// let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
-// let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-quality-average-weekly');
-// let sleepFriendLongestSleeper = document.querySelector('#sleep-friend-longest-sleeper');
-//let sleepFriendWorstSleeper = document.querySelector('#sleep-friend-worst-sleeper');
-// let sleepInfoHoursAverageAlltime = document.querySelector('#sleep-info-hours-average-alltime');
-// let sleepInfoQualityAverageAlltime = document.querySelector('#sleep-info-quality-average-alltime');
-// let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
-// let stairsCalendarFlightsAverageWeekly = document.querySelector('#stairs-calendar-flights-average-weekly');
-// let stairsCalendarStairsAverageWeekly = document.querySelector('#stairs-calendar-stairs-average-weekly');
-//let stairsFriendFlightsAverageToday = document.querySelector('#stairs-friend-flights-average-today');
-//let stairsInfoFlightsToday = document.querySelector('#stairs-info-flights-today');
-//let stairsTrendingButton = document.querySelector('.stairs-trending-button');
-//let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
 let headerName = document.querySelector('#header-name');
 let hydrationCalendarCard = document.querySelector('#hydration-calendar-card');
 let hydrationFriendsCard = document.querySelector('#hydration-friends-card');
@@ -116,12 +100,17 @@ profileButton.addEventListener('click', showDropdown);
 // }
 
 function displayOnLoad() {
+  user.findFriendsNames(userRepository.users);
+  sortOuncesRecord();
   displayMainPageSection();
   headerName.innerText = `${user.getFirstName()}'S FITLIT`;
 }
-displayOnLoad()
 
 function displayMainPageSection() {
+  // stepsUserStepsToday.innerText = data.numSteps;
+  // stairsUserStairsToday.innerText = data.flightsOfStairs * 12;
+  // hydrationUserOuncesToday.innerText = data.numOunces;
+  // sleepUserHoursToday.innerText = data.hoursSlept;
   stepsUserStepsToday.innerText = findTodayUserMetrics(activityInstances).steps;
   stairsUserStairsToday.innerText = findTodayUserMetrics(activityInstances).flightsOfStairs * 12;
   hydrationUserOuncesToday.innerText = findTodayUserMetrics(hydrationInstances).ounces;
@@ -131,6 +120,18 @@ function displayMainPageSection() {
 function findTodayUserMetrics(instances) {
   return instances.find(action => {
     return action.userId === user.id && action.date === todayDate;
+  });
+}
+
+function sortOuncesRecord() {
+  return user.ouncesRecord.sort((a, b) => {
+    if (Object.values(a)[0] > Object.values(b)[0]) {
+      return -1;
+    }
+    if (Object.values(a)[0] < Object.values(b)[0]) {
+      return 1;
+    }
+    return 0;
   });
 }
 
