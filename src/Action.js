@@ -28,7 +28,7 @@ class Action {
   // }
 
   // sortRecord(recordType, activity) {
-  //   return this[recordType].sort((a, b) => {
+  //   return recordType.sort((a, b) => {
   //     if (a[activity] - b[activity] < 0) {
   //       return 1
   //     } else if (a[activity] - b[activity] > 0) {
