@@ -2,11 +2,6 @@
 import './css/styles.scss';
 // import './src/index.js';
 
-// import userData from './data/users';
-// import activityData from './data/activity';
-// import sleepData from './data/sleep';
-// import hydrationData from './data/hydration';
-
 import UserRepository from './UserRepository';
 import User from './User';
 import Activity from './Activity';
@@ -22,36 +17,7 @@ let hydrationInstances = [];
 let sleepInstances = [];
 let user;
 let todayDate;
-
-const newSleepData = {"userID": 1, "date": '2019/09/21', "hoursSlept": 8, "sleepQuality": 7};
-const newActivityData = {"userID": 1, "date": '2019/09/22', "numSteps": 2000, "minutesActive": 30, "flightsOfStairs": 16};
-const newHydrationData = {"userID": 1, "date": '2019/09/22', "numOunces": 6.1};
-//apiCalls.addSleepData(newSleepData), apiCalls.addActivityData(newActivityData),apiCalls.addHydrationData(newHydrationData),
-
-Promise.all([apiCalls.getUserData(), apiCalls.getSleepData(), apiCalls.getActivityData(), apiCalls.getHydrationData()])
-  .then((data) => {
-  // console.log('this is all promises' , data);
-    const dataSet = data.reduce((dataList, dataItem) => {
-      return dataList = {...dataList, ...dataItem};
-    }, {})
-    instantiateData(dataSet);
-    displayOnLoad();
-  })
-
-//Instances of classes
-function instantiateData(data) {
-  users = data.userData.map(user => new User(user));
-  userRepository = new UserRepository(users);
-  activityInstances = data.activityData.map(data => new Activity(data, userRepository));
-  hydrationInstances = data.hydrationData.map(data => new Hydration(data, userRepository));
-  sleepInstances = data.sleepData.map(data => new Sleep(data, userRepository));
-  user = userRepository.users[generateRandomNum(userRepository.users)];
-  todayDate = "2019/06/24";
-}
-  
-function generateRandomNum(list){
-  return Math.round(Math.random() * list.length);
-}
+let randomUserIndex;
 
 //querySelectors
 let headerName = document.querySelector('#header-name');
@@ -87,23 +53,39 @@ profileButton.addEventListener('click', showDropdown);
 
 //Functions
 
+// const newSleepData = {"userID": randomUserIndex + 1, "date": '2019/09/21', "hoursSlept": 8, "sleepQuality": 7};
+// const newActivityData = {"userID": randomUserIndex + 1, "date": '2019/09/22', "numSteps": 2000, "minutesActive": 30, "flightsOfStairs": 16};
+// const newHydrationData = {"userID": randomUserIndex + 1, "date": '2019/09/22', "numOunces": 6.1};
 
-//maybe for later
-// function changeHiddenProperty(elements) {
-//   elements.forEach(element => {
-//     if (element.addHidden) {
-//       elements.property.classList.add('hide');
-//     } else {
-//       elements.property.classList.remove('hide')
-//     }
-//   })
-// }
+Promise.all([apiCalls.getUserData(), apiCalls.getSleepData(), apiCalls.getActivityData(), apiCalls.getHydrationData()])
+  .then((data) => {
+    const dataSet = data.reduce((dataList, dataItem) => {
+      return dataList = {...dataList, ...dataItem};
+    }, {})
+    instantiateData(dataSet);
+    loadMainPage();
+  })
 
-function displayOnLoad() {
+//Instances of classes
+function instantiateData(data) {
+  users = data.userData.map(user => new User(user));
+  userRepository = new UserRepository(users);
+  activityInstances = data.activityData.map(data => new Activity(data, userRepository));
+  hydrationInstances = data.hydrationData.map(data => new Hydration(data, userRepository));
+  sleepInstances = data.sleepData.map(data => new Sleep(data, userRepository));
+  todayDate = "2019/06/24";
+}
+
+function loadMainPage() {
+  randomUserIndex = generateRandomNum(userRepository.users);
+  user = userRepository.users[randomUserIndex];
   user.findFriendsNames(userRepository.users);
   sortOuncesRecord();
   displayMainPageSection();
-  headerName.innerText = `${user.getFirstName()}'S FITLIT`;
+}
+
+function generateRandomNum(list){
+  return Math.round(Math.random() * list.length);
 }
 
 function displayMainPageSection() {
@@ -111,6 +93,7 @@ function displayMainPageSection() {
   // stairsUserStairsToday.innerText = data.flightsOfStairs * 12;
   // hydrationUserOuncesToday.innerText = data.numOunces;
   // sleepUserHoursToday.innerText = data.hoursSlept;
+  headerName.innerText = `${user.getFirstName()}'S FITLIT`;
   stepsUserStepsToday.innerText = findTodayUserMetrics(activityInstances).steps;
   stairsUserStairsToday.innerText = findTodayUserMetrics(activityInstances).flightsOfStairs * 12;
   hydrationUserOuncesToday.innerText = findTodayUserMetrics(hydrationInstances).ounces;
@@ -134,6 +117,17 @@ function sortOuncesRecord() {
     return 0;
   });
 }
+
+//maybe for later
+// function changeHiddenProperty(elements) {
+//   elements.forEach(element => {
+//     if (element.addHidden) {
+//       elements.property.classList.add('hide');
+//     } else {
+//       elements.property.classList.remove('hide')
+//     }
+//   })
+// }
 
 function flipCard(cardToHide, cardToShow) {
   cardToHide.classList.add('hide');
