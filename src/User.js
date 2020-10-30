@@ -22,12 +22,12 @@
     this.friendsActivityRecords = []
   }
   getFirstName() {
-    this.name = this.name.split(' ');
-    return this.name[0].toUpperCase();
+    const newName = this.name.split(' ');
+    return newName[0].toUpperCase();
   }
   // Should be in Hydration.js?
   updateHydration(date, amount) {
-    this.ouncesRecord.unshift({[date]: amount});
+    this.ouncesRecord.unshift({date,amount});
     const recordLength = this.ouncesRecord.length;
     const currentTotal = this.ouncesAverage * (recordLength - 1);
     const currentAverage = (currentTotal + amount) / recordLength;
@@ -40,8 +40,8 @@
   //Move to Hydration.js, formerly addDailyOunces(date)
   returnTotalDailyOunces(date) {
     return this.ouncesRecord.reduce((totalOunces, record) => {
-      if (record[date]) {
-        totalOunces += record[date]
+      if (record.date === date) {
+        totalOunces += record.amount
       }
       return totalOunces
     }, 0)
@@ -103,7 +103,7 @@
   }
 
   sortRecord(recordType, activity) {
-    return this[recordType].sort((a, b) => {
+    return recordType.sort((a, b) => {
       if (a[activity] - b[activity] < 0) {
         return 1
       } else if (a[activity] - b[activity] > 0) {
@@ -113,9 +113,9 @@
       }
     })
   }
-
+//never used
   findClimbingRecord() {
-     this.sortRecord('activityRecord', 'flightsOfStairs');
+     this.sortRecord(`this['activityRecord']`, 'flightsOfStairs');
      return this.activityRecord[0].flightsOfStairs;
   }
 
@@ -171,17 +171,20 @@
   }
 
   findFriendsTotalStepsForWeek(users, date) {
-    this.friends.map(friend => {
-      let matchedFriend = users.find(user => user.id === friend);
+    const friendsActivityRecords = this.friends.reduce((friendsActivityRecords, friendId)=> {
+      let matchedFriend = users.find(user => user.id === friendId);
       matchedFriend.calculateTotalStepsThisWeek(date);
-      this.friendsActivityRecords.push(
-        {
-          'id': matchedFriend.id,
-          'firstName': matchedFriend.name[0].toUpperCase(),
-          'totalWeeklySteps': matchedFriend.totalStepsThisWeek
-        });
-    })
-    return this.sortRecord('friendsActivityRecords', 'totalWeeklySteps');
+      if(friendsActivityRecords.length < this.friends.length) {
+        friendsActivityRecords.push(
+          {
+            'id': matchedFriend.id,
+            'firstName': matchedFriend.name.split(' ')[0].toUpperCase(),
+            'totalWeeklySteps': matchedFriend.totalStepsThisWeek
+          });
+      }
+      return friendsActivityRecords;
+    }, [])
+  return this.sortRecord(friendsActivityRecords, 'totalWeeklySteps');
   }
 }
 

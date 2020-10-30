@@ -11,17 +11,17 @@
       <h1 id='header-name'>FITLIT</h1>
       <button aria-label='profile' id='profile-button'></button>
       <section class='hide' id='user-info-dropdown'>
-        <h5 id='dropdown-name'></h5>
+        <!-- <h5 id='dropdown-name'></h5>
         <p class='dropdown-p' id='dropdown-email'></p>
         <p class='dropdown-p' id='dropdown-goal'></p>
         <br/>
         <p class='dropdown-p' id='dropdown-friends'>FRIENDS TOTAL STEPS THIS WEEK</p>
-        <section id='dropdown-friends-steps-container'></section>
+        <section id='dropdown-friends-steps-container'></section> -->
       </section>
     </header>
     <main>
-      <section class='card-container' id='steps-card-container'>
-        <section class='main-card' id='steps-main-card'>
+      <section class='steps card-container' id='steps-card-container'>
+        <section class='steps main-card' id='steps-main-card'>
           <section class='main-card-top-row'>
             <button aria-label='steps-info' class='info-button steps-info-button'></button>
             <h3>YOU HAVE WALKED</h3>
@@ -35,7 +35,7 @@
           </section>
         </section>
         <section class='info-card hide' id='steps-info-card'>
-          <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
+          <!-- <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
           <section class='card-data-line'>
             <p>TOTAL ACTIVE MINUTES TODAY:</p>
             <h4 id='steps-info-active-minutes-today'></h4>
@@ -43,10 +43,10 @@
           <section class='card-data-line'>
             <p>TOTAL MILES WALKED TODAY:</p>
             <h4 id='steps-info-miles-walked-today'></h4>
-          </section>
+          </section> -->
         </section>
-        <section class='friends-card hide' id='steps-friends-card'>
-          <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
+         <section class='friends-card hide' id='steps-friends-card'>
+          <!-- <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
           <section class='card-data-line'>
             <p>ALL USERS' AVERAGE ACTIVE MINUTES TODAY:</p>
             <h4 id='steps-friend-active-minutes-average-today'></h4>
@@ -58,26 +58,26 @@
           <section class='card-data-line'>
             <p>ALL USERS' AVERAGE STEP GOAL:</p>
             <h4 id='steps-friend-average-step-goal'></h4>
-          </section>
+          </section> -->
         </section>
         <section class='trending-card hide' id='steps-trending-card'>
-          <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
-          <section class='card-data-line trending-steps-phrase-container'></section>
+          <!-- <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
+          <section class='card-data-line trending-steps-phrase-container'></section> -->
         </section>
         <section class='calendar-card hide' id='steps-calendar-card'>
-          <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
+          <!-- <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
           <section class='card-data-line'>
             <p>YOUR WEEKLY AVERAGE MINUTES:</p>
             <h4 id='steps-calendar-total-active-minutes-weekly'></h4>
-          </section>
-          <section class='card-data-line'>
+          </section> -->
+          <!-- <section class='card-data-line'>
             <p>YOUR TOTAL WEEKLY STEP COUNT:</p>
             <h4 id='steps-calendar-total-steps-weekly'></h4>
-          </section>
+          </section> -->
         </section>
       </section>
-      <section class='card-container' id='hydration-card-container'>
-        <section class='main-card' id='hydration-main-card'>
+      <section class='hydration card-container' id='hydration-card-container'>
+        <section class='hydration main-card' id='hydration-main-card'>
           <section class='main-card-top-row'>
             <button aria-label='hydration' class='info-button hydration-info-button'></button>
             <h3>YOU HAVE HAD</h3>
@@ -90,49 +90,49 @@
           </section>
         </section>
         <section class='info-card hide' id='hydration-info-card'>
-          <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
+          <!-- <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
           <section class='card-data-line'>
             <p>GLASSES OF WATER CONSUMED TODAY:</p>
             <h4 id='hydration-info-glasses-today'></h4>
-          </section>
+          </section> -->
         </section>
         <section class='friends-card hide' id='hydration-friends-card'>
-          <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
+          <!-- <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
           <section class='card-data-line'>
             <p>ALL USERS' AVERAGE DAILY OUNCES:</p>
             <h4 id='hydration-friend-ounces-today'></h4>
-          </section>
+          </section> -->
         </section>
         <section class='calendar-card hide' id='hydration-calendar-card'>
-          <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
-          <section class='hydration-data-line'>
-            <p class='hydration-weekly-label'>YESTERDAY:</p>
-            <h4 class='hydration-weekly-amount daily-oz' id='hydration-calendar-ounces-1day'> oz</h4>
-          </section>
-          <section class='hydration-data-line'>
-            <p class='hydration-weekly-label'>2 DAYS AGO:</p>
-            <h4 class='hydration-weekly-amount daily-oz' id='hydration-calendar-ounces-2day'> oz</h4>
-          </section>
-          <section class='hydration-data-line'>
-            <p class='hydration-weekly-label'>3 DAYS AGO:</p>
-            <h4 class='hydration-weekly-amount daily-oz' id='hydration-calendar-ounces-3day'> oz</h4>
-          </section>
-          <section class='hydration-data-line'>
-            <p class='hydration-weekly-label'>4 DAYS AGO:</p>
-            <h4 class='hydration-weekly-amount daily-oz' id='hydration-calendar-ounces-4day'> oz</h4>
-          </section>
-          <section class='hydration-data-line'>
-            <p class='hydration-weekly-label'>5 DAYS AGO:</p>
-            <h4 class='hydration-weekly-amount daily-oz' id='hydration-calendar-ounces-5day'> oz</h4>
-          </section>
-          <section class='hydration-data-line'>
-            <p class='hydration-weekly-label'>6 DAYS AGO:</p>
-            <h4 class='hydration-weekly-amount daily-oz' id='hydration-calendar-ounces-6day'> oz</h4>
-          </section>
+          <!-- <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
+            <section class='hydration-data-line'>
+              <p class='hydration-weekly-label'>YESTERDAY:</p>
+              <h4 class='hydration-weekly-amount daily-oz' id='hydration-calendar-ounces-1day'> oz</h4>
+            </section>
+            <section class='hydration-data-line'>
+              <p class='hydration-weekly-label'>2 DAYS AGO:</p>
+              <h4 class='hydration-weekly-amount daily-oz' id='hydration-calendar-ounces-2day'> oz</h4>
+            </section>
+            <section class='hydration-data-line'>
+              <p class='hydration-weekly-label'>3 DAYS AGO:</p>
+              <h4 class='hydration-weekly-amount daily-oz' id='hydration-calendar-ounces-3day'> oz</h4>
+            </section>
+            <section class='hydration-data-line'>
+              <p class='hydration-weekly-label'>4 DAYS AGO:</p>
+              <h4 class='hydration-weekly-amount daily-oz' id='hydration-calendar-ounces-4day'> oz</h4>
+            </section>
+            <section class='hydration-data-line'>
+              <p class='hydration-weekly-label'>5 DAYS AGO:</p>
+              <h4 class='hydration-weekly-amount daily-oz' id='hydration-calendar-ounces-5day'> oz</h4>
+            </section>
+            <section class='hydration-data-line'>
+              <p class='hydration-weekly-label'>6 DAYS AGO:</p>
+              <h4 class='hydration-weekly-amount daily-oz' id='hydration-calendar-ounces-6day'> oz</h4>
+            </section> -->
         </section>
       </section>
-      <section class='card-container' id='stairs-card-container'>
-        <section class='main-card' id='stairs-main-card'>
+      <section class='stairs card-container' id='stairs-card-container'>
+        <section class='stairs main-card' id='stairs-main-card'>
           <section class='main-card-top-row'>
             <button aria-label='stairs' class='info-button stairs-info-button'></button>
             <h3>YOU HAVE CLIMBED</h3>
@@ -146,26 +146,26 @@
           </section>
         </section>
         <section class='info-card hide' id='stairs-info-card'>
-          <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
+          <!-- <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
           <section class='card-data-line'>
             <p>FLIGHTS CLIMBED TODAY</p>
             <h4 id='stairs-info-flights-today'></h4>
-          </section>
+          </section> -->
         </section>
         <section class='friends-card hide' id='stairs-friends-card'>
-          <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
+          <!-- <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
           <section class='card-data-line'>
             <p>ALL USERS' AVERAGE FLIGHTS TODAY</p>
             <h4 id='stairs-friend-flights-average-today'></h4>
-          </section>
+          </section> -->
         </section>
         <section class='trending-card hide' id='stairs-trending-card'>
-          <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
+          <!-- <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
           <section class='card-data-line trending-stairs-phrase-container'>
-          </section>
+          </section> -->
         </section>
         <section class='calendar-card hide' id='stairs-calendar-card'>
-          <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
+          <!-- <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
           <section class='card-data-line'>
             <p>YOUR WEEKLY FLIGHTS CLIMBED</p>
             <h4 id='stairs-calendar-flights-average-weekly'></h4>
@@ -173,11 +173,11 @@
           <section class='card-data-line'>
             <p>YOUR WEEKLY STAIRS CLIMBED</p>
             <h4 id='stairs-calendar-stairs-average-weekly'></h4>
-          </section>
+          </section> -->
         </section>
       </section>
-      <section class='card-container' id='sleep-card-container'>
-        <section class='main-card' id='sleep-main-card'>
+      <section class='sleep card-container' id='sleep-card-container'>
+        <section class='sleep main-card' id='sleep-main-card'>
           <section class='main-card-top-row'>
             <button aria-label='sleep' class='info-button sleep-info-button'></button>
             <h3>YOU SLEPT</h3>
@@ -190,7 +190,7 @@
           </section>
         </section>
         <section class='info-card hide' id='sleep-info-card'>
-          <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
+          <!-- <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
           <section class='card-data-line'>
             <p>SLEEP QUALITY LAST NIGHT</p>
             <h4 id='sleep-info-quality-today'></h4>
@@ -202,10 +202,10 @@
           <section class='card-data-line'>
             <p>OVERALL SLEEP QUALITY AVERAGE</p>
             <h4 id='sleep-info-quality-average-alltime'></h4>
-          </section>
+          </section> -->
         </section>
         <section class='friends-card hide' id='sleep-friends-card'>
-          <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
+          <!-- <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
           <section class='card-data-line'>
             <p>LAST NIGHT'S SUPERIOR SLEEPER</p>
             <h4 id='sleep-friend-longest-sleeper'></h4>
@@ -213,10 +213,10 @@
           <section class='card-data-line'>
             <p>LAST NIGHT'S INFERIOR SLEEPER</p>
             <h4 id='sleep-friend-worst-sleeper'></h4>
-          </section>
+          </section> -->
         </section>
         <section class='calendar-card hide' id='sleep-calendar-card'>
-          <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
+          <!-- <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
           <section class='card-data-line'>
             <p>LAST WEEK'S HOURLY AVERAGE</p>
             <h4 id='sleep-calendar-hours-average-weekly'></h4>
@@ -224,7 +224,7 @@
           <section class='card-data-line'>
             <p>LAST WEEK'S QUALITY AVERAGE</p>
             <h4 id='sleep-calendar-quality-average-weekly'></h4>
-          </section>
+          </section> -->
         </section>
       </section>
     </main>
