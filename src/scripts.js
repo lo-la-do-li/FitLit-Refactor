@@ -126,17 +126,17 @@ function sortOuncesRecord() {
 //   })
 // }
 
-function flipCard(cardToHide, cardToShow) {
-  cardToHide.classList.add('hide');
-  cardToShow.classList.remove('hide');
-}
+// function domUpdate.flipCard(cardToHide, cardToShow) {
+//   cardToHide.classList.add('hide');
+//   cardToShow.classList.remove('hide');
+// }
 
 function showDropdown() {
   const name = user.getFirstName();
   const friendsSteps = displayFriendsSteps();
   domUpdate.showDropDown(userInfoDropdown, name, user, friendsSteps)
   let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
-  domUpdate.updateDropdowTextColor(friendsStepsParagraphs);
+  domUpdate.updateDropdownTextColor(friendsStepsParagraphs);
 
 }
 
@@ -160,70 +160,70 @@ function showInfo() {
 
 function showStepInfo() {
   if (event.target.classList.contains('steps-info-button')) {
-    flipCard(stepsMainCard, stepsInfoCard);
+    domUpdate.flipCard(stepsMainCard, stepsInfoCard);
     displayStepsInfoSection();
   } else if (event.target.classList.contains('steps-friends-button')) {
-    flipCard(stepsMainCard, stepsFriendsCard);
+    domUpdate.flipCard(stepsMainCard, stepsFriendsCard);
     displayFriendsStepsSection();
   } else if (event.target.classList.contains('steps-trending-button')) {
-    flipCard(stepsMainCard, stepsTrendingCard);
+    domUpdate.flipCard(stepsMainCard, stepsTrendingCard);
     displayTrendingStepSection();
   } else if (event.target.classList.contains('steps-calendar-button')) {
-    flipCard(stepsMainCard, stepsCalendarCard);
+    domUpdate.flipCard(stepsMainCard, stepsCalendarCard);
     displayCalendarStepsSection();
   } else if (event.target.classList.contains('steps-go-back-button')) {
-    flipCard(event.target.parentNode, stepsMainCard);
+    domUpdate.flipCard(event.target.parentNode, stepsMainCard);
   }
 }
 
 function showHydrationInfo() {
   if (event.target.classList.contains('hydration-info-button')) {
-    flipCard(hydrationMainCard, hydrationInfoCard);
+    domUpdate.flipCard(hydrationMainCard, hydrationInfoCard);
     displayHydrationInfoSection();
   }
   if (event.target.classList.contains('hydration-friends-button')) {
-    flipCard(hydrationMainCard, hydrationFriendsCard);
+    domUpdate.flipCard(hydrationMainCard, hydrationFriendsCard);
     displayFriendsHydrationSection();
   }
   if (event.target.classList.contains('hydration-calendar-button')) {
-    flipCard(hydrationMainCard, hydrationCalendarCard);
+    domUpdate.flipCard(hydrationMainCard, hydrationCalendarCard);
     displayHydrationCalendarSection();
   }
   if (event.target.classList.contains('hydration-go-back-button')) {
-    flipCard(event.target.parentNode, hydrationMainCard);
+    domUpdate.flipCard(event.target.parentNode, hydrationMainCard);
   }
 }
 
 function showStairsInfo() {
   if (event.target.classList.contains('stairs-info-button')) {
-    flipCard(stairsMainCard, stairsInfoCard);
+    domUpdate.flipCard(stairsMainCard, stairsInfoCard);
     displayStairsInfoSection();
   } else if (event.target.classList.contains('stairs-friends-button')) {
-    flipCard(stairsMainCard, stairsFriendsCard);
+    domUpdate.flipCard(stairsMainCard, stairsFriendsCard);
     displayFriendsStairsSection();
   } else if (event.target.classList.contains('stairs-trending-button')) {
-    flipCard(stairsMainCard, stairsTrendingCard);
+    domUpdate.flipCard(stairsMainCard, stairsTrendingCard);
     displayTrendingStairsSection();
   } else if (event.target.classList.contains('stairs-calendar-button')) {
-    flipCard(stairsMainCard, stairsCalendarCard);
+    domUpdate.flipCard(stairsMainCard, stairsCalendarCard);
     displayCalendarStairsSection();
   } else if (event.target.classList.contains('stairs-go-back-button')) {
-    flipCard(event.target.parentNode, stairsMainCard);
+    domUpdate.flipCard(event.target.parentNode, stairsMainCard);
   }
 }
 
 function showSleepInfo() {
   if (event.target.classList.contains('sleep-info-button')) {
-    flipCard(sleepMainCard, sleepInfoCard);
+    domUpdate.flipCard(sleepMainCard, sleepInfoCard);
     displaySleepInfoSection();
   } else if (event.target.classList.contains('sleep-friends-button')) {
-    flipCard(sleepMainCard, sleepFriendsCard);
+    domUpdate.flipCard(sleepMainCard, sleepFriendsCard);
     displayFriendsSleepSection();
   } else if (event.target.classList.contains('sleep-calendar-button')) {
-    flipCard(sleepMainCard, sleepCalendarCard);
+    domUpdate.flipCard(sleepMainCard, sleepCalendarCard);
     displayCalendarSleepSection();
   } else if (event.target.classList.contains('sleep-go-back-button')) {
-    flipCard(event.target.parentNode, sleepMainCard);
+    domUpdate.flipCard(event.target.parentNode, sleepMainCard);
   }
 }
 

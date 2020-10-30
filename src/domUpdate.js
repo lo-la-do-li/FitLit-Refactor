@@ -26,7 +26,7 @@ const domUpdate = {
     return element;
   },
 
-  updateDropdowTextColor: (element) => {
+  updateDropdownTextColor: (element) => {
     element.forEach(paragraph => {
       if (element[0] === paragraph) {
         paragraph.classList.add('teal-text');
@@ -38,7 +38,12 @@ const domUpdate = {
         paragraph.classList.add('yellow-text');
       }
     });
-  }
+  },
+
+  flipCard: (cardToHide, cardToShow) => {
+    cardToHide.classList.add('hide');
+    cardToShow.classList.remove('hide');
+  },
 
 }
 
