@@ -241,19 +241,22 @@ function displayFriendsStepsSection() {
 }
 
 function displayCalendarStepsSection() {
-  stepsCalendarCard.innerHTML = '';
-  stepsCalendarCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
-  <section class='card-data-line'>
-    <p>YOUR WEEKLY AVERAGE MINUTES:</p>
-    <h4 id='steps-calendar-total-active-minutes-weekly'>${user.calculateAverageMinutesActiveThisWeek(todayDate)}</h4>
-  </section>
-  <section class='card-data-line'>
-    <p>YOUR TOTAL WEEKLY STEP COUNT:</p>
-    <h4 id='steps-calendar-total-steps-weekly'>${user.calculateAverageStepsThisWeek(todayDate)}</h4>
-  </section>
-  `
+  const averageActiveMin = user.calculateAverageMinutesActiveThisWeek(todayDate);
+  const averageSteps = user.calculateAverageStepsThisWeek(todayDate);
+  domUpdate.updateCalendarStepsSection(stepsCalendarCard, averageActiveMin, averageSteps)
+  // stepsCalendarCard.innerHTML = '';
+  // stepsCalendarCard.innerHTML =
+  // `
+  // <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
+  // <section class='card-data-line'>
+  //   <p>YOUR WEEKLY AVERAGE MINUTES:</p>
+  //   <h4 id='steps-calendar-total-active-minutes-weekly'>${user.calculateAverageMinutesActiveThisWeek(todayDate)}</h4>
+  // </section>
+  // <section class='card-data-line'>
+  //   <p>YOUR TOTAL WEEKLY STEP COUNT:</p>
+  //   <h4 id='steps-calendar-total-steps-weekly'>${user.calculateAverageStepsThisWeek(todayDate)}</h4>
+  // </section>
+  // `
 }
 
 function displayTrendingStepSection() {

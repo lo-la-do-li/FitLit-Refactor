@@ -78,7 +78,24 @@ const domUpdate = {
       <p>ALL USERS' AVERAGE STEP GOAL:</p>
       <h4 id='steps-friend-average-step-goal'>${goal}</h4>
     `
+  },
+  updateCalendarStepsSection: (element, min, steps) => {
+
+    element.innerHTML = '';
+    element.innerHTML =
+    `
+    <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
+    <section class='card-data-line'>
+      <p>YOUR WEEKLY AVERAGE MINUTES:</p>
+      <h4 id='steps-calendar-total-active-minutes-weekly'>${min}</h4>
+    </section>
+    <section class='card-data-line'>
+      <p>YOUR TOTAL WEEKLY STEP COUNT:</p>
+      <h4 id='steps-calendar-total-steps-weekly'>${steps}</h4>
+    </section>
+    `
   }
+
 
 
 }
