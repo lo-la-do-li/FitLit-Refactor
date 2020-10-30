@@ -7,6 +7,7 @@ import User from './User';
 import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
+import domUpdate from './domUpdate';
 import apiCalls from './ApiCalls';
 
 
@@ -89,10 +90,6 @@ function generateRandomNum(list){
 }
 
 function displayMainPageSection() {
-  // stepsUserStepsToday.innerText = data.numSteps;
-  // stairsUserStairsToday.innerText = data.flightsOfStairs * 12;
-  // hydrationUserOuncesToday.innerText = data.numOunces;
-  // sleepUserHoursToday.innerText = data.hoursSlept;
   headerName.innerText = `${user.getFirstName()}'S FITLIT`;
   stepsUserStepsToday.innerText = findTodayUserMetrics(activityInstances).steps;
   stairsUserStairsToday.innerText = findTodayUserMetrics(activityInstances).flightsOfStairs * 12;
@@ -135,48 +132,19 @@ function flipCard(cardToHide, cardToShow) {
 }
 
 function showDropdown() {
-  userInfoDropdown.classList.toggle('hide');
-  userInfoDropdown.innerHTML = '';
-  userInfoDropdown.innerHTML =
-  `
-  <h5 id='dropdown-name'>${user.getFirstName()}</h5>
-  <p class='dropdown-p' id='dropdown-email'> EMAIL | ${user.email}</p>
-  <p class='dropdown-p' id='dropdown-goal'> DAILY STEP GOAL | ${user.dailyStepGoal}</p>
-  <br/>
-  <p class='dropdown-p' id='dropdown-friends'>FRIENDS TOTAL STEPS THIS WEEK</p>
-  <section id='dropdown-friends-steps-container'>
-  ${displayFriendsSteps()}</section>
-  `
+  const name = user.getFirstName();
+  const friendsSteps = displayFriendsSteps();
+  domUpdate.showDropDown(userInfoDropdown, name, user, friendsSteps)
   let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
-  updateDropdowTextColor(friendsStepsParagraphs);
+  domUpdate.updateDropdowTextColor(friendsStepsParagraphs);
 
 }
 
 function displayFriendsSteps() {
   const friendsStepsRecords = user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
-  let element = '';
-  friendsStepsRecords.forEach(friend => {    
-    element +=
-    `
-    <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
-    `
-  });
-  return element;
+  return domUpdate.updateFriendsSteps(friendsStepsRecords);
 }
 
-function updateDropdowTextColor(element) {
-  element.forEach(paragraph => {
-    if (element[0] === paragraph) {
-      paragraph.classList.add('teal-text');
-    }
-    if (element[element.length - 1] === paragraph) {
-      paragraph.classList.add('orange-text');
-    }
-    if (paragraph.innerText.includes('YOU')) {
-      paragraph.classList.add('yellow-text');
-    }
-  });
-}
 
 function showInfo() {
   if (event.target.parentNode.parentNode.classList.contains('steps')) {
