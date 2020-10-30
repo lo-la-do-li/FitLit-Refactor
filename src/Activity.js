@@ -1,7 +1,8 @@
-class Activity {
+import Action from './Action';
+
+class Activity extends Action {
   constructor(data, userRepository) {
-    this.userId = data.userID;
-    this.date = data.date;
+    super(data);
     this.steps = data.numSteps;
     this.minutesActive = data.minutesActive;
     this.flightsOfStairs = data.flightsOfStairs;
@@ -10,9 +11,62 @@ class Activity {
     this.doActivity(userRepository);
   }
 
-  returnChosenUser(userRepository) {
-    return userRepository.users.find(user => user.id === this.userId)
-  }
+  // updateActivities(activity) {
+  //   this.updateRecord(activity, 'activityRecord')
+  //   if (activity.numSteps >= this.dailyStepGoal) {
+  //     this.accomplishedDays.unshift(activity.date);
+  //   }
+  // }
+
+  // findClimbingRecord() {
+  //   this.sortRecord('activityRecord', 'flightsOfStairs');
+  //   return this.activityRecord[0].flightsOfStairs;
+  // }
+
+  // calculateDailyCalories(date) {
+  //  let fitDate = this.activityRecord.filter(activity => activity.date === date)
+  //  const totalMinutes = fitDate.reduce((sumMinutes, activity) => {
+  //    return sumMinutes += activity.minutesActive
+  //  }, 0);
+  //  return Math.round(totalMinutes * 7.6);
+  // }
+
+  // calculateAverageMinutesActiveThisWeek(todayDate) {
+  //  return this.calculateAverageValueByWeek(todayDate, this.activityRecord, 'minutesActive', 0);
+  // }
+  // calculateAverageStepsThisWeek(todayDate) {
+  //  return this.calculateAverageValueByWeek(todayDate, this.activityRecord, 'steps', 0);
+  // }
+  // calculateAverageFlightsThisWeek(todayDate) {
+  //  return this.calculateAverageValueByWeek(todayDate, this.activityRecord, 'flightsOfStairs', 1);
+  // }
+
+  // findTrendingStepDays() {
+  //   this.findRecord('trendingStepDays', 'steps', 'step');
+  // }
+
+  // findTrendingStairsDays() {
+  //   this.findRecord('trendingStairsDays', 'flightsOfStairs', 'climbing');
+  // }
+
+  // calculateTotalStepsThisWeek(todayDate) {
+  //   const totalSteps = this.calculateTotalNum(todayDate, this.activityRecord, 'steps');
+  //   return this.totalStepsThisWeek = totalSteps;
+  // }
+
+  // findFriendsTotalStepsForWeek(users, date) {
+  //   this.friends.map(friend => {
+  //     let matchedFriend = users.find(user => user.id === friend);
+  //     matchedFriend.calculateTotalStepsThisWeek(date);
+  //     this.friendsActivityRecords.push(
+  //       {
+  //         'id': matchedFriend.id,
+  //         'firstName': matchedFriend.name[0].toUpperCase(),
+  //         'totalWeeklySteps': matchedFriend.totalStepsThisWeek
+  //       });
+  //   })
+  //   return this.sortRecord('friendsActivityRecords', 'totalWeeklySteps');
+  // }
 
   doActivity(userRepository) {
     const chosenUser = this.returnChosenUser(userRepository);

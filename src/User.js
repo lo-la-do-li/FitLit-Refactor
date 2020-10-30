@@ -19,7 +19,7 @@
     this.trendingStepDays = [];
     this.trendingStairsDays = [];
     this.friendsNames = [];
-    this.friendsActivityRecords = []
+    //this.friendsActivityRecords = []
   }
   getFirstName() {
     const newName = this.name.split(' ');
@@ -114,10 +114,10 @@
     })
   }
 //never used
-  findClimbingRecord() {
-     this.sortRecord(`this['activityRecord']`, 'flightsOfStairs');
-     return this.activityRecord[0].flightsOfStairs;
-  }
+  // findClimbingRecord() {
+  //    this.sortRecord(`this['activityRecord']`, 'flightsOfStairs');
+  //    return this.activityRecord[0].flightsOfStairs;
+  // }
 
   calculateDailyCalories(date) {
     let fitDate = this.activityRecord.filter(activity => activity.date === date)

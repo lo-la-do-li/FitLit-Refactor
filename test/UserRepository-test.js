@@ -114,17 +114,17 @@ describe('UserRepository', function() {
   });
   it('should have a method that finds the longest sleepers', function() {
     sleepData = [{
-      "userID": 1,
+      "userId": 1,
       "date": "2019/06/15",
       "hoursSlept": 6.1,
       "sleepQuality": 100
     }, {
-      "userID": 2,
+      "userId": 2,
       "date": "2019/06/15",
       "hoursSlept": 7.3,
       "sleepQuality": 1500
     }, {
-      "userID": 3,
+      "userId": 3,
       "date": "2019/06/15",
       "hoursSlept": 9.3,
       "sleepQuality": 1.4
@@ -133,17 +133,17 @@ describe('UserRepository', function() {
   });
   it('should have a method that finds the worst sleepers', function() {
     sleepData = [{
-      "userID": 1,
+      "userId": 1,
       "date": "2019/06/15",
       "hoursSlept": 6.1,
       "sleepQuality": 1000
     }, {
-      "userID": 2,
+      "userId": 2,
       "date": "2019/06/15",
       "hoursSlept": 7.3,
       "sleepQuality": 500
     }, {
-      "userID": 3,
+      "userId": 3,
       "date": "2019/06/15",
       "hoursSlept": 9.3,
       "sleepQuality": 1.4
