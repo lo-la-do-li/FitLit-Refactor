@@ -282,7 +282,7 @@ function displayFriendsStairsSection() {
 
 function displayTrendingStairsSection() {
   const trendingStairs = updateTrendingStairsDays();
-  domUpdate.updateTrendingStairsSection(stairsTrendingCard, trendingStairs)
+  domUpdate.updateTrendingStairsSection(stairsTrendingCard, trendingStairs);
   // stairsTrendingCard.innerHTML = '';
   // stairsTrendingCard.innerHTML =
   // `
@@ -294,11 +294,9 @@ function displayTrendingStairsSection() {
 }
 
 function updateTrendingStairsDays() {
-  // const trendingStairs = user.findTrendingStairsDays();
-  // domUpdate.updateTrendingStairs();
-  let element = '';
   user.findTrendingStairsDays();
-  return element = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
+  const trendingStairs = user.trendingStairsDays[0]
+  return domUpdate.updateTrendingStairs(trendingStairs);
 }
 
 function displayCalendarStairsSection() {
@@ -324,39 +322,45 @@ function displayCalendarStairsSection() {
 
 
 function displayHydrationInfoSection() {
-  hydrationInfoCard.innerHTML = '';
-  hydrationInfoCard.innerHTML = 
-  `
-  <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
-  <section class='card-data-line'>
-  <p>GLASSES OF WATER CONSUMED TODAY:</p>
-  <h4 id='hydration-info-glasses-today'>${findTodayUserMetrics(hydrationInstances).ounces/8}</h4>
-  </section>
-  `
+  const glasses = findTodayUserMetrics(hydrationInstances).ounces/8;
+  domUpdate.updateHydrationInfoSection(hydrationInfoCard, glasses);
+  // hydrationInfoCard.innerHTML = '';
+  // hydrationInfoCard.innerHTML = 
+  // `
+  // <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
+  // <section class='card-data-line'>
+  // <p>GLASSES OF WATER CONSUMED TODAY:</p>
+  // <h4 id='hydration-info-glasses-today'>${findTodayUserMetrics(hydrationInstances).ounces/8}</h4>
+  // </section>
+  // `
 }
 
 function displayFriendsHydrationSection() {
-  hydrationFriendsCard.innerHTML = '';
-  hydrationFriendsCard.innerHTML = 
-  `
-  <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
-  <section class='card-data-line'>
-  <p>ALL USERS' AVERAGE DAILY OUNCES:</p>
-  <h4 id='hydration-friend-ounces-today'>${userRepository.calculateAverageDailyWater(todayDate)}</h4>
-  </section>
-  `
+  const friendsIntake = userRepository.calculateAverageDailyWater(todayDate);
+  domUpdate.updateFriendsHydrationSection(hydrationFriendsCard, friendsIntake);
+  // hydrationFriendsCard.innerHTML = '';
+  // hydrationFriendsCard.innerHTML = 
+  // `
+  // <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
+  // <section class='card-data-line'>
+  // <p>ALL USERS' AVERAGE DAILY OUNCES:</p>
+  // <h4 id='hydration-friend-ounces-today'>${userRepository.calculateAverageDailyWater(todayDate)}</h4>
+  // </section>
+  // `
 }
 
 function displayHydrationCalendarSection() {
-  hydrationCalendarCard.innerHTML = '';
-  hydrationCalendarCard.innerHTML = 
-  `
-  <button aria-label='go-back' class='go-back-button hydration-go-back-button'>
-  </button>
-  <section class="display-hydration-calendar">
-  ${displayDailyOunces()}
-  </section>
-  `
+  const dailyOunces = displayDailyOunces();
+  domUpdate.updateHydrationCalendarSection(hydrationCalendarCard, dailyOunces);
+  // hydrationCalendarCard.innerHTML = '';
+  // hydrationCalendarCard.innerHTML = 
+  // `
+  // <button aria-label='go-back' class='go-back-button hydration-go-back-button'>
+  // </button>
+  // <section class="display-hydration-calendar">
+  // ${displayDailyOunces()}
+  // </section>
+  // `
 }
 
 function displayDailyOunces() {

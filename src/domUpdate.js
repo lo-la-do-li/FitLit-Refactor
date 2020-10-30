@@ -141,10 +141,10 @@ const domUpdate = {
     `
   },
 
-  // updateTrendingStairs: (stairs) => {
-  //   let element = '';
-  //   return element = `<p class='trend-line'>${stairs}</p>`
-  // },
+  updateTrendingStairs: (message) => {
+    let element = '';
+    return element = `<p class='trend-line'>${message}</p>`
+  },
 
   updateCalendarStairsSection: (element, avgFlights, avgStairs) => {
     element.innerHTML = '';
@@ -158,6 +158,42 @@ const domUpdate = {
     <section class='card-data-line'>
       <p>YOUR WEEKLY STAIRS CLIMBED</p>
       <h4 id='stairs-calendar-stairs-average-weekly'>${avgStairs}</h4>
+    </section>
+    `
+  },
+
+  updateHydrationInfoSection: (element, glasses) => {
+    element.innerHTML = '';
+    element.innerHTML = 
+    `
+    <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
+    <section class='card-data-line'>
+    <p>GLASSES OF WATER CONSUMED TODAY:</p>
+    <h4 id='hydration-info-glasses-today'>${glasses}</h4>
+    </section>
+    `
+  },
+
+  updateFriendsHydrationSection: (element, friendsIntake) => {
+    element.innerHTML = '';
+    element.innerHTML = 
+    `
+    <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
+    <section class='card-data-line'>
+    <p>ALL USERS' AVERAGE DAILY OUNCES:</p>
+    <h4 id='hydration-friend-ounces-today'>${friendsIntake}</h4>
+    </section>
+    `
+  },
+
+  updateHydrationCalendarSection: (element, dailyOunces) => {
+    element.innerHTML = '';
+    element.innerHTML = 
+    `
+    <button aria-label='go-back' class='go-back-button hydration-go-back-button'>
+    </button>
+    <section class="display-hydration-calendar">
+    ${dailyOunces}
     </section>
     `
   }
