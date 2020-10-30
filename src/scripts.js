@@ -155,7 +155,7 @@ function showDropdown() {
 function displayFriendsSteps() {
   const friendsStepsRecords = user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
   let element = '';
-  friendsStepsRecords.forEach(friend => {    
+  friendsStepsRecords.forEach(friend => {
     element +=
     `
     <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
@@ -384,7 +384,7 @@ function displayCalendarStairsSection() {
 
 function displayHydrationInfoSection() {
   hydrationInfoCard.innerHTML = '';
-  hydrationInfoCard.innerHTML = 
+  hydrationInfoCard.innerHTML =
   `
   <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
   <section class='card-data-line'>
@@ -396,7 +396,7 @@ function displayHydrationInfoSection() {
 
 function displayFriendsHydrationSection() {
   hydrationFriendsCard.innerHTML = '';
-  hydrationFriendsCard.innerHTML = 
+  hydrationFriendsCard.innerHTML =
   `
   <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
   <section class='card-data-line'>
@@ -408,7 +408,7 @@ function displayFriendsHydrationSection() {
 
 function displayHydrationCalendarSection() {
   hydrationCalendarCard.innerHTML = '';
-  hydrationCalendarCard.innerHTML = 
+  hydrationCalendarCard.innerHTML =
   `
   <button aria-label='go-back' class='go-back-button hydration-go-back-button'>
   </button>
@@ -422,36 +422,36 @@ function displayDailyOunces() {
   let elementSection = '';
   user.ouncesRecord.forEach((record, index) => {
   if (index === 1) {
-    elementSection = 
+    elementSection =
     `
-    <section 
+    <section
       class='hydration-data-line'>
-        <p 
+        <p
           class='hydration-weekly-label'>
           YESTERDAY:
         </p>
-        <h4 
-          class='hydration-weekly-amount daily-oz' 
+        <h4
+          class='hydration-weekly-amount daily-oz'
           id='hydration-calendar-ounces-1day'>
           ${user.returnTotalDailyOunces(record.date)} oz
         </h4>
     </section>
-    ` 
-  } else if(index > 1 && index < 7) {
-    elementSection += 
     `
-    <section 
+  } else if(index > 1 && index < 7) {
+    elementSection +=
+    `
+    <section
       class='hydration-data-line'>
-      <p 
+      <p
         class='hydration-weekly-label'>
         ${index} DAYS AGO:</p>
-      <h4 
-        class='hydration-weekly-amount daily-oz' 
-        id='hydration-calendar-ounces-1day'> 
+      <h4
+        class='hydration-weekly-amount daily-oz'
+        id='hydration-calendar-ounces-1day'>
         ${user.returnTotalDailyOunces(record.date)} oz
       </h4>
     </section>
-    ` 
+    `
     }
   })
   return elementSection;
@@ -516,3 +516,21 @@ function displayCalendarSleepSection() {
   </section>
   `
 }
+//MODAL SELECTORS, HANDLERS, and LISTENERS
+let modal = document.querySelector(".modal");
+let trigger = document.querySelector(".trigger");
+let closeButton = document.querySelector(".close-button");
+
+    function toggleModal() {
+        modal.classList.toggle("show-modal");
+    }
+
+    function windowOnClick(event) {
+        if (event.target === modal) {
+            toggleModal();
+        }
+    }
+
+  trigger.addEventListener("click", toggleModal);
+  closeButton.addEventListener("click", toggleModal);
+  window.addEventListener("click", windowOnClick);
