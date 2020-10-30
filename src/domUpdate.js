@@ -94,6 +94,18 @@ const domUpdate = {
       <h4 id='steps-calendar-total-steps-weekly'>${steps}</h4>
     </section>
     `
+  },
+
+  updateTrendingStepSection: (element, user) => {
+   
+    element.innerHTML = '';
+    element.innerHTML =
+    `
+    <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
+    <section class='card-data-line trending-steps-phrase-container'>
+      <p class='trend-line'>${user.trendingStepDays[0]}</p>
+    </section>
+    `
   }
 
 
