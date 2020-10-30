@@ -59,6 +59,25 @@ const domUpdate = {
       <h4 id='steps-info-miles-walked-today'>${miles}</h4>
     </section>
     `
+  },
+
+  updateFriendsStepsSection: (element, min, steps, goal) => {
+    element.innerHTML = '';
+    element.innerHTML =
+    `
+    <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
+    <section class='card-data-line'>
+      <p>ALL USERS' AVERAGE ACTIVE MINUTES TODAY:</p>
+      <h4 id='steps-friend-active-minutes-average-today'>${min}</h4>
+    </section>
+    <section class='card-data-line'>
+      <p>ALL USERS' AVERAGE STEPS TODAY:</p>
+      <h4 id='steps-friend-steps-average-today'>${steps}</h4>
+    </section>
+    <section class='card-data-line'>
+      <p>ALL USERS' AVERAGE STEP GOAL:</p>
+      <h4 id='steps-friend-average-step-goal'>${goal}</h4>
+    `
   }
 
 

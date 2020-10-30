@@ -234,22 +234,10 @@ function displayStepsInfoSection() {
 }
 
 function displayFriendsStepsSection() {
-  stepsFriendsCard.innerHTML = '';
-  stepsFriendsCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
-  <section class='card-data-line'>
-    <p>ALL USERS' AVERAGE ACTIVE MINUTES TODAY:</p>
-    <h4 id='steps-friend-active-minutes-average-today'>${userRepository.calculateAverageMinutesActive(todayDate)}</h4>
-  </section>
-  <section class='card-data-line'>
-    <p>ALL USERS' AVERAGE STEPS TODAY:</p>
-    <h4 id='steps-friend-steps-average-today'>${userRepository.calculateAverageSteps(todayDate)}</h4>
-  </section>
-  <section class='card-data-line'>
-    <p>ALL USERS' AVERAGE STEP GOAL:</p>
-    <h4 id='steps-friend-average-step-goal'>${userRepository.calculateAverageStepGoal()}</h4>
-  `
+  const averageMin = userRepository.calculateAverageMinutesActive(todayDate);
+  const averageSteps = userRepository.calculateAverageSteps(todayDate);
+  const averageGoal = userRepository.calculateAverageStepGoal();
+  domUpdate.updateFriendsStepsSection(stepsFriendsCard, averageMin, averageSteps, averageGoal);
 }
 
 function displayCalendarStepsSection() {
