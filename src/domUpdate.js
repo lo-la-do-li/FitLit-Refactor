@@ -45,6 +45,23 @@ const domUpdate = {
     cardToShow.classList.remove('hide');
   },
 
+  updateStepsInfoSection: (element, min, miles) => {
+    element.innerHTML = '';
+    element.innerHTML =
+    `
+    <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
+    <section class='card-data-line'>
+      <p>TOTAL ACTIVE MINUTES TODAY:</p>
+      <h4 id='steps-info-active-minutes-today'>${min}</h4>
+    </section>
+    <section class='card-data-line'>
+      <p>TOTAL MILES WALKED TODAY:</p>
+      <h4 id='steps-info-miles-walked-today'>${miles}</h4>
+    </section>
+    `
+  }
+
+
 }
 
 export default domUpdate;

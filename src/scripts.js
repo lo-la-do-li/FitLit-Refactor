@@ -228,19 +228,9 @@ function showSleepInfo() {
 }
 
 function displayStepsInfoSection() {
-  stepsInfoCard.innerHTML = '';
-  stepsInfoCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
-  <section class='card-data-line'>
-    <p>TOTAL ACTIVE MINUTES TODAY:</p>
-    <h4 id='steps-info-active-minutes-today'>${findTodayUserMetrics(activityInstances).minutesActive}</h4>
-  </section>
-  <section class='card-data-line'>
-    <p>TOTAL MILES WALKED TODAY:</p>
-    <h4 id='steps-info-miles-walked-today'>${findTodayUserMetrics(activityInstances).calculateMiles(userRepository)}</h4>
-  </section>
-  `
+  const min = findTodayUserMetrics(activityInstances).minutesActive;
+  const miles = findTodayUserMetrics(activityInstances).calculateMiles(userRepository)
+  domUpdate.updateStepsInfoSection(stepsInfoCard, min, miles);
 }
 
 function displayFriendsStepsSection() {
