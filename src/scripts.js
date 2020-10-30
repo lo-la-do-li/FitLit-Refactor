@@ -254,58 +254,70 @@ function displayTrendingStepSection() {
 // END OF STEPS -----------------------------------------
 
 function displayStairsInfoSection() {
-  stairsInfoCard.innerHTML = '';
-  stairsInfoCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
-  <section class='card-data-line'>
-    <p>FLIGHTS CLIMBED TODAY</p>
-    <h4 id='stairs-info-flights-today'>${findTodayUserMetrics(activityInstances).flightsOfStairs}</h4>
-  </section>
-  `
+  const flights = findTodayUserMetrics(activityInstances).flightsOfStairs;
+  domUpdate.updateStairsInfoSection(stairsInfoCard, flights);
+  // stairsInfoCard.innerHTML = '';
+  // stairsInfoCard.innerHTML =
+  // `
+  // <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
+  // <section class='card-data-line'>
+  //   <p>FLIGHTS CLIMBED TODAY</p>
+  //   <h4 id='stairs-info-flights-today'>${findTodayUserMetrics(activityInstances).flightsOfStairs}</h4>
+  // </section>
+  // `
 }
 
 function displayFriendsStairsSection() {
-  stairsFriendsCard.innerHTML = ''
-  stairsFriendsCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
-  <section class='card-data-line'>
-    <p>ALL USERS' AVERAGE FLIGHTS TODAY</p>
-    <h4 id='stairs-friend-flights-average-today'>${(userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1)}</h4>
-    `
+  const avgFlights = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
+  domUpdate.updateFriendsStairsSection(stairsFriendsCard, avgFlights);
+  // stairsFriendsCard.innerHTML = ''
+  // stairsFriendsCard.innerHTML =
+  // `
+  // <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
+  // <section class='card-data-line'>
+  //   <p>ALL USERS' AVERAGE FLIGHTS TODAY</p>
+  //   <h4 id='stairs-friend-flights-average-today'>${(userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1)}</h4>
+  // `
 }
 
 function displayTrendingStairsSection() {
-  stairsTrendingCard.innerHTML = '';
-  stairsTrendingCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
-  <section class='card-data-line trending-stairs-phrase-container'>
-  ${updateTrendingStairsDays()}
-  </section>
-  `
+  const trendingStairs = updateTrendingStairsDays();
+  domUpdate.updateTrendingStairsSection(stairsTrendingCard, trendingStairs)
+  // stairsTrendingCard.innerHTML = '';
+  // stairsTrendingCard.innerHTML =
+  // `
+  // <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
+  // <section class='card-data-line trending-stairs-phrase-container'>
+  // ${updateTrendingStairsDays()}
+  // </section>
+  // `
 }
+
 function updateTrendingStairsDays() {
+  // const trendingStairs = user.findTrendingStairsDays();
+  // domUpdate.updateTrendingStairs();
   let element = '';
   user.findTrendingStairsDays();
   return element = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
 }
 
 function displayCalendarStairsSection() {
-  stairsCalendarCard.innerHTML = '';
-  stairsCalendarCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
-  <section class='card-data-line'>
-    <p>YOUR WEEKLY FLIGHTS CLIMBED</p>
-    <h4 id='stairs-calendar-flights-average-weekly'>${user.calculateAverageFlightsThisWeek(todayDate)}</h4>
-  </section>
-  <section class='card-data-line'>
-    <p>YOUR WEEKLY STAIRS CLIMBED</p>
-    <h4 id='stairs-calendar-stairs-average-weekly'>${(user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0)}</h4>
-  </section>
-  `
+  const avgFlights = user.calculateAverageFlightsThisWeek(todayDate);
+  const avgStairs = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+  domUpdate.updateCalendarStairsSection(stairsCalendarCard, avgFlights, avgStairs);
+  // stairsCalendarCard.innerHTML = '';
+  // stairsCalendarCard.innerHTML =
+  // `
+  // <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
+  // <section class='card-data-line'>
+  //   <p>YOUR WEEKLY FLIGHTS CLIMBED</p>
+  //   <h4 id='stairs-calendar-flights-average-weekly'>${user.calculateAverageFlightsThisWeek(todayDate)}</h4>
+  // </section>
+  // <section class='card-data-line'>
+  //   <p>YOUR WEEKLY STAIRS CLIMBED</p>
+  //   <h4 id='stairs-calendar-stairs-average-weekly'>${(user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0)}</h4>
+  // </section>
+  // `
 }
 
 // END OF STAIRS -----------------------------------------

@@ -106,9 +106,61 @@ const domUpdate = {
       <p class='trend-line'>${user.trendingStepDays[0]}</p>
     </section>
     `
+  },
+
+  updateStairsInfoSection: (element, flights) => {
+    element.innerHTML = '';
+    element.innerHTML =   `
+    <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
+    <section class='card-data-line'>
+      <p>FLIGHTS CLIMBED TODAY</p>
+      <h4 id='stairs-info-flights-today'>${flights}</h4>
+    </section>
+    `
+  },
+
+  updateFriendsStairsSection: (element, avgFlights) => {
+    element.innerHTML = ''
+    element.innerHTML =
+    `
+    <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
+    <section class='card-data-line'>
+      <p>ALL USERS' AVERAGE FLIGHTS TODAY</p>
+      <h4 id='stairs-friend-flights-average-today'>${avgFlights}</h4>
+    `
+  },
+
+  updateTrendingStairsSection: (element, trendingStairs) => {
+    element.innerHTML = '';
+    element.innerHTML =
+    `
+    <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
+    <section class='card-data-line trending-stairs-phrase-container'>
+    ${trendingStairs}
+    </section>
+    `
+  },
+
+  // updateTrendingStairs: (stairs) => {
+  //   let element = '';
+  //   return element = `<p class='trend-line'>${stairs}</p>`
+  // },
+
+  updateCalendarStairsSection: (element, avgFlights, avgStairs) => {
+    element.innerHTML = '';
+    element.innerHTML =
+    `
+    <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
+    <section class='card-data-line'>
+      <p>YOUR WEEKLY FLIGHTS CLIMBED</p>
+      <h4 id='stairs-calendar-flights-average-weekly'>${avgFlights}</h4>
+    </section>
+    <section class='card-data-line'>
+      <p>YOUR WEEKLY STAIRS CLIMBED</p>
+      <h4 id='stairs-calendar-stairs-average-weekly'>${avgStairs}</h4>
+    </section>
+    `
   }
-
-
 
 }
 
