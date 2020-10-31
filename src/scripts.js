@@ -61,10 +61,7 @@ profileButton.addEventListener('click', showDropdown);
 Promise.all([apiCalls.getUserData(), apiCalls.getSleepData(), apiCalls.getActivityData(), apiCalls.getHydrationData()])
   .then((data) => {
     const dataSet = data.reduce((dataList, dataItem) => {
-      const keyName = Object.keys(dataItem);
-      dataList[keyName[0]] = dataItem[keyName[0]]
-      return dataList;
-      //return dataList = {...dataList, ...dataItem};
+      return dataList = {...dataList, ...dataItem};
     }, {})
     instantiateData(dataSet);
     loadMainPage();
@@ -271,7 +268,7 @@ function displayCalendarStairsSection() {
 
 
 function displayHydrationInfoSection() {
-  const glasses = findTodayUserMetrics(hydrationInstances).ounces/8;
+  const glasses = (findTodayUserMetrics(hydrationInstances).ounces/8).toFixed(1);
   domUpdate.updateHydrationInfoSection(hydrationInfoCard, glasses);
 }
 
