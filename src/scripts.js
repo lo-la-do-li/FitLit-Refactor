@@ -74,7 +74,7 @@ function instantiateData(data) {
   activityInstances = data.activityData.map(data => new Activity(data, userRepository));
   hydrationInstances = data.hydrationData.map(data => new Hydration(data, userRepository));
   sleepInstances = data.sleepData.map(data => new Sleep(data, userRepository));
-  todayDate = "2019/06/24";
+  todayDate = "2019/09/21";
 }
 
 function loadMainPage() {

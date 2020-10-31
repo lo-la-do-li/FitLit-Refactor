@@ -1,6 +1,6 @@
 
 const domUpdate = {
-  showDropDown : function (element, name, user, steps) {
+  showDropDown : (element, name, user, steps) => {
     element.classList.toggle('hide');
     element.innerHTML = '';
     element.innerHTML =
