@@ -517,16 +517,38 @@ function displayCalendarSleepSection() {
   `
 }
 //MODAL SELECTORS, HANDLERS, and LISTENERS
-let modal = document.querySelector(".modal");
-let trigger = document.querySelector(".trigger");
-let closeButton = document.querySelector(".close-button");
-let submitButton = document.querySelector(".submit-user-input-button")
+let modal = document.querySelector('.modal');
+let trigger = document.querySelector('.trigger');
+let closeButton = document.querySelector('.close-button');
+let submitButton = document.querySelector('.submit-user-input-button');
+// let userInputs;
 
-    function toggleModal() {
-        modal.classList.toggle("show-modal");
+trigger.addEventListener('click', toggleModal);
+closeButton.addEventListener('click', toggleModal);
+submitButton.addEventListener('click', postOnSubmit);
+
+function toggleModal() {
+  modal.classList.toggle('show-modal');
     }
+function postOnSubmit(event) {
+  event.preventDefault();
+  postUserInputData();
+  toggleModal();
+}
+
+function postUserInputData() {
+  let userInputs = document.querySelectorAll('.user-input');
+  userInputs = Array.from(userInputs);
+  console.log(typeof userInputs[0]);
+
+  // const newSleepData = {"userID": randomUserIndex + 1, "date": '2019/09/21', "hoursSlept": hoursSlept, "sleepQuality": sleepQuality};
+  // const newActivityData = {"userID": randomUserIndex + 1, "date": '2019/09/22', "numSteps": numberSteps, "minutesActive": minutesActive, "flightsOfStairs": flightsOfStairs};
+  // const newHydrationData = {"userID": randomUserIndex + 1, "date": '2019/09/22', "numOunces": numberOunces};
 
 
-  trigger.addEventListener("click", toggleModal);
-  closeButton.addEventListener("click", toggleModal);
-  submitButton.addEventListener("click", toggleModal);
+  const test = userInputs.reduce((inputData, input) => {
+  //   console.log(input.name)
+    return inputData = {...inputData, ...input}
+  }, {})
+  console.log(test)
+}
