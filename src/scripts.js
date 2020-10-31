@@ -520,17 +520,13 @@ function displayCalendarSleepSection() {
 let modal = document.querySelector(".modal");
 let trigger = document.querySelector(".trigger");
 let closeButton = document.querySelector(".close-button");
+let submitButton = document.querySelector(".submit-user-input-button")
 
     function toggleModal() {
         modal.classList.toggle("show-modal");
     }
 
-    function windowOnClick(event) {
-        if (event.target === modal) {
-            toggleModal();
-        }
-    }
 
   trigger.addEventListener("click", toggleModal);
   closeButton.addEventListener("click", toggleModal);
-  window.addEventListener("click", windowOnClick);
+  submitButton.addEventListener("click", toggleModal);
