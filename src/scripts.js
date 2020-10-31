@@ -123,6 +123,9 @@ function sortOuncesRecord() {
   });
 }
 ////////////////// below ////////////////
+let userInputs = document.querySelectorAll('.user-input');
+let modalContent = document.querySelector('.modal-content');
+modalContent.addEventListener('keyup', limitInputs);
 
 function toggleModal() {
   domUpdate.toggleElement(modal)
@@ -132,11 +135,10 @@ function postOnSubmit(event) {
   event.preventDefault();
   collectUserInputData();
   toggleModal();
-  postUserInputData();
+  //postUserInputData();
 }
 
 function collectUserInputData() {
-  let userInputs = document.querySelectorAll('.user-input');
   newSleepData = {"userID": randomUserIndex + 1, "date": '2019/08/21', "hoursSlept": userInputs[0].value, "sleepQuality": userInputs[1].value};
   newActivityData = {"userID": randomUserIndex + 1, "date": '2019/08/22', "numSteps": userInputs[2].value, "minutesActive": userInputs[3].value, "flightsOfStairs": userInputs[4].value};
   newHydrationData = {"userID": randomUserIndex + 1, "date": '2019/08/22', "numOunces": userInputs[5].value};
@@ -145,6 +147,22 @@ function collectUserInputData() {
 function postUserInputData() {
   return Promise.all([apiCalls.addSleepData(newSleepData), apiCalls.addActivityData(newActivityData), apiCalls.addHydrationData(newHydrationData)])
     .then(data => console.log(data))
+}
+
+function limitInputs() {
+  preventInvalids(event, userInputs)
+}
+
+function preventInvalids(event, inputFields) {
+  const invalidChars = ['+', '-', 'e', 'E'];
+  inputFields.forEach(inputField => {
+    invalidChars.forEach(char => {
+      if (event.key === char) {
+        event.preventDefault();
+        inputField.value = '';
+      }
+    })
+  })
 }
 
 ///////////////////////////// above ////////////////
@@ -356,3 +374,4 @@ function displayCalendarSleepSection() {
   const avgQuality = user.calculateAverageSleptQualityThisWeek(todayDate);
   domUpdate.updateSleepCalendarSection(sleepCalendarCard, avgHours, avgQuality)
 }
+
