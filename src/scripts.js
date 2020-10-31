@@ -61,7 +61,10 @@ profileButton.addEventListener('click', showDropdown);
 Promise.all([apiCalls.getUserData(), apiCalls.getSleepData(), apiCalls.getActivityData(), apiCalls.getHydrationData()])
   .then((data) => {
     const dataSet = data.reduce((dataList, dataItem) => {
-      return dataList = {...dataList, ...dataItem};
+      const keyName = Object.keys(dataItem);
+      dataList[keyName[0]] = dataItem[keyName[0]]
+      return dataList;
+      //return dataList = {...dataList, ...dataItem};
     }, {})
     instantiateData(dataSet);
     loadMainPage();
@@ -114,22 +117,6 @@ function sortOuncesRecord() {
     return 0;
   });
 }
-
-//maybe for later
-// function changeHiddenProperty(elements) {
-//   elements.forEach(element => {
-//     if (element.addHidden) {
-//       elements.property.classList.add('hide');
-//     } else {
-//       elements.property.classList.remove('hide')
-//     }
-//   })
-// }
-
-// function domUpdate.flipCard(cardToHide, cardToShow) {
-//   cardToHide.classList.add('hide');
-//   cardToShow.classList.remove('hide');
-// }
 
 function showDropdown() {
   const name = user.getFirstName();
