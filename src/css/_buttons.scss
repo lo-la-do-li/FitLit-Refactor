@@ -10,7 +10,7 @@
 }
 
 .steps-friends-button {
-  @include button-styles()
+  @include button-styles();
   background-image: url(../images/steps-friends.png);
 }
 
