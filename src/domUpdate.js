@@ -1,5 +1,9 @@
 
 const domUpdate = {
+  toggleElement: (element) => {
+    element.classList.toggle('show-modal');
+  },
+
   showDropDown : (element, name, user, steps) => {
     element.classList.toggle('hide');
     element.innerHTML = '';
