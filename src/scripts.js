@@ -18,6 +18,10 @@ let sleepInstances = [];
 let user;
 let todayDate;
 let randomUserIndex;
+let newSleepData;
+let newActivityData;
+let newHydrationData;
+
 
 //querySelectors
 let headerName = document.querySelector('#header-name');
@@ -532,23 +536,19 @@ function toggleModal() {
     }
 function postOnSubmit(event) {
   event.preventDefault();
-  postUserInputData();
+  collectUserInputData();
   toggleModal();
+  postUserInputData();
+}
+
+function collectUserInputData() {
+  let userInputs = document.querySelectorAll('.user-input');
+  newSleepData = {"userID": randomUserIndex + 1, "date": '2019/08/21', "hoursSlept": userInputs[0].value, "sleepQuality": userInputs[1].value};
+  newActivityData = {"userID": randomUserIndex + 1, "date": '2019/08/22', "numSteps": userInputs[2].value, "minutesActive": userInputs[3].value, "flightsOfStairs": userInputs[4].value};
+  newHydrationData = {"userID": randomUserIndex + 1, "date": '2019/08/22', "numOunces": userInputs[5].value};
 }
 
 function postUserInputData() {
-  let userInputs = document.querySelectorAll('.user-input');
-  userInputs = Array.from(userInputs);
-  console.log(typeof userInputs[0]);
-
-  // const newSleepData = {"userID": randomUserIndex + 1, "date": '2019/09/21', "hoursSlept": hoursSlept, "sleepQuality": sleepQuality};
-  // const newActivityData = {"userID": randomUserIndex + 1, "date": '2019/09/22', "numSteps": numberSteps, "minutesActive": minutesActive, "flightsOfStairs": flightsOfStairs};
-  // const newHydrationData = {"userID": randomUserIndex + 1, "date": '2019/09/22', "numOunces": numberOunces};
-
-
-  const test = userInputs.reduce((inputData, input) => {
-  //   console.log(input.name)
-    return inputData = {...inputData, ...input}
-  }, {})
-  console.log(test)
+  return Promise.all([apiCalls.addSleepData(newSleepData), apiCalls.addActivityData(newActivityData), apiCalls.addHydrationData(newHydrationData)])
+    .then(data => console.log(data))
 }
