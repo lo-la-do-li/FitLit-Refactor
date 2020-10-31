@@ -196,6 +196,62 @@ const domUpdate = {
     ${dailyOunces}
     </section>
     `
+  }, 
+  
+  updateDailyOunces: () => {
+
+  },
+
+  updateSleepInfoSection: (element, quality, avgHours, avgQuality) => {
+    element.innerHTML = '';
+    element.innerHTML =
+    `
+    <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
+    <section class='card-data-line'>
+      <p>SLEEP QUALITY LAST NIGHT</p>
+      <h4 id='sleep-info-quality-today'>${quality}</h4>
+    </section>
+    <section class='card-data-line'>
+      <p>OVERALL NUMBER OF HOURS AVERAGE</p>
+      <h4 id='sleep-info-hours-average-alltime'>${avgHours}</h4>
+    </section>
+    <section class='card-data-line'>
+      <p>OVERALL SLEEP QUALITY AVERAGE</p>
+      <h4 id='sleep-info-quality-average-alltime'>${avgQuality}</h4>
+    </section>
+    `
+  }, 
+
+  updateFriendsSleepSection: (element, longestSleeper, worstSleeper) => {
+    element.innerHTML = '';
+    element.innerHTML =
+    `
+    <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
+    <section class='card-data-line'>
+      <p>LAST NIGHT'S SUPERIOR SLEEPER</p>
+      <h4 id='sleep-friend-longest-sleeper'>${longestSleeper}</h4>
+    </section>
+    <section class='card-data-line'>
+      <p>LAST NIGHT'S INFERIOR SLEEPER</p>
+      <h4 id='sleep-friend-worst-sleeper'>${worstSleeper}</h4>
+    </section>
+    `
+  },
+
+  updateSleepCalendarSection: (element, avgHours, avgQuality) => {
+    element.innerHTML = '';
+    element.innerHTML =
+    `
+    <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
+    <section class='card-data-line'>
+      <p>LAST WEEK'S HOURLY AVERAGE</p>
+      <h4 id='sleep-calendar-hours-average-weekly'>${avgHours}</h4>
+    </section>
+    <section class='card-data-line'>
+      <p>LAST WEEK'S QUALITY AVERAGE</p>
+      <h4 id='sleep-calendar-quality-average-weekly'>${avgQuality}</h4>
+    </section>
+    `
   }
 
 }

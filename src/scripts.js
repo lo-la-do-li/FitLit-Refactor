@@ -405,39 +405,46 @@ function displayDailyOunces() {
 // END OF HYDRATION  -----------------------------------------
 
 function displaySleepInfoSection() {
-  sleepInfoCard.innerHTML = '';
-  sleepInfoCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
-  <section class='card-data-line'>
-    <p>SLEEP QUALITY LAST NIGHT</p>
-    <h4 id='sleep-info-quality-today'>${findTodayUserMetrics(sleepInstances).sleepQuality}</h4>
-  </section>
-  <section class='card-data-line'>
-    <p>OVERALL NUMBER OF HOURS AVERAGE</p>
-    <h4 id='sleep-info-hours-average-alltime'>${user.hoursSleptAverage}</h4>
-  </section>
-  <section class='card-data-line'>
-    <p>OVERALL SLEEP QUALITY AVERAGE</p>
-    <h4 id='sleep-info-quality-average-alltime'>${user.sleepQualityAverage}</h4>
-  </section>
-  `
+  const sleepQuality = findTodayUserMetrics(sleepInstances).sleepQuality;
+  const hoursAvg = user.hoursSleptAverage;
+  const qualityAvg = user.sleepQualityAverage;
+  domUpdate.updateSleepInfoSection(sleepInfoCard, sleepQuality, hoursAvg, qualityAvg);
+  // sleepInfoCard.innerHTML = '';
+  // sleepInfoCard.innerHTML =
+  // `
+  // <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
+  // <section class='card-data-line'>
+  //   <p>SLEEP QUALITY LAST NIGHT</p>
+  //   <h4 id='sleep-info-quality-today'>${findTodayUserMetrics(sleepInstances).sleepQuality}</h4>
+  // </section>
+  // <section class='card-data-line'>
+  //   <p>OVERALL NUMBER OF HOURS AVERAGE</p>
+  //   <h4 id='sleep-info-hours-average-alltime'>${user.hoursSleptAverage}</h4>
+  // </section>
+  // <section class='card-data-line'>
+  //   <p>OVERALL SLEEP QUALITY AVERAGE</p>
+  //   <h4 id='sleep-info-quality-average-alltime'>${user.sleepQualityAverage}</h4>
+  // </section>
+  // `
 }
 
 function displayFriendsSleepSection() {
-  sleepFriendsCard.innerHTML = '';
-  sleepFriendsCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
-  <section class='card-data-line'>
-    <p>LAST NIGHT'S SUPERIOR SLEEPER</p>
-    <h4 id='sleep-friend-longest-sleeper'>${getFriendSleeper('getLongestSleeper')}</h4>
-  </section>
-  <section class='card-data-line'>
-    <p>LAST NIGHT'S INFERIOR SLEEPER</p>
-    <h4 id='sleep-friend-worst-sleeper'>${getFriendSleeper('getWorstSleeper')}</h4>
-  </section>
-  `
+  const longestSleeper = getFriendSleeper('getLongestSleeper');
+  const worstSleeper = getFriendSleeper('getWorstSleeper');
+  domUpdate.updateFriendsSleepSection(sleepFriendsCard, longestSleeper, worstSleeper);
+  // sleepFriendsCard.innerHTML = '';
+  // sleepFriendsCard.innerHTML =
+  // `
+  // <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
+  // <section class='card-data-line'>
+  //   <p>LAST NIGHT'S SUPERIOR SLEEPER</p>
+  //   <h4 id='sleep-friend-longest-sleeper'>${getFriendSleeper('getLongestSleeper')}</h4>
+  // </section>
+  // <section class='card-data-line'>
+  //   <p>LAST NIGHT'S INFERIOR SLEEPER</p>
+  //   <h4 id='sleep-friend-worst-sleeper'>${getFriendSleeper('getWorstSleeper')}</h4>
+  // </section>
+  // `
 }
 
 function getFriendSleeper(type) {
@@ -447,17 +454,20 @@ function getFriendSleeper(type) {
 }
 
 function displayCalendarSleepSection() {
-  sleepCalendarCard.innerHTML = '';
-  sleepCalendarCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
-  <section class='card-data-line'>
-    <p>LAST WEEK'S HOURLY AVERAGE</p>
-    <h4 id='sleep-calendar-hours-average-weekly'>${user.calculateAverageSleptHoursThisWeek(todayDate)}</h4>
-  </section>
-  <section class='card-data-line'>
-    <p>LAST WEEK'S QUALITY AVERAGE</p>
-    <h4 id='sleep-calendar-quality-average-weekly'>${user.calculateAverageSleptQualityThisWeek(todayDate)}</h4>
-  </section>
-  `
+  const avgHours = user.calculateAverageSleptHoursThisWeek(todayDate);
+  const avgQuality = user.calculateAverageSleptQualityThisWeek(todayDate);
+  domUpdate.updateSleepCalendarSection(sleepCalendarCard, avgHours, avgQuality)
+  // sleepCalendarCard.innerHTML = '';
+  // sleepCalendarCard.innerHTML =
+  // `
+  // <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
+  // <section class='card-data-line'>
+  //   <p>LAST WEEK'S HOURLY AVERAGE</p>
+  //   <h4 id='sleep-calendar-hours-average-weekly'>${user.calculateAverageSleptHoursThisWeek(todayDate)}</h4>
+  // </section>
+  // <section class='card-data-line'>
+  //   <p>LAST WEEK'S QUALITY AVERAGE</p>
+  //   <h4 id='sleep-calendar-quality-average-weekly'>${user.calculateAverageSleptQualityThisWeek(todayDate)}</h4>
+  // </section>
+  // `
 }
