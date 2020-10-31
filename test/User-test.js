@@ -116,10 +116,10 @@ describe('User', function() {
     user.sleepQualityRecord = [{date: "2019/09/22", quality: 9.6}, {date: "2019/09/21", quality: 8.2}, {date: "2019/09/20", quality: 9.9}, {date: "2019/09/19", quality: 4.2}, {date: "2019/09/18", quality: 9.5}, {date: "2019/09/17", quality: 7.8}, {date: "2019/09/16", quality: 10.2}, {date: "2019/09/15", quality: 5.7}, {date: "2019/09/14", quality: 8.8}, {date: "2019/09/13", quality: 4.6}, {date: "2019/09/12", quality: 5.3}];
     expect(user.calculateAverageSleptQualityThisWeek('2019/09/22')).to.equal('8.5')
   });
-  it('should have a method that return the highest climbing record', function() {
-    user.activityRecord = [{flightsOfStairs: 17}, {flightsOfStairs: 10}, {flightsOfStairs: 15}]
-    expect(user.findClimbingRecord()).to.equal(17)
-  });
+  // it('should have a method that return the highest climbing record', function() {
+  //   user.activityRecord = [{flightsOfStairs: 17}, {flightsOfStairs: 10}, {flightsOfStairs: 15}]
+  //   expect(user.findClimbingRecord()).to.equal(17)
+  // });
   it('should have a method that calculates daily calories burned', function() {
     user.activityRecord = [{date: "2019/09/16", activityRecord: 78}, {date: "2019/09/17", minutesActive: 100}, {date: "2019/09/17", minutesActive: 20}];
     expect(user.calculateDailyCalories("2019/09/17")).to.equal(912)
@@ -225,15 +225,15 @@ describe('User', function() {
   it('findFriendsTotalStepsForWeek should find friends\' total steps', function() {
     let user2 = new User({
       'id': 16,
-      'name': ['Ben', 'Nist'],
+      'name': 'Ben Nist',
     })
     let user3 = new User({
       'id': 4,
-      'name': ['John', 'Firth'],
+      'name': 'John Firth',
     })
     let user4 = new User({
       'id': 8,
-      'name': ['Nick', 'Adams'],
+      'name': 'Nick Adams',
     })
     user2.activityRecord = [{
     "date": "2019/06/29", "steps": 25},
@@ -275,7 +275,7 @@ describe('User', function() {
     {"date": "2019/06/19", "steps": 11},
     {"date": "2019/06/18", "steps": 10}];
     let users = [user2, user3, user4];
-    user.findFriendsTotalStepsForWeek(users, '2019/06/29');
-    expect(user.friendsActivityRecords).to.deep.equal([{"id": 4, "firstName": "JOHN", "totalWeeklySteps": 734}, {"id": 16, "firstName": "BEN", "totalWeeklySteps": 248}, {"id": 8, "firstName": "NICK", "totalWeeklySteps": 34}]);
+    let friendsSteps = user.findFriendsTotalStepsForWeek(users, '2019/06/29');
+    expect(friendsSteps).to.deep.equal([{"id": 4, "firstName": "JOHN", "totalWeeklySteps": 734}, {"id": 16, "firstName": "BEN", "totalWeeklySteps": 248}, {"id": 8, "firstName": "NICK", "totalWeeklySteps": 34}]);
   });
 });

@@ -7,6 +7,7 @@ import User from './User';
 import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
+import domUpdate from './domUpdate';
 import apiCalls from './ApiCalls';
 
 
@@ -77,7 +78,7 @@ function instantiateData(data) {
   activityInstances = data.activityData.map(data => new Activity(data, userRepository));
   hydrationInstances = data.hydrationData.map(data => new Hydration(data, userRepository));
   sleepInstances = data.sleepData.map(data => new Sleep(data, userRepository));
-  todayDate = "2019/06/24";
+  todayDate = "2019/09/21";
 }
 
 function loadMainPage() {
@@ -93,10 +94,6 @@ function generateRandomNum(list){
 }
 
 function displayMainPageSection() {
-  // stepsUserStepsToday.innerText = data.numSteps;
-  // stairsUserStairsToday.innerText = data.flightsOfStairs * 12;
-  // hydrationUserOuncesToday.innerText = data.numOunces;
-  // sleepUserHoursToday.innerText = data.hoursSlept;
   headerName.innerText = `${user.getFirstName()}'S FITLIT`;
   stepsUserStepsToday.innerText = findTodayUserMetrics(activityInstances).steps;
   stairsUserStairsToday.innerText = findTodayUserMetrics(activityInstances).flightsOfStairs * 12;
@@ -122,65 +119,20 @@ function sortOuncesRecord() {
   });
 }
 
-//maybe for later
-// function changeHiddenProperty(elements) {
-//   elements.forEach(element => {
-//     if (element.addHidden) {
-//       elements.property.classList.add('hide');
-//     } else {
-//       elements.property.classList.remove('hide')
-//     }
-//   })
-// }
-
-function flipCard(cardToHide, cardToShow) {
-  cardToHide.classList.add('hide');
-  cardToShow.classList.remove('hide');
-}
-
 function showDropdown() {
-  userInfoDropdown.classList.toggle('hide');
-  userInfoDropdown.innerHTML = '';
-  userInfoDropdown.innerHTML =
-  `
-  <h5 id='dropdown-name'>${user.getFirstName()}</h5>
-  <p class='dropdown-p' id='dropdown-email'> EMAIL | ${user.email}</p>
-  <p class='dropdown-p' id='dropdown-goal'> DAILY STEP GOAL | ${user.dailyStepGoal}</p>
-  <br/>
-  <p class='dropdown-p' id='dropdown-friends'>FRIENDS TOTAL STEPS THIS WEEK</p>
-  <section id='dropdown-friends-steps-container'>
-  ${displayFriendsSteps()}</section>
-  `
+  const name = user.getFirstName();
+  const friendsSteps = displayFriendsSteps();
+  domUpdate.showDropDown(userInfoDropdown, name, user, friendsSteps)
   let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
-  updateDropdowTextColor(friendsStepsParagraphs);
+  domUpdate.updateDropdownTextColor(friendsStepsParagraphs);
 
 }
 
 function displayFriendsSteps() {
   const friendsStepsRecords = user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
-  let element = '';
-  friendsStepsRecords.forEach(friend => {
-    element +=
-    `
-    <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
-    `
-  });
-  return element;
+  return domUpdate.updateFriendsSteps(friendsStepsRecords);
 }
 
-function updateDropdowTextColor(element) {
-  element.forEach(paragraph => {
-    if (element[0] === paragraph) {
-      paragraph.classList.add('teal-text');
-    }
-    if (element[element.length - 1] === paragraph) {
-      paragraph.classList.add('orange-text');
-    }
-    if (paragraph.innerText.includes('YOU')) {
-      paragraph.classList.add('yellow-text');
-    }
-  });
-}
 
 function showInfo() {
   if (event.target.parentNode.parentNode.classList.contains('steps')) {
@@ -196,266 +148,153 @@ function showInfo() {
 
 function showStepInfo() {
   if (event.target.classList.contains('steps-info-button')) {
-    flipCard(stepsMainCard, stepsInfoCard);
+    domUpdate.flipCard(stepsMainCard, stepsInfoCard);
     displayStepsInfoSection();
   } else if (event.target.classList.contains('steps-friends-button')) {
-    flipCard(stepsMainCard, stepsFriendsCard);
+    domUpdate.flipCard(stepsMainCard, stepsFriendsCard);
     displayFriendsStepsSection();
   } else if (event.target.classList.contains('steps-trending-button')) {
-    flipCard(stepsMainCard, stepsTrendingCard);
+    domUpdate.flipCard(stepsMainCard, stepsTrendingCard);
     displayTrendingStepSection();
   } else if (event.target.classList.contains('steps-calendar-button')) {
-    flipCard(stepsMainCard, stepsCalendarCard);
+    domUpdate.flipCard(stepsMainCard, stepsCalendarCard);
     displayCalendarStepsSection();
   } else if (event.target.classList.contains('steps-go-back-button')) {
-    flipCard(event.target.parentNode, stepsMainCard);
+    domUpdate.flipCard(event.target.parentNode, stepsMainCard);
   }
 }
 
 function showHydrationInfo() {
   if (event.target.classList.contains('hydration-info-button')) {
-    flipCard(hydrationMainCard, hydrationInfoCard);
+    domUpdate.flipCard(hydrationMainCard, hydrationInfoCard);
     displayHydrationInfoSection();
   }
   if (event.target.classList.contains('hydration-friends-button')) {
-    flipCard(hydrationMainCard, hydrationFriendsCard);
+    domUpdate.flipCard(hydrationMainCard, hydrationFriendsCard);
     displayFriendsHydrationSection();
   }
   if (event.target.classList.contains('hydration-calendar-button')) {
-    flipCard(hydrationMainCard, hydrationCalendarCard);
+    domUpdate.flipCard(hydrationMainCard, hydrationCalendarCard);
     displayHydrationCalendarSection();
   }
   if (event.target.classList.contains('hydration-go-back-button')) {
-    flipCard(event.target.parentNode, hydrationMainCard);
+    domUpdate.flipCard(event.target.parentNode, hydrationMainCard);
   }
 }
 
 function showStairsInfo() {
   if (event.target.classList.contains('stairs-info-button')) {
-    flipCard(stairsMainCard, stairsInfoCard);
+    domUpdate.flipCard(stairsMainCard, stairsInfoCard);
     displayStairsInfoSection();
   } else if (event.target.classList.contains('stairs-friends-button')) {
-    flipCard(stairsMainCard, stairsFriendsCard);
+    domUpdate.flipCard(stairsMainCard, stairsFriendsCard);
     displayFriendsStairsSection();
   } else if (event.target.classList.contains('stairs-trending-button')) {
-    flipCard(stairsMainCard, stairsTrendingCard);
+    domUpdate.flipCard(stairsMainCard, stairsTrendingCard);
     displayTrendingStairsSection();
   } else if (event.target.classList.contains('stairs-calendar-button')) {
-    flipCard(stairsMainCard, stairsCalendarCard);
+    domUpdate.flipCard(stairsMainCard, stairsCalendarCard);
     displayCalendarStairsSection();
   } else if (event.target.classList.contains('stairs-go-back-button')) {
-    flipCard(event.target.parentNode, stairsMainCard);
+    domUpdate.flipCard(event.target.parentNode, stairsMainCard);
   }
 }
 
 function showSleepInfo() {
   if (event.target.classList.contains('sleep-info-button')) {
-    flipCard(sleepMainCard, sleepInfoCard);
+    domUpdate.flipCard(sleepMainCard, sleepInfoCard);
     displaySleepInfoSection();
   } else if (event.target.classList.contains('sleep-friends-button')) {
-    flipCard(sleepMainCard, sleepFriendsCard);
+    domUpdate.flipCard(sleepMainCard, sleepFriendsCard);
     displayFriendsSleepSection();
   } else if (event.target.classList.contains('sleep-calendar-button')) {
-    flipCard(sleepMainCard, sleepCalendarCard);
+    domUpdate.flipCard(sleepMainCard, sleepCalendarCard);
     displayCalendarSleepSection();
   } else if (event.target.classList.contains('sleep-go-back-button')) {
-    flipCard(event.target.parentNode, sleepMainCard);
+    domUpdate.flipCard(event.target.parentNode, sleepMainCard);
   }
 }
 
 function displayStepsInfoSection() {
-  stepsInfoCard.innerHTML = '';
-  stepsInfoCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
-  <section class='card-data-line'>
-    <p>TOTAL ACTIVE MINUTES TODAY:</p>
-    <h4 id='steps-info-active-minutes-today'>${findTodayUserMetrics(activityInstances).minutesActive}</h4>
-  </section>
-  <section class='card-data-line'>
-    <p>TOTAL MILES WALKED TODAY:</p>
-    <h4 id='steps-info-miles-walked-today'>${findTodayUserMetrics(activityInstances).calculateMiles(userRepository)}</h4>
-  </section>
-  `
+  const min = findTodayUserMetrics(activityInstances).minutesActive;
+  const miles = findTodayUserMetrics(activityInstances).calculateMiles(userRepository)
+  domUpdate.updateStepsInfoSection(stepsInfoCard, min, miles);
 }
 
 function displayFriendsStepsSection() {
-  stepsFriendsCard.innerHTML = '';
-  stepsFriendsCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
-  <section class='card-data-line'>
-    <p>ALL USERS' AVERAGE ACTIVE MINUTES TODAY:</p>
-    <h4 id='steps-friend-active-minutes-average-today'>${userRepository.calculateAverageMinutesActive(todayDate)}</h4>
-  </section>
-  <section class='card-data-line'>
-    <p>ALL USERS' AVERAGE STEPS TODAY:</p>
-    <h4 id='steps-friend-steps-average-today'>${userRepository.calculateAverageSteps(todayDate)}</h4>
-  </section>
-  <section class='card-data-line'>
-    <p>ALL USERS' AVERAGE STEP GOAL:</p>
-    <h4 id='steps-friend-average-step-goal'>${userRepository.calculateAverageStepGoal()}</h4>
-  `
+  const averageMin = userRepository.calculateAverageMinutesActive(todayDate);
+  const averageSteps = userRepository.calculateAverageSteps(todayDate);
+  const averageGoal = userRepository.calculateAverageStepGoal();
+  domUpdate.updateFriendsStepsSection(stepsFriendsCard, averageMin, averageSteps, averageGoal);
 }
 
 function displayCalendarStepsSection() {
-  stepsCalendarCard.innerHTML = '';
-  stepsCalendarCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
-  <section class='card-data-line'>
-    <p>YOUR WEEKLY AVERAGE MINUTES:</p>
-    <h4 id='steps-calendar-total-active-minutes-weekly'>${user.calculateAverageMinutesActiveThisWeek(todayDate)}</h4>
-  </section>
-  <section class='card-data-line'>
-    <p>YOUR TOTAL WEEKLY STEP COUNT:</p>
-    <h4 id='steps-calendar-total-steps-weekly'>${user.calculateAverageStepsThisWeek(todayDate)}</h4>
-  </section>
-  `
+  const averageActiveMin = user.calculateAverageMinutesActiveThisWeek(todayDate);
+  const averageSteps = user.calculateAverageStepsThisWeek(todayDate);
+  domUpdate.updateCalendarStepsSection(stepsCalendarCard, averageActiveMin, averageSteps);
 }
 
 function displayTrendingStepSection() {
   user.findTrendingStepDays();
-  stepsTrendingCard.innerHTML = '';
-  stepsTrendingCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
-  <section class='card-data-line trending-steps-phrase-container'>
-    <p class='trend-line'>${user.trendingStepDays[0]}</p>
-  </section>
-  `
+  domUpdate.updateTrendingStepSection(stepsTrendingCard, user)
 }
 
 // END OF STEPS -----------------------------------------
 
 function displayStairsInfoSection() {
-  stairsInfoCard.innerHTML = '';
-  stairsInfoCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
-  <section class='card-data-line'>
-    <p>FLIGHTS CLIMBED TODAY</p>
-    <h4 id='stairs-info-flights-today'>${findTodayUserMetrics(activityInstances).flightsOfStairs}</h4>
-  </section>
-  `
+  const flights = findTodayUserMetrics(activityInstances).flightsOfStairs;
+  domUpdate.updateStairsInfoSection(stairsInfoCard, flights);
 }
 
 function displayFriendsStairsSection() {
-  stairsFriendsCard.innerHTML = ''
-  stairsFriendsCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
-  <section class='card-data-line'>
-    <p>ALL USERS' AVERAGE FLIGHTS TODAY</p>
-    <h4 id='stairs-friend-flights-average-today'>${(userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1)}</h4>
-    `
+  const avgFlights = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
+  domUpdate.updateFriendsStairsSection(stairsFriendsCard, avgFlights);
 }
 
 function displayTrendingStairsSection() {
-  stairsTrendingCard.innerHTML = '';
-  stairsTrendingCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
-  <section class='card-data-line trending-stairs-phrase-container'>
-  ${updateTrendingStairsDays()}
-  </section>
-  `
+  const trendingStairs = updateTrendingStairsDays();
+  domUpdate.updateTrendingStairsSection(stairsTrendingCard, trendingStairs);
 }
+
 function updateTrendingStairsDays() {
-  let element = '';
   user.findTrendingStairsDays();
-  return element = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
+  const trendingStairs = user.trendingStairsDays[0]
+  return domUpdate.updateTrendingStairs(trendingStairs);
 }
 
 function displayCalendarStairsSection() {
-  stairsCalendarCard.innerHTML = '';
-  stairsCalendarCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
-  <section class='card-data-line'>
-    <p>YOUR WEEKLY FLIGHTS CLIMBED</p>
-    <h4 id='stairs-calendar-flights-average-weekly'>${user.calculateAverageFlightsThisWeek(todayDate)}</h4>
-  </section>
-  <section class='card-data-line'>
-    <p>YOUR WEEKLY STAIRS CLIMBED</p>
-    <h4 id='stairs-calendar-stairs-average-weekly'>${(user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0)}</h4>
-  </section>
-  `
+  const avgFlights = user.calculateAverageFlightsThisWeek(todayDate);
+  const avgStairs = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+  domUpdate.updateCalendarStairsSection(stairsCalendarCard, avgFlights, avgStairs);
 }
 
 // END OF STAIRS -----------------------------------------
 
 
 function displayHydrationInfoSection() {
-  hydrationInfoCard.innerHTML = '';
-  hydrationInfoCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
-  <section class='card-data-line'>
-  <p>GLASSES OF WATER CONSUMED TODAY:</p>
-  <h4 id='hydration-info-glasses-today'>${findTodayUserMetrics(hydrationInstances).ounces/8}</h4>
-  </section>
-  `
+  const glasses = (findTodayUserMetrics(hydrationInstances).ounces/8).toFixed(1);
+  domUpdate.updateHydrationInfoSection(hydrationInfoCard, glasses);
 }
 
 function displayFriendsHydrationSection() {
-  hydrationFriendsCard.innerHTML = '';
-  hydrationFriendsCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
-  <section class='card-data-line'>
-  <p>ALL USERS' AVERAGE DAILY OUNCES:</p>
-  <h4 id='hydration-friend-ounces-today'>${userRepository.calculateAverageDailyWater(todayDate)}</h4>
-  </section>
-  `
+  const friendsIntake = userRepository.calculateAverageDailyWater(todayDate);
+  domUpdate.updateFriendsHydrationSection(hydrationFriendsCard, friendsIntake);
 }
 
 function displayHydrationCalendarSection() {
-  hydrationCalendarCard.innerHTML = '';
-  hydrationCalendarCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button hydration-go-back-button'>
-  </button>
-  <section class="display-hydration-calendar">
-  ${displayDailyOunces()}
-  </section>
-  `
+  const dailyOunces = displayDailyOunces();
+  domUpdate.updateHydrationCalendarSection(hydrationCalendarCard, dailyOunces);
 }
 
 function displayDailyOunces() {
+
   let elementSection = '';
   user.ouncesRecord.forEach((record, index) => {
+  let dailyOunces = user.returnTotalDailyOunces(record.date);
   if (index === 1) {
-    elementSection =
-    `
-    <section
-      class='hydration-data-line'>
-        <p
-          class='hydration-weekly-label'>
-          YESTERDAY:
-        </p>
-        <h4
-          class='hydration-weekly-amount daily-oz'
-          id='hydration-calendar-ounces-1day'>
-          ${user.returnTotalDailyOunces(record.date)} oz
-        </h4>
-    </section>
-    `
+    elementSection = domUpdate.updateYesterdayOunces(dailyOunces);
   } else if(index > 1 && index < 7) {
-    elementSection +=
-    `
-    <section
-      class='hydration-data-line'>
-      <p
-        class='hydration-weekly-label'>
-        ${index} DAYS AGO:</p>
-      <h4
-        class='hydration-weekly-amount daily-oz'
-        id='hydration-calendar-ounces-1day'>
-        ${user.returnTotalDailyOunces(record.date)} oz
-      </h4>
-    </section>
-    `
+    elementSection += domUpdate.updatePastDailyOunces(index, dailyOunces);
     }
   })
   return elementSection;
@@ -464,39 +303,16 @@ function displayDailyOunces() {
 // END OF HYDRATION  -----------------------------------------
 
 function displaySleepInfoSection() {
-  sleepInfoCard.innerHTML = '';
-  sleepInfoCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
-  <section class='card-data-line'>
-    <p>SLEEP QUALITY LAST NIGHT</p>
-    <h4 id='sleep-info-quality-today'>${findTodayUserMetrics(sleepInstances).sleepQuality}</h4>
-  </section>
-  <section class='card-data-line'>
-    <p>OVERALL NUMBER OF HOURS AVERAGE</p>
-    <h4 id='sleep-info-hours-average-alltime'>${user.hoursSleptAverage}</h4>
-  </section>
-  <section class='card-data-line'>
-    <p>OVERALL SLEEP QUALITY AVERAGE</p>
-    <h4 id='sleep-info-quality-average-alltime'>${user.sleepQualityAverage}</h4>
-  </section>
-  `
+  const sleepQuality = findTodayUserMetrics(sleepInstances).sleepQuality;
+  const hoursAvg = user.hoursSleptAverage;
+  const qualityAvg = user.sleepQualityAverage;
+  domUpdate.updateSleepInfoSection(sleepInfoCard, sleepQuality, hoursAvg, qualityAvg);
 }
 
 function displayFriendsSleepSection() {
-  sleepFriendsCard.innerHTML = '';
-  sleepFriendsCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
-  <section class='card-data-line'>
-    <p>LAST NIGHT'S SUPERIOR SLEEPER</p>
-    <h4 id='sleep-friend-longest-sleeper'>${getFriendSleeper('getLongestSleeper')}</h4>
-  </section>
-  <section class='card-data-line'>
-    <p>LAST NIGHT'S INFERIOR SLEEPER</p>
-    <h4 id='sleep-friend-worst-sleeper'>${getFriendSleeper('getWorstSleeper')}</h4>
-  </section>
-  `
+  const longestSleeper = getFriendSleeper('getLongestSleeper');
+  const worstSleeper = getFriendSleeper('getWorstSleeper');
+  domUpdate.updateFriendsSleepSection(sleepFriendsCard, longestSleeper, worstSleeper);
 }
 
 function getFriendSleeper(type) {
@@ -506,19 +322,9 @@ function getFriendSleeper(type) {
 }
 
 function displayCalendarSleepSection() {
-  sleepCalendarCard.innerHTML = '';
-  sleepCalendarCard.innerHTML =
-  `
-  <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
-  <section class='card-data-line'>
-    <p>LAST WEEK'S HOURLY AVERAGE</p>
-    <h4 id='sleep-calendar-hours-average-weekly'>${user.calculateAverageSleptHoursThisWeek(todayDate)}</h4>
-  </section>
-  <section class='card-data-line'>
-    <p>LAST WEEK'S QUALITY AVERAGE</p>
-    <h4 id='sleep-calendar-quality-average-weekly'>${user.calculateAverageSleptQualityThisWeek(todayDate)}</h4>
-  </section>
-  `
+  const avgHours = user.calculateAverageSleptHoursThisWeek(todayDate);
+  const avgQuality = user.calculateAverageSleptQualityThisWeek(todayDate);
+  domUpdate.updateSleepCalendarSection(sleepCalendarCard, avgHours, avgQuality)
 }
 //MODAL SELECTORS, HANDLERS, and LISTENERS
 let modal = document.querySelector('.modal');

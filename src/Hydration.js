@@ -1,7 +1,8 @@
-class Hydration {
+import Action from './Action';
+
+class Hydration extends Action {
   constructor(data, userRepository) {
-    this.userId = data.userID;
-    this.date = data.date;
+    super(data);
     this.ounces = data.numOunces;
     // this.ouncesAverage = 0;
     // this.ouncesRecord = [];
@@ -18,8 +19,29 @@ class Hydration {
   //   return this.ouncesAverage = recordLength ? finalAverage : amount;
   // }
 
+  // updateHydration(date, amount) {
+  //   this.ouncesRecord.unshift({[date]: amount});
+  //   const recordLength = this.ouncesRecord.length;
+  //   const currentTotal = this.ouncesAverage * (recordLength - 1);
+  //   const currentAverage = (currentTotal + amount) / recordLength;
+  //   const finalAverage = Math.round(currentAverage);
+
+  //   return this.ouncesAverage = recordLength ? finalAverage : amount;
+  // }
+
+
+  // //Move to Hydration.js, formerly addDailyOunces(date)
+  // returnTotalDailyOunces(date) {
+  //   return this.ouncesRecord.reduce((totalOunces, record) => {
+  //     if (record[date]) {
+  //       totalOunces += record[date]
+  //     }
+  //     return totalOunces
+  //   }, 0)
+  // }
+
   drink(userRepo) {
-    const chosenUser = userRepo.users.find(user => user.id === this.userId);
+    const chosenUser = this.returnChosenUser(userRepo);
     chosenUser.updateHydration(this.date, this.ounces);
   }
 }
