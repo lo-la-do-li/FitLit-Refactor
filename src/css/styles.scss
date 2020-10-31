@@ -156,9 +156,9 @@ main {
 //USER INPUT MODAL
 
 .trigger {
-  background-image: url(../images/plus-sign.png);
+  background-image: url(../images/plus-icon.png);
   background-position: center;
-  background-size: $profile-button;
+  background-size: 5.1vw;
   border: none;
   display: inline;
   float: right;
@@ -210,6 +210,21 @@ main {
 .show-modal {
   opacity: 1;
   visibility: visible;
-  transform: scale(1.0);
+  transform: scale(1.2);
   transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+form {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: lightgray;
+  padding-top: 2rem;
+  width: 80%;
+  overflow: scroll;
+  border-radius: 0.5rem;
+  height: 80vh;
+
 }
