@@ -256,41 +256,16 @@ function displayTrendingStepSection() {
 function displayStairsInfoSection() {
   const flights = findTodayUserMetrics(activityInstances).flightsOfStairs;
   domUpdate.updateStairsInfoSection(stairsInfoCard, flights);
-  // stairsInfoCard.innerHTML = '';
-  // stairsInfoCard.innerHTML =
-  // `
-  // <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
-  // <section class='card-data-line'>
-  //   <p>FLIGHTS CLIMBED TODAY</p>
-  //   <h4 id='stairs-info-flights-today'>${findTodayUserMetrics(activityInstances).flightsOfStairs}</h4>
-  // </section>
-  // `
 }
 
 function displayFriendsStairsSection() {
   const avgFlights = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
   domUpdate.updateFriendsStairsSection(stairsFriendsCard, avgFlights);
-  // stairsFriendsCard.innerHTML = ''
-  // stairsFriendsCard.innerHTML =
-  // `
-  // <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
-  // <section class='card-data-line'>
-  //   <p>ALL USERS' AVERAGE FLIGHTS TODAY</p>
-  //   <h4 id='stairs-friend-flights-average-today'>${(userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1)}</h4>
-  // `
 }
 
 function displayTrendingStairsSection() {
   const trendingStairs = updateTrendingStairsDays();
   domUpdate.updateTrendingStairsSection(stairsTrendingCard, trendingStairs);
-  // stairsTrendingCard.innerHTML = '';
-  // stairsTrendingCard.innerHTML =
-  // `
-  // <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
-  // <section class='card-data-line trending-stairs-phrase-container'>
-  // ${updateTrendingStairsDays()}
-  // </section>
-  // `
 }
 
 function updateTrendingStairsDays() {
@@ -303,19 +278,6 @@ function displayCalendarStairsSection() {
   const avgFlights = user.calculateAverageFlightsThisWeek(todayDate);
   const avgStairs = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
   domUpdate.updateCalendarStairsSection(stairsCalendarCard, avgFlights, avgStairs);
-  // stairsCalendarCard.innerHTML = '';
-  // stairsCalendarCard.innerHTML =
-  // `
-  // <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
-  // <section class='card-data-line'>
-  //   <p>YOUR WEEKLY FLIGHTS CLIMBED</p>
-  //   <h4 id='stairs-calendar-flights-average-weekly'>${user.calculateAverageFlightsThisWeek(todayDate)}</h4>
-  // </section>
-  // <section class='card-data-line'>
-  //   <p>YOUR WEEKLY STAIRS CLIMBED</p>
-  //   <h4 id='stairs-calendar-stairs-average-weekly'>${(user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0)}</h4>
-  // </section>
-  // `
 }
 
 // END OF STAIRS -----------------------------------------
@@ -324,79 +286,27 @@ function displayCalendarStairsSection() {
 function displayHydrationInfoSection() {
   const glasses = findTodayUserMetrics(hydrationInstances).ounces/8;
   domUpdate.updateHydrationInfoSection(hydrationInfoCard, glasses);
-  // hydrationInfoCard.innerHTML = '';
-  // hydrationInfoCard.innerHTML = 
-  // `
-  // <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
-  // <section class='card-data-line'>
-  // <p>GLASSES OF WATER CONSUMED TODAY:</p>
-  // <h4 id='hydration-info-glasses-today'>${findTodayUserMetrics(hydrationInstances).ounces/8}</h4>
-  // </section>
-  // `
 }
 
 function displayFriendsHydrationSection() {
   const friendsIntake = userRepository.calculateAverageDailyWater(todayDate);
   domUpdate.updateFriendsHydrationSection(hydrationFriendsCard, friendsIntake);
-  // hydrationFriendsCard.innerHTML = '';
-  // hydrationFriendsCard.innerHTML = 
-  // `
-  // <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
-  // <section class='card-data-line'>
-  // <p>ALL USERS' AVERAGE DAILY OUNCES:</p>
-  // <h4 id='hydration-friend-ounces-today'>${userRepository.calculateAverageDailyWater(todayDate)}</h4>
-  // </section>
-  // `
 }
 
 function displayHydrationCalendarSection() {
   const dailyOunces = displayDailyOunces();
   domUpdate.updateHydrationCalendarSection(hydrationCalendarCard, dailyOunces);
-  // hydrationCalendarCard.innerHTML = '';
-  // hydrationCalendarCard.innerHTML = 
-  // `
-  // <button aria-label='go-back' class='go-back-button hydration-go-back-button'>
-  // </button>
-  // <section class="display-hydration-calendar">
-  // ${displayDailyOunces()}
-  // </section>
-  // `
 }
 
 function displayDailyOunces() {
+
   let elementSection = '';
   user.ouncesRecord.forEach((record, index) => {
+  let dailyOunces = user.returnTotalDailyOunces(record.date);
   if (index === 1) {
-    elementSection = 
-    `
-    <section 
-      class='hydration-data-line'>
-        <p 
-          class='hydration-weekly-label'>
-          YESTERDAY:
-        </p>
-        <h4 
-          class='hydration-weekly-amount daily-oz' 
-          id='hydration-calendar-ounces-1day'>
-          ${user.returnTotalDailyOunces(record.date)} oz
-        </h4>
-    </section>
-    ` 
+    elementSection = domUpdate.updateYesterdayOunces(dailyOunces);
   } else if(index > 1 && index < 7) {
-    elementSection += 
-    `
-    <section 
-      class='hydration-data-line'>
-      <p 
-        class='hydration-weekly-label'>
-        ${index} DAYS AGO:</p>
-      <h4 
-        class='hydration-weekly-amount daily-oz' 
-        id='hydration-calendar-ounces-1day'> 
-        ${user.returnTotalDailyOunces(record.date)} oz
-      </h4>
-    </section>
-    ` 
+    elementSection += domUpdate.updatePastDailyOunces(index, dailyOunces);
     }
   })
   return elementSection;
@@ -409,42 +319,12 @@ function displaySleepInfoSection() {
   const hoursAvg = user.hoursSleptAverage;
   const qualityAvg = user.sleepQualityAverage;
   domUpdate.updateSleepInfoSection(sleepInfoCard, sleepQuality, hoursAvg, qualityAvg);
-  // sleepInfoCard.innerHTML = '';
-  // sleepInfoCard.innerHTML =
-  // `
-  // <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
-  // <section class='card-data-line'>
-  //   <p>SLEEP QUALITY LAST NIGHT</p>
-  //   <h4 id='sleep-info-quality-today'>${findTodayUserMetrics(sleepInstances).sleepQuality}</h4>
-  // </section>
-  // <section class='card-data-line'>
-  //   <p>OVERALL NUMBER OF HOURS AVERAGE</p>
-  //   <h4 id='sleep-info-hours-average-alltime'>${user.hoursSleptAverage}</h4>
-  // </section>
-  // <section class='card-data-line'>
-  //   <p>OVERALL SLEEP QUALITY AVERAGE</p>
-  //   <h4 id='sleep-info-quality-average-alltime'>${user.sleepQualityAverage}</h4>
-  // </section>
-  // `
 }
 
 function displayFriendsSleepSection() {
   const longestSleeper = getFriendSleeper('getLongestSleeper');
   const worstSleeper = getFriendSleeper('getWorstSleeper');
   domUpdate.updateFriendsSleepSection(sleepFriendsCard, longestSleeper, worstSleeper);
-  // sleepFriendsCard.innerHTML = '';
-  // sleepFriendsCard.innerHTML =
-  // `
-  // <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
-  // <section class='card-data-line'>
-  //   <p>LAST NIGHT'S SUPERIOR SLEEPER</p>
-  //   <h4 id='sleep-friend-longest-sleeper'>${getFriendSleeper('getLongestSleeper')}</h4>
-  // </section>
-  // <section class='card-data-line'>
-  //   <p>LAST NIGHT'S INFERIOR SLEEPER</p>
-  //   <h4 id='sleep-friend-worst-sleeper'>${getFriendSleeper('getWorstSleeper')}</h4>
-  // </section>
-  // `
 }
 
 function getFriendSleeper(type) {
@@ -457,17 +337,4 @@ function displayCalendarSleepSection() {
   const avgHours = user.calculateAverageSleptHoursThisWeek(todayDate);
   const avgQuality = user.calculateAverageSleptQualityThisWeek(todayDate);
   domUpdate.updateSleepCalendarSection(sleepCalendarCard, avgHours, avgQuality)
-  // sleepCalendarCard.innerHTML = '';
-  // sleepCalendarCard.innerHTML =
-  // `
-  // <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
-  // <section class='card-data-line'>
-  //   <p>LAST WEEK'S HOURLY AVERAGE</p>
-  //   <h4 id='sleep-calendar-hours-average-weekly'>${user.calculateAverageSleptHoursThisWeek(todayDate)}</h4>
-  // </section>
-  // <section class='card-data-line'>
-  //   <p>LAST WEEK'S QUALITY AVERAGE</p>
-  //   <h4 id='sleep-calendar-quality-average-weekly'>${user.calculateAverageSleptQualityThisWeek(todayDate)}</h4>
-  // </section>
-  // `
 }

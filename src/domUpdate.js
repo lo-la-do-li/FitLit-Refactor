@@ -198,9 +198,43 @@ const domUpdate = {
     `
   }, 
   
-  updateDailyOunces: () => {
-
+  updateYesterdayOunces: (dailyOunces) => {
+    let elementSection = '';
+    return elementSection = 
+    `
+      <section 
+        class='hydration-data-line'>
+          <p 
+            class='hydration-weekly-label'>
+            YESTERDAY:
+          </p>
+          <h4 
+            class='hydration-weekly-amount daily-oz' 
+            id='hydration-calendar-ounces-1day'>
+            ${dailyOunces} oz
+          </h4>
+      </section>
+    ` 
   },
+
+  updatePastDailyOunces: (num, dailyOunces) => {
+    let elementSection = '';
+    return elementSection = 
+    `
+      <section 
+        class='hydration-data-line'>
+        <p 
+          class='hydration-weekly-label'>
+          ${num} DAYS AGO:</p>
+        <h4 
+          class='hydration-weekly-amount daily-oz' 
+          id='hydration-calendar-ounces-1day'> 
+          ${dailyOunces} oz
+        </h4>
+      </section>
+    ` 
+  },
+
 
   updateSleepInfoSection: (element, quality, avgHours, avgQuality) => {
     element.innerHTML = '';
