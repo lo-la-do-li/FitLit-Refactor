@@ -7,13 +7,3 @@ $bright-orange: #F5634B;
 $aqua-blue: #54C6BE;
 $light-purple: #8975B2;
 $pale-yellow: #FBD089;
-
-@mixin button-styles() {
-    background-position: center;
-    background-size: 3.4vw;
-    border: none;
-    display: inline;
-    height: 3.4vw;
-    margin-left: 1vw;
-    width: 3.4vw;
-}

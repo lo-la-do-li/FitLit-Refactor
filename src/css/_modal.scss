@@ -7,18 +7,16 @@
   border: none;
   display: inline;
   float: left;
-  height: $profile-button;
+  @include height-width($profile-button, $profile-button);
   margin-right: $margin-size;
   margin-top: 1.6vw;
-  width: $profile-button;
 }
 
 .modal {
   position: fixed;
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
+  @include height-width(100%, 100%);
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 0;
   visibility: hidden;
@@ -33,10 +31,9 @@
   transform: translate(-50%, -50%);
   background-color: white;
   padding: 1rem 1.5rem;
-  width: 30%;
   overflow: scroll;
-  border-radius: 0.5rem;
-  height: 80vh;
+  @include rounded-corners(.5rem);
+  @include height-width(80vh, 30%);
 }
 
 .close-button {
@@ -45,7 +42,7 @@
   line-height: 1.5rem;
   text-align: center;
   cursor: pointer;
-  border-radius: 0.25rem;
+  @include rounded-corners(.25rem);
   background-color: lightgray;
   &:hover {
     background-color: darkgray;
@@ -68,9 +65,7 @@ form {
   transform: translate(-50%, -50%);
   background-color: lightgray;
   padding-top: 2rem;
-  width: 80%;
   overflow: scroll;
-  border-radius: 0.5rem;
-  height: 80vh;
-
+  @include rounded-corners(.5rem);
+  @include height-width(80vh, 80%);
 }

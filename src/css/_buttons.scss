@@ -1,95 +1,103 @@
+.button-styles {
+  background-position: center;
+  background-size: 3.4vw;
+  border: none;
+  display: inline;
+  height: 3.4vw;
+  margin-left: 1vw;
+  width: 3.4vw;
+}
 
 .steps-go-back-button {
-  @include button-styles();
+  @extend .button-styles;
   background-image: url(../images/steps-goback.png);
 }
 
 .steps-info-button {
-  @include button-styles();
+  @extend .button-styles;
   background-image: url(../images/steps-info.png);
 }
 
 .steps-friends-button {
-  @include button-styles();
+  @extend .button-styles;
   background-image: url(../images/steps-friends.png);
 }
 
 .steps-calendar-button {
   float: right;
-  @include button-styles();
+  @extend .button-styles;
   background-image: url(../images/steps-calendar.png);
 }
 
 .hydration-go-back-button {
-  @include button-styles();
+  @extend .button-styles;
   background-image: url(../images/hydration-goback.png);
 }
 
 .hydration-info-button {
-  @include button-styles();
+  @extend .button-styles;
   background-image: url(../images/hydration-info.png);
 }
 
 .hydration-friends-button {
-  @include button-styles();
+  @extend .button-styles;
   background-image: url(../images/hydration-friends.png);
 }
 
 .hydration-calendar-button {
   float: right;
-  @include button-styles();
+  @extend .button-styles;
   background-image: url(../images/hydration-calendar.png);
 }
 
 .stairs-go-back-button {
-  @include button-styles();
+  @extend .button-styles;
   background-image: url(../images/stairs-goback.png);
 }
 
 .stairs-info-button {
-  @include button-styles();
+  @extend .button-styles;
   background-image: url(../images/stairs-info.png);
 }
 
 .stairs-friends-button {
-  @include button-styles();
+  @extend .button-styles;
   background-image: url(../images/stairs-friends.png);
 }
 
 .stairs-calendar-button {
   float: right;
-  @include button-styles();
+  @extend .button-styles;
   background-image: url(../images/stairs-calendar.png);
 }
 
 .sleep-go-back-button {
-  @include button-styles();
+  @extend .button-styles;
   background-image: url(../images/sleep-goback.png);
 }
 
 .sleep-info-button {
-  @include button-styles();
+  @extend .button-styles;
   background-image: url(../images/sleep-info.png);
 }
 
 .sleep-friends-button {
-  @include button-styles();
+  @extend .button-styles;
   background-image: url(../images/sleep-friends.png);
 }
 
 .sleep-calendar-button {
   float: right;
-  @include button-styles();
+  @extend .button-styles;
   background-image: url(../images/sleep-calendar.png);
 }
 
-
 .steps-trending-button {
-  @include button-styles();
+  @extend .button-styles;
   background-image: url(../images/steps-trending.png);
 }
 
 .stairs-trending-button {
-  @include button-styles();
+  @extend .button-styles;
   background-image: url(../images/stairs-trending.png);
 }
