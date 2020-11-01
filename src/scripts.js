@@ -19,6 +19,10 @@ let sleepInstances = [];
 let user;
 let todayDate;
 let randomUserIndex;
+let newSleepData;
+let newActivityData;
+let newHydrationData;
+
 
 //querySelectors
 let headerName = document.querySelector('#header-name');
@@ -47,16 +51,20 @@ let stairsTrendingCard = document.querySelector('#stairs-trending-card');
 let stairsUserStairsToday = document.querySelector('#stairs-user-stairs-today');
 let stepsUserStepsToday = document.querySelector('#steps-user-steps-today');
 let userInfoDropdown = document.querySelector('#user-info-dropdown');
+let modal = document.querySelector('.modal');
+let triggerButton = document.querySelector('.trigger');
+let closeButton = document.querySelector('.close-button');
+let submitButton = document.querySelector('.submit-user-input-button');
 
 //eventListener
 mainPage.addEventListener('click', showInfo);
-profileButton.addEventListener('click', showDropdown);
+profileButton.addEventListener('click', showProfileDropDown);
+triggerButton.addEventListener('click', displayFormDropDown);
+closeButton.addEventListener('click', closeFormDropDown);
+submitButton.addEventListener('click', postOnSubmit);
+
 
 //Functions
-
-// const newSleepData = {"userID": randomUserIndex + 1, "date": '2019/09/21', "hoursSlept": 8, "sleepQuality": 7};
-// const newActivityData = {"userID": randomUserIndex + 1, "date": '2019/09/22', "numSteps": 2000, "minutesActive": 30, "flightsOfStairs": 16};
-// const newHydrationData = {"userID": randomUserIndex + 1, "date": '2019/09/22', "numOunces": 6.1};
 
 Promise.all([apiCalls.getUserData(), apiCalls.getSleepData(), apiCalls.getActivityData(), apiCalls.getHydrationData()])
   .then((data) => {
@@ -114,11 +122,68 @@ function sortOuncesRecord() {
     return 0;
   });
 }
+////////////////// below ////////////////
+let userInputs = document.querySelectorAll('.user-input');
+let modalContent = document.querySelector('.modal-content');
+modalContent.addEventListener('keyup', limitInputs);
 
-function showDropdown() {
+function displayFormDropDown() {
+  checkInputFields();
+  domUpdate.toggleElement(modal);
+}
+
+function checkInputFields() {
+  const inputs = Array.from(userInputs)
+  const unfilledinput = inputs.find(userInput => userInput.value === '');
+  if (unfilledinput) {
+    submitButton.disabled = true;
+  } else {
+    submitButton.disabled = false;
+  }
+}
+
+function closeFormDropDown() {
+  domUpdate.toggleElement(modal);
+  domUpdate.clearInputFields(userInputs);
+}
+
+function postOnSubmit(event) {
+  event.preventDefault();
+  collectUserInputData();
+  postUserInputData();
+  domUpdate.toggleElement(modal);
+  domUpdate.clearInputFields(userInputs);
+}
+
+function collectUserInputData() {
+  newSleepData = {"userID": randomUserIndex + 1, "date": '2019/08/21', "hoursSlept": userInputs[0].value, "sleepQuality": userInputs[1].value};
+  newActivityData = {"userID": randomUserIndex + 1, "date": '2019/08/22', "numSteps": userInputs[2].value, "minutesActive": userInputs[3].value, "flightsOfStairs": userInputs[4].value};
+  newHydrationData = {"userID": randomUserIndex + 1, "date": '2019/08/22', "numOunces": userInputs[5].value};
+}
+
+function postUserInputData() {
+  return Promise.all([apiCalls.addSleepData(newSleepData), apiCalls.addActivityData(newActivityData), apiCalls.addHydrationData(newHydrationData)])
+    .then(data => console.log(data))
+}
+
+function limitInputs() {
+  checkInputFields();
+  preventInvalids();
+}
+
+function preventInvalids() {
+  const invalidChars = ['+', '-', 'e', 'E'];
+    if (invalidChars.includes(event.key)) {
+      event.preventDefault();
+    }
+}
+
+///////////////////////////// above ////////////////
+
+function showProfileDropDown() {
   const name = user.getFirstName();
   const friendsSteps = displayFriendsSteps();
-  domUpdate.showDropDown(userInfoDropdown, name, user, friendsSteps)
+  domUpdate.showProfileDropDown(userInfoDropdown, name, user, friendsSteps)
   let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
   domUpdate.updateDropdownTextColor(friendsStepsParagraphs);
 
@@ -322,3 +387,4 @@ function displayCalendarSleepSection() {
   const avgQuality = user.calculateAverageSleptQualityThisWeek(todayDate);
   domUpdate.updateSleepCalendarSection(sleepCalendarCard, avgHours, avgQuality)
 }
+
