@@ -59,8 +59,8 @@ let submitButton = document.querySelector('.submit-user-input-button');
 //eventListener
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showProfileDropDown);
-triggerButton.addEventListener('click', toggleModal);
-closeButton.addEventListener('click', toggleModal);
+triggerButton.addEventListener('click', displayFormDropDown);
+closeButton.addEventListener('click', closeFormDropDown);
 submitButton.addEventListener('click', postOnSubmit);
 
 
@@ -125,17 +125,33 @@ function sortOuncesRecord() {
 ////////////////// below ////////////////
 let userInputs = document.querySelectorAll('.user-input');
 let modalContent = document.querySelector('.modal-content');
-modalContent.addEventListener('keyup', limitInputs);
+modalContent.addEventListener('keydown', limitInputs);
 
-function toggleModal() {
-  domUpdate.toggleElement(modal)
+function displayFormDropDown() {
+  checkInputFields();
+  domUpdate.toggleElement(modal);
+}
+function checkInputFields() {
+  userInputs.forEach(userInput => {
+    if (userInput.value === '') {
+      submitButton.disabled = true;
+    } else {
+      submitButton.disabled = false;
+    }
+  })
+}
+
+function closeFormDropDown() {
+  domUpdate.toggleElement(modal);
+  domUpdate.clearInputFields(userInputs);
 }
 
 function postOnSubmit(event) {
   event.preventDefault();
   collectUserInputData();
-  toggleModal();
   //postUserInputData();
+  domUpdate.toggleElement(modal);
+  domUpdate.clearInputFields(userInputs);
 }
 
 function collectUserInputData() {
@@ -150,19 +166,17 @@ function postUserInputData() {
 }
 
 function limitInputs() {
-  preventInvalids(event, userInputs)
+  checkInputFields();
+  userInputs.forEach(inputField => {
+    preventInvalids(event, userInputs);
+  })
 }
 
-function preventInvalids(event, inputFields) {
+function preventInvalids(event) {
   const invalidChars = ['+', '-', 'e', 'E'];
-  inputFields.forEach(inputField => {
-    invalidChars.forEach(char => {
-      if (event.key === char) {
-        event.preventDefault();
-        inputField.value = '';
-      }
-    })
-  })
+    if (invalidChars.includes(event.key)) {
+      event.preventDefault();
+    }
 }
 
 ///////////////////////////// above ////////////////
