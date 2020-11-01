@@ -6,7 +6,7 @@
     this.email = userData.email;
     this.strideLength = userData.strideLength;
     this.dailyStepGoal = userData.dailyStepGoal;
-    this.totalStepsThisWeek = 0;//
+    this.totalStepsThisWeek = 0;
     this.friends = userData.friends;
     this.ouncesAverage = 0;
     this.ouncesRecord = [];
@@ -19,13 +19,12 @@
     this.trendingStepDays = [];
     this.trendingStairsDays = [];
     this.friendsNames = [];
-    //this.friendsActivityRecords = []
   }
   getFirstName() {
     const newName = this.name.split(' ');
     return newName[0].toUpperCase();
   }
-  // Should be in Hydration.js?
+
   updateHydration(date, amount) {
     this.ouncesRecord.unshift({date,amount});
     const recordLength = this.ouncesRecord.length;
@@ -36,8 +35,6 @@
     return this.ouncesAverage = recordLength ? finalAverage : amount;
   }
 
-
-  //Move to Hydration.js, formerly addDailyOunces(date)
   returnTotalDailyOunces(date) {
     return this.ouncesRecord.reduce((totalOunces, record) => {
       if (record.date === date) {
@@ -113,11 +110,6 @@
       }
     })
   }
-//never used
-  // findClimbingRecord() {
-  //    this.sortRecord(`this['activityRecord']`, 'flightsOfStairs');
-  //    return this.activityRecord[0].flightsOfStairs;
-  // }
 
   calculateDailyCalories(date) {
     let fitDate = this.activityRecord.filter(activity => activity.date === date)

@@ -1,6 +1,5 @@
 @mixin large-fonts($font-size, $spacing) {
   font-size: $font-size;
-  // display: inline;
   letter-spacing: $spacing;
 }
 

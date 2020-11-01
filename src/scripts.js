@@ -161,8 +161,9 @@ function collectUserInputData() {
 }
 
 function postUserInputData() {
-  return Promise.all([apiCalls.addSleepData(newSleepData), apiCalls.addActivityData(newActivityData), apiCalls.addHydrationData(newHydrationData)])
-    .then(data => console.log(data))
+  apiCalls.addSleepData(newSleepData); 
+  apiCalls.addActivityData(newActivityData);
+  apiCalls.addHydrationData(newHydrationData);
 }
 
 function limitInputs() {
