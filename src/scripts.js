@@ -150,7 +150,7 @@ function closeFormDropDown() {
 function postOnSubmit(event) {
   event.preventDefault();
   collectUserInputData();
-  //postUserInputData();
+  postUserInputData();
   domUpdate.toggleElement(modal);
   domUpdate.clearInputFields(userInputs);
 }

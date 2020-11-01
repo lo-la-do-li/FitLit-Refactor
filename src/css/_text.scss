@@ -7,12 +7,12 @@ h1 {
   letter-spacing: .2em;
 }
 
-h2 {
-  font-size: 7vw;
-  letter-spacing: .1em;
-}
+// h2 {
+//   font-size: 7vw;
+//   letter-spacing: .1em;
+// }
 
-h3 {
+h2 {
   display: inline;
   font-family: 'Work Sans', sans-serif;
   font-size: 3vw;
@@ -20,11 +20,11 @@ h3 {
   letter-spacing: .2em;
 }
 
-h4 {
+h3 {
   font-size: 6vw;
 }
 
-h5 {
+h4 {
   font-size: 1.8vw;
   padding-bottom: 1vw;
   text-align: center;
@@ -40,4 +40,11 @@ p {
   text-align: right;
   width: 9vw;
   word-break: keep-all;
+}
+
+.today-data {
+  font-size: 7vw;
+  letter-spacing: .1em;
+  display: flex;
+  justify-content: center;
 }

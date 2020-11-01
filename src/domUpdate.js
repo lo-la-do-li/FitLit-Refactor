@@ -13,7 +13,7 @@ const domUpdate = {
     element.innerHTML = '';
     element.innerHTML =
     `
-    <h5 id='dropdown-name'>${name}</h5>
+    <h4 id='dropdown-name'>${name}</h4>
     <p class='dropdown-p' id='dropdown-email'> EMAIL | ${user.email}</p>
     <p class='dropdown-p' id='dropdown-goal'> DAILY STEP GOAL | ${user.dailyStepGoal}</p>
     <br/>
@@ -60,11 +60,11 @@ const domUpdate = {
     <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
     <section class='card-data-line'>
       <p>TOTAL ACTIVE MINUTES TODAY:</p>
-      <h4 id='steps-info-active-minutes-today'>${min}</h4>
+      <h3 id='steps-info-active-minutes-today'>${min}</h3>
     </section>
     <section class='card-data-line'>
       <p>TOTAL MILES WALKED TODAY:</p>
-      <h4 id='steps-info-miles-walked-today'>${miles}</h4>
+      <h3 id='steps-info-miles-walked-today'>${miles}</h3>
     </section>
     `
   },
@@ -76,15 +76,15 @@ const domUpdate = {
     <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
     <section class='card-data-line'>
       <p>ALL USERS' AVERAGE ACTIVE MINUTES TODAY:</p>
-      <h4 id='steps-friend-active-minutes-average-today'>${min}</h4>
+      <h3 id='steps-friend-active-minutes-average-today'>${min}</h3>
     </section>
     <section class='card-data-line'>
       <p>ALL USERS' AVERAGE STEPS TODAY:</p>
-      <h4 id='steps-friend-steps-average-today'>${steps}</h4>
+      <h3 id='steps-friend-steps-average-today'>${steps}</h3>
     </section>
     <section class='card-data-line'>
       <p>ALL USERS' AVERAGE STEP GOAL:</p>
-      <h4 id='steps-friend-average-step-goal'>${goal}</h4>
+      <h3 id='steps-friend-average-step-goal'>${goal}</h3>
     `
   },
   updateCalendarStepsSection: (element, min, steps) => {
@@ -95,11 +95,11 @@ const domUpdate = {
     <button aria-label='go-back' class='go-back-button steps-go-back-button'></button>
     <section class='card-data-line'>
       <p>YOUR WEEKLY AVERAGE MINUTES:</p>
-      <h4 id='steps-calendar-total-active-minutes-weekly'>${min}</h4>
+      <h3 id='steps-calendar-total-active-minutes-weekly'>${min}</h3>
     </section>
     <section class='card-data-line'>
       <p>YOUR TOTAL WEEKLY STEP COUNT:</p>
-      <h4 id='steps-calendar-total-steps-weekly'>${steps}</h4>
+      <h3 id='steps-calendar-total-steps-weekly'>${steps}</h3>
     </section>
     `
   },
@@ -122,7 +122,7 @@ const domUpdate = {
     <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
     <section class='card-data-line'>
       <p>FLIGHTS CLIMBED TODAY</p>
-      <h4 id='stairs-info-flights-today'>${flights}</h4>
+      <h3 id='stairs-info-flights-today'>${flights}</h3>
     </section>
     `
   },
@@ -134,7 +134,7 @@ const domUpdate = {
     <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
     <section class='card-data-line'>
       <p>ALL USERS' AVERAGE FLIGHTS TODAY</p>
-      <h4 id='stairs-friend-flights-average-today'>${avgFlights}</h4>
+      <h3 id='stairs-friend-flights-average-today'>${avgFlights}</h3>
     `
   },
 
@@ -161,11 +161,11 @@ const domUpdate = {
     <button aria-label='go-back' class='go-back-button stairs-go-back-button'></button>
     <section class='card-data-line'>
       <p>YOUR WEEKLY FLIGHTS CLIMBED</p>
-      <h4 id='stairs-calendar-flights-average-weekly'>${avgFlights}</h4>
+      <h3 id='stairs-calendar-flights-average-weekly'>${avgFlights}</h3>
     </section>
     <section class='card-data-line'>
       <p>YOUR WEEKLY STAIRS CLIMBED</p>
-      <h4 id='stairs-calendar-stairs-average-weekly'>${avgStairs}</h4>
+      <h3 id='stairs-calendar-stairs-average-weekly'>${avgStairs}</h3>
     </section>
     `
   },
@@ -177,7 +177,7 @@ const domUpdate = {
     <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
     <section class='card-data-line'>
     <p>GLASSES OF WATER CONSUMED TODAY:</p>
-    <h4 id='hydration-info-glasses-today'>${glasses}</h4>
+    <h3 id='hydration-info-glasses-today'>${glasses}</h3>
     </section>
     `
   },
@@ -189,7 +189,7 @@ const domUpdate = {
     <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
     <section class='card-data-line'>
     <p>ALL USERS' AVERAGE DAILY OUNCES:</p>
-    <h4 id='hydration-friend-ounces-today'>${friendsIntake}</h4>
+    <h3 id='hydration-friend-ounces-today'>${friendsIntake}</h3>
     </section>
     `
   },
@@ -216,11 +216,11 @@ const domUpdate = {
             class='hydration-weekly-label'>
             YESTERDAY:
           </p>
-          <h4 
+          <h3 
             class='hydration-weekly-amount daily-oz' 
             id='hydration-calendar-ounces-1day'>
             ${dailyOunces} oz
-          </h4>
+          </h3>
       </section>
     ` 
   },
@@ -234,11 +234,11 @@ const domUpdate = {
         <p 
           class='hydration-weekly-label'>
           ${num} DAYS AGO:</p>
-        <h4 
+        <h3 
           class='hydration-weekly-amount daily-oz' 
           id='hydration-calendar-ounces-1day'> 
           ${dailyOunces} oz
-        </h4>
+        </h3>
       </section>
     ` 
   },
@@ -251,15 +251,15 @@ const domUpdate = {
     <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
     <section class='card-data-line'>
       <p>SLEEP QUALITY LAST NIGHT</p>
-      <h4 id='sleep-info-quality-today'>${quality}</h4>
+      <h3 id='sleep-info-quality-today'>${quality}</h3>
     </section>
     <section class='card-data-line'>
       <p>OVERALL NUMBER OF HOURS AVERAGE</p>
-      <h4 id='sleep-info-hours-average-alltime'>${avgHours}</h4>
+      <h3 id='sleep-info-hours-average-alltime'>${avgHours}</h3>
     </section>
     <section class='card-data-line'>
       <p>OVERALL SLEEP QUALITY AVERAGE</p>
-      <h4 id='sleep-info-quality-average-alltime'>${avgQuality}</h4>
+      <h3 id='sleep-info-quality-average-alltime'>${avgQuality}</h3>
     </section>
     `
   }, 
@@ -271,11 +271,11 @@ const domUpdate = {
     <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
     <section class='card-data-line'>
       <p>LAST NIGHT'S SUPERIOR SLEEPER</p>
-      <h4 id='sleep-friend-longest-sleeper'>${longestSleeper}</h4>
+      <h3 id='sleep-friend-longest-sleeper'>${longestSleeper}</h3>
     </section>
     <section class='card-data-line'>
       <p>LAST NIGHT'S INFERIOR SLEEPER</p>
-      <h4 id='sleep-friend-worst-sleeper'>${worstSleeper}</h4>
+      <h3 id='sleep-friend-worst-sleeper'>${worstSleeper}</h3>
     </section>
     `
   },
@@ -287,11 +287,11 @@ const domUpdate = {
     <button aria-label='go-back' class='go-back-button sleep-go-back-button'></button>
     <section class='card-data-line'>
       <p>LAST WEEK'S HOURLY AVERAGE</p>
-      <h4 id='sleep-calendar-hours-average-weekly'>${avgHours}</h4>
+      <h3 id='sleep-calendar-hours-average-weekly'>${avgHours}</h3>
     </section>
     <section class='card-data-line'>
       <p>LAST WEEK'S QUALITY AVERAGE</p>
-      <h4 id='sleep-calendar-quality-average-weekly'>${avgQuality}</h4>
+      <h3 id='sleep-calendar-quality-average-weekly'>${avgQuality}</h3>
     </section>
     `
   }
