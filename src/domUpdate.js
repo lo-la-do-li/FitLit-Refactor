@@ -8,6 +8,10 @@ const domUpdate = {
     inputs.forEach(input => input.value = '')
   },
 
+  displayAlertMessage: (sleepInput, activityInput, hydrationInput) => {
+    window.alert(`The following data has been added to your Fitlit:\n Hours of Sleep: ${sleepInput.hoursSlept}\n Sleep Quality: ${sleepInput.sleepQuality}\n Number of Steps: ${activityInput.numSteps}\n Minutes Active: ${activityInput.minutesActive}\n Flights of Stairs: ${activityInput.flightsOfStairs}\n Ounces of Water: ${hydrationInput.numOunces}`)
+  },
+
   showDropDown : (element, name, user, steps) => {
     element.classList.toggle('hide');
     element.innerHTML = '';
@@ -25,7 +29,7 @@ const domUpdate = {
 
   updateFriendsSteps : (records) => {
     let element = '';
-    records.forEach(friend => {    
+    records.forEach(friend => {
       element +=
       `
       <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
@@ -105,7 +109,7 @@ const domUpdate = {
   },
 
   updateTrendingStepSection: (element, user) => {
-   
+
     element.innerHTML = '';
     element.innerHTML =
     `
@@ -172,7 +176,7 @@ const domUpdate = {
 
   updateHydrationInfoSection: (element, glasses) => {
     element.innerHTML = '';
-    element.innerHTML = 
+    element.innerHTML =
     `
     <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
     <section class='card-data-line'>
@@ -184,7 +188,7 @@ const domUpdate = {
 
   updateFriendsHydrationSection: (element, friendsIntake) => {
     element.innerHTML = '';
-    element.innerHTML = 
+    element.innerHTML =
     `
     <button aria-label='go-back' class='go-back-button hydration-go-back-button'></button>
     <section class='card-data-line'>
@@ -196,7 +200,7 @@ const domUpdate = {
 
   updateHydrationCalendarSection: (element, dailyOunces) => {
     element.innerHTML = '';
-    element.innerHTML = 
+    element.innerHTML =
     `
     <button aria-label='go-back' class='go-back-button hydration-go-back-button'>
     </button>
@@ -204,43 +208,43 @@ const domUpdate = {
     ${dailyOunces}
     </section>
     `
-  }, 
-  
+  },
+
   updateYesterdayOunces: (dailyOunces) => {
     let elementSection = '';
-    return elementSection = 
+    return elementSection =
     `
-      <section 
+      <section
         class='hydration-data-line'>
-          <p 
+          <p
             class='hydration-weekly-label'>
             YESTERDAY:
           </p>
-          <h3 
-            class='hydration-weekly-amount daily-oz' 
+          <h3
+            class='hydration-weekly-amount daily-oz'
             id='hydration-calendar-ounces-1day'>
             ${dailyOunces} oz
           </h3>
       </section>
-    ` 
+    `
   },
 
   updatePastDailyOunces: (num, dailyOunces) => {
     let elementSection = '';
-    return elementSection = 
+    return elementSection =
     `
-      <section 
+      <section
         class='hydration-data-line'>
-        <p 
+        <p
           class='hydration-weekly-label'>
           ${num} DAYS AGO:</p>
-        <h3 
-          class='hydration-weekly-amount daily-oz' 
-          id='hydration-calendar-ounces-1day'> 
+        <h3
+          class='hydration-weekly-amount daily-oz'
+          id='hydration-calendar-ounces-1day'>
           ${dailyOunces} oz
         </h3>
       </section>
-    ` 
+    `
   },
 
 
@@ -262,7 +266,7 @@ const domUpdate = {
       <h3 id='sleep-info-quality-average-alltime'>${avgQuality}</h3>
     </section>
     `
-  }, 
+  },
 
   updateFriendsSleepSection: (element, longestSleeper, worstSleeper) => {
     element.innerHTML = '';
