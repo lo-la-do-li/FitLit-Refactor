@@ -153,11 +153,7 @@ function postOnSubmit(event) {
   postUserInputData();
   domUpdate.toggleElement(modal);
   domUpdate.clearInputFields(userInputs);
-  alertUserFormPosted();
-}
-
-function alertUserFormPosted() {
-  window.alert(`The following data has been added to your Fitlit:\n Hours of Sleep: ${newSleepData.hoursSlept}\n Sleep Quality: ${newSleepData.sleepQuality}\n Number of Steps: ${newActivityData.numSteps}\n Minutes Active: ${newActivityData.minutesActive}\n Flights of Stairs: ${newActivityData.flightsOfStairs}\n Ounces of Water: ${newHydrationData.numOunces}`);
+  domUpdate.displayAlertMessage(newSleepData, newActivityData, newHydrationData);
 }
 
 function collectUserInputData() {
