@@ -153,6 +153,7 @@ function postOnSubmit(event) {
   postUserInputData();
   domUpdate.toggleElement(modal);
   domUpdate.clearInputFields(userInputs);
+  domUpdate.displayAlertMessage(newSleepData, newActivityData, newHydrationData);
 }
 
 function collectUserInputData() {
@@ -387,4 +388,3 @@ function displayCalendarSleepSection() {
   const avgQuality = user.calculateAverageSleptQualityThisWeek(todayDate);
   domUpdate.updateSleepCalendarSection(sleepCalendarCard, avgHours, avgQuality)
 }
-
