@@ -1,4 +1,4 @@
- class User {
+class User {
   constructor(userData) {
     this.id = userData.id;
     this.name = userData.name;
@@ -26,7 +26,7 @@
   }
 
   updateHydration(date, amount) {
-    this.ouncesRecord.unshift({date,amount});
+    this.ouncesRecord.unshift({date, amount});
     const recordLength = this.ouncesRecord.length;
     const currentTotal = this.ouncesAverage * (recordLength - 1);
     const currentAverage = (currentTotal + amount) / recordLength;
@@ -132,7 +132,7 @@
   findRecord(type, activity, msg) {
     return this.activityRecord.reduce((positiveDays, dailyRecord) => {
       const index1 = this.activityRecord.indexOf(dailyRecord);
-      if (this.activityRecord[index1+1] && dailyRecord[activity] > this.activityRecord[index1+1][activity]) {
+      if (this.activityRecord[index1 + 1] && dailyRecord[activity] > this.activityRecord[index1 + 1][activity]) {
         positiveDays.unshift(dailyRecord.date);
       } else if (positiveDays.length > 2) {
         this[type].push(`Your most recent positive ${msg} streak was ${positiveDays[0]} - ${positiveDays[positiveDays.length - 1]}!`);
@@ -166,7 +166,7 @@
     const friendsActivityRecords = this.friends.reduce((friendsActivityRecords, friendId)=> {
       let matchedFriend = users.find(user => user.id === friendId);
       matchedFriend.calculateTotalStepsThisWeek(date);
-      if(friendsActivityRecords.length < this.friends.length) {
+      if (friendsActivityRecords.length < this.friends.length) {
         friendsActivityRecords.push(
           {
             'id': matchedFriend.id,
@@ -176,7 +176,7 @@
       }
       return friendsActivityRecords;
     }, [])
-  return this.sortRecord(friendsActivityRecords, 'totalWeeklySteps');
+    return this.sortRecord(friendsActivityRecords, 'totalWeeklySteps');
   }
 }
 

@@ -12,7 +12,7 @@ const domUpdate = {
     window.alert(`The following data has been added to your Fitlit:\n Hours of Sleep: ${sleepInput.hoursSlept}\n Sleep Quality: ${sleepInput.sleepQuality}\n Number of Steps: ${activityInput.numSteps}\n Minutes Active: ${activityInput.minutesActive}\n Flights of Stairs: ${activityInput.flightsOfStairs}\n Ounces of Water: ${hydrationInput.numOunces}`)
   },
 
-  displayProfileDropDown : (element, name, user, steps) => {
+  displayProfileDropDown: (element, name, user, steps) => {
     element.classList.toggle('hide');
     element.innerHTML = '';
     element.innerHTML =
@@ -27,7 +27,7 @@ const domUpdate = {
     `
   },
 
-  updateFriendsSteps : (records) => {
+  updateFriendsSteps: (records) => {
     let element = '';
     records.forEach(friend => {
       element +=

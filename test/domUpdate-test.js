@@ -1,7 +1,7 @@
 const chai = require('chai');
 const spies = require('chai-spies');
 chai.use(spies);
-import { expect, util } from 'chai';
+import { expect } from 'chai';
 import domUpdate from '../src/domUpdate';
 
 describe('domUpdate', () => {

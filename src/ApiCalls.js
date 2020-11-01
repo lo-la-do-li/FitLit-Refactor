@@ -1,7 +1,7 @@
 const getData = (path) => {
   return fetch(path)
-  .then(response => response.json())
-  .catch(err => console.log(err))
+    .then(response => response.json())
+    .catch(err => console.log(err))
 }
 
 const addData = (path, data) => {
@@ -12,8 +12,8 @@ const addData = (path, data) => {
     },
     body: JSON.stringify(data)
   })
-  .then(response => response.json())
-  .catch(err => console.log(err))
+    .then(response => response.json())
+    .catch(err => console.log(err))
 }
 
 const apiCalls = {

@@ -5,7 +5,7 @@ import User from '../src/User';
 import Sleep from '../src/Sleep';
 
 describe('UserRepository', function() {
-  let user1, user2, user3, userRepository, sleepData, sleep1, sleep2, sleep3;
+  let user1, user2, user3, userRepository, sleepData;
   beforeEach(() => {
     user1 = new User({
       'id': 1,
@@ -76,18 +76,18 @@ describe('UserRepository', function() {
   it('should have a method that calculates friends average ounces of water', function() {
     user1.ouncesRecord = [
       {date: "2019/06/15", amount: 1},
-      {date: "2019/06/15", amount:  1},
-      {date: "2019/06/16", amount:  5}
+      {date: "2019/06/15", amount: 1},
+      {date: "2019/06/16", amount: 5}
     ]
     user2.ouncesRecord = [
-      {date: "2019/06/15", amount:  1},
-      {date: "2019/06/15", amount:  1},
-      {date: "2019/06/16", amount:  8}
+      {date: "2019/06/15", amount: 1},
+      {date: "2019/06/15", amount: 1},
+      {date: "2019/06/16", amount: 8}
     ]
     user3.ouncesRecord = [
-      {date: "2019/06/15", amount:  1},
-      {date: "2019/06/15", amount:  1},
-      {date: "2019/06/16", amount:  4}
+      {date: "2019/06/15", amount: 1},
+      {date: "2019/06/15", amount: 1},
+      {date: "2019/06/16", amount: 4}
     ]
     expect(userRepository.calculateAverageDailyWater("2019/06/16")).to.equal(5)
   });

@@ -38,10 +38,10 @@ describe('Hydration', function() {
     userRepository = new UserRepository();
     userRepository.users.push(user1, user2);
     hydrate1 = new Hydration({
-        "userID": 1,
-        "date": "2019/06/15",
-        "numOunces": 37
-      }, userRepository);
+      "userID": 1,
+      "date": "2019/06/15",
+      "numOunces": 37
+    }, userRepository);
     hydrate2 = new Hydration({
       "userID": 2,
       "date": "2019/06/15",
@@ -60,6 +60,7 @@ describe('Hydration', function() {
   
   it('should be an instance of hydrate', function() {
     expect(hydrate1).to.be.an.instanceof(Hydration);
+    expect(hydrate2).to.be.an.instanceof(Hydration);
   });
 
   it('should have an amount of ounces drank', function() {
