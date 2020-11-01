@@ -8,7 +8,7 @@ const domUpdate = {
     inputs.forEach(input => input.value = '')
   },
 
-  showDropDown : (element, name, user, steps) => {
+  displayProfileDropDown : (element, name, user, steps) => {
     element.classList.toggle('hide');
     element.innerHTML = '';
     element.innerHTML =
