@@ -1,0 +1,14 @@
+@mixin large-fonts($font-size, $spacing) {
+  font-size: $font-size;
+  display: inline;
+  letter-spacing: $spacing;
+}
+
+@mixin rounded-corners($radius) {
+  border-radius: $radius
+}
+
+@mixin height-width($height, $width) {
+  height: $height;
+  width: $width;
+}
