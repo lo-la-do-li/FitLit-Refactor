@@ -4,6 +4,10 @@ const domUpdate = {
     element.classList.toggle('show-modal');
   },
 
+  clearInputFields: (inputs) => {
+    inputs.forEach(input => input.value = '')
+  },
+
   showDropDown : (element, name, user, steps) => {
     element.classList.toggle('hide');
     element.innerHTML = '';
