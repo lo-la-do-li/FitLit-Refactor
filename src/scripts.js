@@ -153,6 +153,11 @@ function postOnSubmit(event) {
   postUserInputData();
   domUpdate.toggleElement(modal);
   domUpdate.clearInputFields(userInputs);
+  confirmUserFormPosted();
+}
+
+function confirmUserFormPosted() {
+  window.confirm('Today\'s input has been added to your Fitlit!')
 }
 
 function collectUserInputData() {
@@ -387,4 +392,3 @@ function displayCalendarSleepSection() {
   const avgQuality = user.calculateAverageSleptQualityThisWeek(todayDate);
   domUpdate.updateSleepCalendarSection(sleepCalendarCard, avgHours, avgQuality)
 }
-
