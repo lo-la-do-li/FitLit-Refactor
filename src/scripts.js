@@ -125,20 +125,21 @@ function sortOuncesRecord() {
 ////////////////// below ////////////////
 let userInputs = document.querySelectorAll('.user-input');
 let modalContent = document.querySelector('.modal-content');
-modalContent.addEventListener('keydown', limitInputs);
+modalContent.addEventListener('keyup', limitInputs);
 
 function displayFormDropDown() {
   checkInputFields();
   domUpdate.toggleElement(modal);
 }
+
 function checkInputFields() {
-  userInputs.forEach(userInput => {
-    if (userInput.value === '') {
-      submitButton.disabled = true;
-    } else {
-      submitButton.disabled = false;
-    }
-  })
+  const inputs = Array.from(userInputs)
+  const unfilledinput = inputs.find(userInput => userInput.value === '');
+  if (unfilledinput) {
+    submitButton.disabled = true;
+  } else {
+    submitButton.disabled = false;
+  }
 }
 
 function closeFormDropDown() {
@@ -167,12 +168,10 @@ function postUserInputData() {
 
 function limitInputs() {
   checkInputFields();
-  userInputs.forEach(inputField => {
-    preventInvalids(event, userInputs);
-  })
+  preventInvalids();
 }
 
-function preventInvalids(event) {
+function preventInvalids() {
   const invalidChars = ['+', '-', 'e', 'E'];
     if (invalidChars.includes(event.key)) {
       event.preventDefault();
