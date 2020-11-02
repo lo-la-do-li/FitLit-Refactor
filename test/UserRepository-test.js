@@ -5,7 +5,7 @@ import User from '../src/User';
 import Sleep from '../src/Sleep';
 
 describe('UserRepository', function() {
-  let user1, user2, user3, userRepository, sleepData;
+  let user1, user2, user3, userRepository, sleepData, sleep1, sleep2, sleep3;
   beforeEach(() => {
     user1 = new User({
       'id': 1,
