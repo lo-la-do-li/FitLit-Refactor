@@ -1,105 +1,74 @@
-# Webpack Starter Kit
+# Refactor Tractor Group Project: FitLit
+## Authors
+[Aaron Townshend](https://github.com/atownse)<br>
+[Elle Li](https://github.com/Elle624)<br>
+[Lola Dolinsky](https://github.com/lo-la-do-li)
 
-## Clone This Repo
+## Abstract
+**FitLit Description:** FitLit is a project that simulates an activity tracker, allowing a given user to see their health statistics.  Statistics include steps taken, water consumed, quality and quantity of sleep, and stairs climbed.  To make it even more dynamic, the user can see other users' stats, both the friends that are linked to their profile and averages of all users in the database.
 
-That's right, _clone_ not fork. You will use this repo multiple times, but you can only fork a repository once. So here is what you need to do to clone the repo and still be able to push changes to your repo:
+Part of this project was also designing a UI/UX comp.  We used Canva to make a mock-up and used that for wireframming and writing/implementing our CSS.
 
-1. Clone down this repo. Since you don't want to name your project "webpack-starter-kit", you can use an optional argument when you run `git clone` (you replace the `[...]` with the terminal command arguments): `git clone [remote-address] [what you want to name the repo]`
-1. Remove the default remote: `git remote rm origin` (notice that `git remote -v` not gives you back nothing)
-1. Create a new repo on GitHub with the name of `[what you want to name the repo]` to be consistent with naming
-1. Copy the address that you would use to clone down this repo - something like `git@github.com:...`
-1. Add this remote to your cloned down repo: `git remote add origin [address you copied in the previous step]` - do not include the brackets
+Technically, this project incorporated designing the architecture of the project, which included multiple classes to handle various small databases.  Code implementation focused on using information from various databases in the same classes and how those can talk to each other.
 
-Now try to commit something and push it up to your new repo. If everything is setup correctly, you should see the changes on GitHub.
+**Refactor Tractor Description:** The goal for this project was to refactor the existing code from a previously completed project to be more efficient.
+
+In the JavaScript files, we refactored many functions in scripts.js and methods on each Class using array iterator methods. We created a parent class "Action" and called each of our pre-existing "Activity", "Hydration", and "Sleep" classes a child of the parent, which inherits its properties and methods.
+
+After refactoring the JS, we were tasked with replacing local datasets to endpoints linked to an API.
+
+Additionally, we cleaned up our stylesheet using SASS and created partial files. HTML was modified to include aria tags, and styling utilizes contrasting colors to ensure that our site meets accessibility standards.
+
+In order to make sure our DOM updates were called on, we used spy testing in our chai library.
+
+---
+## Learning Goals
++ Build on top of pre-existing code that you did not write and navigate someone else’s codebase
++ Develop processes for working remotely and submitting pull requests to perform effective code reviews that help ensure the code is accurate and that everyone understands it
++ Make network requests to API endpoints to retrieve and manipulate data
++ Refactor pre-existing code and use inheritance to DRY up repetitive logic
++ Ensure your app is following best practices for accessibility
++ Leverage Sass to DRY up your CSS
++ Incorporate Webpack to streamline your workflow process
++ Leverage Chai Spies to verify that your DOM manipulation is happening
+---
 
 ## Setup
-
-After one person has gone through the steps of cloning down this repo and editing the remote, everyone should clone down the repo. 
-
-Then install the library dependencies. Run:
-
-```bash
-npm install
-```
-
-To verify that it is setup correctly, run `npm start` in your terminal. Go to `http://localhost:8080/` and you should see a page with some `h1` text and a pink background. If that's the case, you're good to go. Enter `control + c` in your terminal to stop the server at any time.
-
-## Where to Add Your Code
-
-### JavaScript
-
-You have to be very intentional with where you add your feature code. This repo uses a tool called [webpack](https://webpack.js.org/) to combine many JavaScript files into one big file. Webpack enables you to have many, separate JavaScript files to keep your code organized and readable. Webpack expects all of your code files to be in a specific place, or else it doesn't know how to combine them all behind the scenes.
-
-**Create all of your feature code files in the `src` directory.**
-
-Since code is separated into multiple files, you need to use the `import` and `export` syntax to share code across file.
-
-Here is a video that walks through some information about [import and export](https://www.youtube.com/watch?v=_3oSWwapPKQ). There are a lot of resources out there about `import` and `export`, and resources will sometimes call them `ES6 modules`. It's something you will see in React and beyond.
-
-### HTML
-
-Add the HTML you need in the `index.html` file in the `./src` directory. There is some boilerplate HTML that exists from the start that you can modify.
-
-### CSS (SCSS/SASS)
-
-This project is setup to use SCSS/SASS files by default instead of your regular CSS files. Add your SCSS files in the `src/css` directory. There is a `base.scss` file already there, but you can change this file and add multiple SCSS files in this directory.
-
-This might sound weird, but you need to `import` your SCSS files in the JavaScript entry file (`index.js`) for the styles to be applied to your HTML. The example `base.scss` file has already been imported in the JavaScript entry file as an example.
-
-### Images
-
-Add your image files in the `src/images` directory. Similar to CSS files, you need to `import` image files in the JavaScript entry file (`index.js`). Then go into the HTML and add an `img` element with the `src` attribute pointing to the `images` directory. There is an example in the `index.html` file for you to see.
-
-## How to View Your Code in Action
-
-In the terminal, run:
-
-```bash
-npm start
-```
-
-You will see a bunch of lines output to your terminal. One of those lines will be something like:
-
-```bash
-Project is running at http://localhost:8080/
-```
-
-Go to `http://localhost:8080/` in your browser to view your code running in the browser.
-
++ Clone down this repo to your local computer.
++ CD into the project directory.
++ In your terminal, run `npm install` and then `npm start`
++ You will see a bunch of lines output to your terminal. One of those lines will be something like: `Project is running at http://localhost:8080/`
++ Go to http://localhost:8080/ in your browser to view the site.
 ---
 
-## Test Files Organization
+## FitLit in Action
 
-Similar to feature code, your test code needs to be put in a specific place for it to run successfully.
+### Home Screen
+The user will see this as their main view when they load the page.
+![View of our home screen](https://i.imgur.com/MlOFp1c.png)
 
-**Put all of your test files in the `test` directory.** As a convention, all test filenames should end with `-test.js`. For instance: `box-test.js`.
+### More Information
+The user can click on the buttons on the card to get more information, both about their own stats and stats aggregated from all users.
+![Click on the buttons to view more information](https://i.imgur.com/OccjPvL.png)
 
-## Running Your Tests
 
-Run your test suite using the command:
+### User Information
+The user can also click on the profile icon in the upper right hand corner to see some additional profile information and stats from their friends.
+![Click the user icon to see profile information](https://i.imgur.com/GZF13DW.png)
 
-```bash
-npm test
-```
-
-The test results will output to the terminal.
+### Added Functionality: User Input Form
+The user can click an "add" button located in the top left corner of the site, to input today's health info to be applied to their FitLit.
+![Click on the "+" icon to add health data to FitLit](src/images/user-add-data-screenshot.png)
 
 ---
+## Technologies:
++ JavaScript ES6
++ Webpack
++ Chai Spies
++ Sass/SCSS
 
-## Linting Your Code
-
-Run the command in your terminal `npm run lint` to run the linter on your JavaScript code. There will be errors and warnings right from the start in this starter kit - the linter is still running successfully.
-
-Your linter will look at the JavaScript files you have within the `src` directory and the `test` directory. 
-
-## Webpack?
-
-If you look in the `package.json` file, you'll see one of the library dependencies called `webpack`. If you're interested in learning more about what Webpack is and how it works behind the scenes, take a look through the [Webpack configuration documentation](https://webpack.js.org/concepts/).
-
-## Deploying to GitHub Pages
-
-_If you are finished with the functionality and testing of your project_, then you can consider deploying your project to the web! This way anyone can play it without cloning down your repo.
-
-[GitHub Pages](https://pages.github.com/) is a great way to deploy your project to the web. Don't worry about this until your project is free of bugs and well tested!
-
-If you _are_ done, you can follow [this procedure](./gh-pages-procedure.md) to get your project live on GitHub Pages.
+## Project Management Tools and Practices:
++ Git Version Control
++ GitHub Project Board
++ Pull Request Template
++ Test-Driven Development (TDD)
