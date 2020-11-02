@@ -65,7 +65,7 @@ describe('Sleep', function() {
   });
 
   it('should hold hours slept', function() {
-    expect(sleep1.hoursSlept).to.equal(6.1);
+    expect(sleep2.hoursSlept).to.equal(7.3);
   });
   
   it('should hold sleep quality', function() {

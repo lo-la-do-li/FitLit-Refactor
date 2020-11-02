@@ -55,11 +55,14 @@ let modal = document.querySelector('.modal');
 let triggerButton = document.querySelector('.trigger');
 let closeButton = document.querySelector('.close-button');
 let submitButton = document.querySelector('.submit-user-input-button');
+let userInputs = document.querySelectorAll('.user-input');
+let modalContent = document.querySelector('.modal-content');
 
 //eventListener
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showProfileDropDown);
 triggerButton.addEventListener('click', displayFormDropDown);
+modalContent.addEventListener('keyup', limitInputs);
 closeButton.addEventListener('click', closeFormDropDown);
 submitButton.addEventListener('click', postOnSubmit);
 
@@ -122,10 +125,6 @@ function sortOuncesRecord() {
     return 0;
   });
 }
-////////////////// below ////////////////
-let userInputs = document.querySelectorAll('.user-input');
-let modalContent = document.querySelector('.modal-content');
-modalContent.addEventListener('keyup', limitInputs);
 
 function displayFormDropDown() {
   checkInputFields();
@@ -163,8 +162,9 @@ function collectUserInputData() {
 }
 
 function postUserInputData() {
-  return Promise.all([apiCalls.addSleepData(newSleepData), apiCalls.addActivityData(newActivityData), apiCalls.addHydrationData(newHydrationData)])
-    .then(data => console.log(data))
+  apiCalls.addSleepData(newSleepData); 
+  apiCalls.addActivityData(newActivityData);
+  apiCalls.addHydrationData(newHydrationData);
 }
 
 function limitInputs() {
@@ -179,12 +179,10 @@ function preventInvalids() {
     }
 }
 
-///////////////////////////// above ////////////////
-
 function showProfileDropDown() {
   const name = user.getFirstName();
   const friendsSteps = displayFriendsSteps();
-  domUpdate.showProfileDropDown(userInfoDropdown, name, user, friendsSteps)
+  domUpdate.displayProfileDropDown(userInfoDropdown, name, user, friendsSteps)
   let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
   domUpdate.updateDropdownTextColor(friendsStepsParagraphs);
 

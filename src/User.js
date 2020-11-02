@@ -1,4 +1,4 @@
- class User {
+class User {
   constructor(userData) {
     this.id = userData.id;
     this.name = userData.name;
@@ -6,7 +6,7 @@
     this.email = userData.email;
     this.strideLength = userData.strideLength;
     this.dailyStepGoal = userData.dailyStepGoal;
-    this.totalStepsThisWeek = 0;//
+    this.totalStepsThisWeek = 0;
     this.friends = userData.friends;
     this.ouncesAverage = 0;
     this.ouncesRecord = [];
@@ -19,15 +19,14 @@
     this.trendingStepDays = [];
     this.trendingStairsDays = [];
     this.friendsNames = [];
-    //this.friendsActivityRecords = []
   }
   getFirstName() {
     const newName = this.name.split(' ');
     return newName[0].toUpperCase();
   }
-  // Should be in Hydration.js?
+
   updateHydration(date, amount) {
-    this.ouncesRecord.unshift({date,amount});
+    this.ouncesRecord.unshift({date, amount});
     const recordLength = this.ouncesRecord.length;
     const currentTotal = this.ouncesAverage * (recordLength - 1);
     const currentAverage = (currentTotal + amount) / recordLength;
@@ -36,8 +35,6 @@
     return this.ouncesAverage = recordLength ? finalAverage : amount;
   }
 
-
-  //Move to Hydration.js, formerly addDailyOunces(date)
   returnTotalDailyOunces(date) {
     return this.ouncesRecord.reduce((totalOunces, record) => {
       if (record.date === date) {
@@ -113,11 +110,6 @@
       }
     })
   }
-//never used
-  // findClimbingRecord() {
-  //    this.sortRecord(`this['activityRecord']`, 'flightsOfStairs');
-  //    return this.activityRecord[0].flightsOfStairs;
-  // }
 
   calculateDailyCalories(date) {
     let fitDate = this.activityRecord.filter(activity => activity.date === date)
@@ -140,7 +132,7 @@
   findRecord(type, activity, msg) {
     return this.activityRecord.reduce((positiveDays, dailyRecord) => {
       const index1 = this.activityRecord.indexOf(dailyRecord);
-      if (this.activityRecord[index1+1] && dailyRecord[activity] > this.activityRecord[index1+1][activity]) {
+      if (this.activityRecord[index1 + 1] && dailyRecord[activity] > this.activityRecord[index1 + 1][activity]) {
         positiveDays.unshift(dailyRecord.date);
       } else if (positiveDays.length > 2) {
         this[type].push(`Your most recent positive ${msg} streak was ${positiveDays[0]} - ${positiveDays[positiveDays.length - 1]}!`);
@@ -174,7 +166,7 @@
     const friendsActivityRecords = this.friends.reduce((friendsActivityRecords, friendId)=> {
       let matchedFriend = users.find(user => user.id === friendId);
       matchedFriend.calculateTotalStepsThisWeek(date);
-      if(friendsActivityRecords.length < this.friends.length) {
+      if (friendsActivityRecords.length < this.friends.length) {
         friendsActivityRecords.push(
           {
             'id': matchedFriend.id,
@@ -184,7 +176,7 @@
       }
       return friendsActivityRecords;
     }, [])
-  return this.sortRecord(friendsActivityRecords, 'totalWeeklySteps');
+    return this.sortRecord(friendsActivityRecords, 'totalWeeklySteps');
   }
 }
 
