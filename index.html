@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset='UTF-8'>
+    <title>Trisha & Kayla's FitLit</title>
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <h1 id='header-name'>FITLIT</h1>
+      <button aria-label="trigger-button" class="trigger"></button>
+        <section class="modal" id="modal">
+          <section class="modal-content">
+            <button aria-label="close-form" class="close-button" id="close-button">x</button>
+              <form>
+                <label for="form-title"><strong>Enter Today's Health Info Data:</strong></label><br>
+                <label for="hours-slept">Hours Slept:</label><br>
+                  <input class="user-input hours-slept" type="number" id="hours-slept" name="hours-slept" placeholder="Please enter or choose a number"><br>
+                <label for="sleep-quality">Sleep Quality:</label><br>
+                  <input class="user-input sleep-quality" type="number" id="sleep-quality" name="sleep-quality" placeholder="Please enter or choose a number"><br>
+                <label for="number-steps">Number of Steps:</label><br>
+                  <input class="user-input number-steps" type="number" id="number-steps" name="number-steps" placeholder="Please enter or choose a number"><br>
+                <label for="minutes-active">Minutes Active:</label><br>
+                  <input class="user-input minutes-active" type="number" id="minutes-active" name="minutes-active" placeholder="Please enter or choose a number"><br>
+                <label for="flights-of-stairs">Flights of Stairs:</label><br>
+                  <input class="user-input flights-of-stairs" type="number" id="flights-of-stairs" name="flights-of-stairs" placeholder="Please enter or choose a number"><br>
+                <label for="ounces-of-water">Ounces of H20:</label><br>
+                  <input class="user-input ounces-of-water" type="number" id="ounces-of-water" name="ounces-of-water" placeholder="Please enter or choose a number"><br>
+                  <input class="submit-user-input-button" type="submit" value="Submit"></input>
+            </form>
+          </section>
+        </section>
+      <button aria-label='profile' id='profile-button'></button>
+      <section class='hide' id='user-info-dropdown'>
+      </section>
+    </header>
+    <main>
+      <section class='steps card-container' id='steps-card-container'>
+        <section class='steps main-card' id='steps-main-card'>
+          <section class='main-card-top-row'>
+            <button aria-label='steps-info' class='info-button steps-info-button'></button>
+            <h2>YOU HAVE WALKED</h2>
+            <button aria-label='friends-steps-info' class='friends-button steps-friends-button'></button>
+          </section>
+          <p id='steps-user-steps-today' class="today-data">X</p>
+          <section class='main-card-top-row'>
+            <button aria-label='steps-trending-info' class='trending-button steps-trending-button'></button>
+            <h2>STEPS TODAY</h2>
+            <button aria-label='steps-calendar-info' class='calendar-button steps-calendar-button'></button>
+          </section>
+        </section>
+        <section class='info-card hide' id='steps-info-card'>
+        </section>
+         <section class='friends-card hide' id='steps-friends-card'>
+        </section>
+        <section class='trending-card hide' id='steps-trending-card'>
+        </section>
+        <section class='calendar-card hide' id='steps-calendar-card'>
+        </section>
+      </section>
+      <section class='hydration card-container' id='hydration-card-container'>
+        <section class='hydration main-card' id='hydration-main-card'>
+          <section class='main-card-top-row'>
+            <button aria-label='hydration' class='info-button hydration-info-button'></button>
+            <h2>YOU HAVE HAD</h2>
+            <button aria-label='friends-hydration' class='friends-button hydration-friends-button'></button>
+          </section>
+          <p id='hydration-user-ounces-today' class="today-data"></p>
+          <section class='main-card-bottom-row'>
+            <h2>OZ OF WATER TODAY</h2>
+            <button aria-label='hydration-calendar' class='calendar-button hydration-calendar-button'></button>
+          </section>
+        </section>
+        <section class='info-card hide' id='hydration-info-card'>
+        </section>
+        <section class='friends-card hide' id='hydration-friends-card'>
+        </section>
+        <section class='calendar-card hide' id='hydration-calendar-card'>
+        </section>
+      </section>
+      <section class='stairs card-container' id='stairs-card-container'>
+        <section class='stairs main-card' id='stairs-main-card'>
+          <section class='main-card-top-row'>
+            <button aria-label='stairs' class='info-button stairs-info-button'></button>
+            <h2>YOU HAVE CLIMBED</h2>
+            <button aria-label='friends-stairs' class='friends-button stairs-friends-button'></button>
+          </section>
+          <p id='stairs-user-stairs-today' class="today-data"></p>
+          <section class='main-card-top-row'>
+            <button aria-label='stairs-trending' class='trending-button stairs-trending-button'></button>
+            <h2>STAIRS TODAY</h2>
+            <button aria-label='stairs-calendar' class='calendar-button stairs-calendar-button'></button>
+          </section>
+        </section>
+        <section class='info-card hide' id='stairs-info-card'>
+        </section>
+        <section class='friends-card hide' id='stairs-friends-card'>
+        </section>
+        <section class='trending-card hide' id='stairs-trending-card'>
+        </section>
+        <section class='calendar-card hide' id='stairs-calendar-card'>
+        </section>
+      </section>
+      <section class='sleep card-container' id='sleep-card-container'>
+        <section class='sleep main-card' id='sleep-main-card'>
+          <section class='main-card-top-row'>
+            <button aria-label='sleep' class='info-button sleep-info-button'></button>
+            <h2>YOU SLEPT</h2>
+            <button aria-label='friends-sleep' class='friends-button sleep-friends-button'></button>
+          </section>
+          <p id='sleep-user-hours-today' class="today-data"></p>
+          <section class='main-card-bottom-row'>
+            <h2>HOURS LAST NIGHT</h2>
+            <button aria-label='sleep-calender' class='calendar-button sleep-calendar-button'></button>
+          </section>
+        </section>
+        <section class='info-card hide' id='sleep-info-card'>
+        </section>
+        <section class='friends-card hide' id='sleep-friends-card'>
+        </section>
+        <section class='calendar-card hide' id='sleep-calendar-card'>
+        </section>
+      </section>
+    </main>
+  <script type="text/javascript" src="main.bundle.js"></script></body>
+</html>
