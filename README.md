@@ -32,6 +32,7 @@ In order to make sure our DOM updates were called on, we used spy testing in our
 + Incorporate Webpack to streamline your workflow process
 + Leverage Chai Spies to verify that your DOM manipulation is happening
 ---
+[Visit our deployed site here](https://elle624.github.io/FitLit-Refactor/) or set it up on your local device by following the instructions below
 
 ## Setup
 + Clone down this repo to your local computer.
